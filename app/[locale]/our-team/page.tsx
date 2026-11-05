@@ -142,20 +142,20 @@ export default function OurTeamPage() {
               >
                 {member.image && member.image !== '/team/placeholder.jpg' ? (
                   <>
-                    <Image 
-                      src={member.image} 
-                      alt={member.name} 
-                      fill 
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
                       className={`object-cover transition-all duration-[800ms] ease-out group-hover:scale-110 ${member.hoverImage ? 'group-hover:opacity-0' : ''} opacity-0`}
                       onLoad={(e) => (e.target as HTMLImageElement).classList.remove('opacity-0')}
                       style={{ objectPosition: member.imagePosition || 'center 25%' }}
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     />
                     {member.hoverImage && (
-                      <Image 
-                        src={member.hoverImage} 
-                        alt={`${member.name} alternate`} 
-                        fill 
+                      <Image
+                        src={member.hoverImage}
+                        alt={`${member.name} alternate`}
+                        fill
                         className="object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-[800ms] ease-out"
                         style={{ objectPosition: member.hoverImagePosition || 'center 25%' }}
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -188,7 +188,7 @@ export default function OurTeamPage() {
         {selectedMember && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-12">
             {/* Backdrop */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -196,9 +196,9 @@ export default function OurTeamPage() {
               className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm"
               onClick={() => setSelectedMember(null)}
             />
-            
+
             {/* Modal Content */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 50, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -207,7 +207,7 @@ export default function OurTeamPage() {
               style={{ height: 'min(90vh, 900px)', maxHeight: '92vh' }}
             >
               {/* Close Button */}
-              <button 
+              <button
                 onClick={() => setSelectedMember(null)}
                 className="absolute top-4 right-4 lg:top-8 lg:right-8 z-20 w-10 h-10 lg:w-14 lg:h-14 rounded-full bg-white/90 lg:bg-[#FAFAFA] backdrop-blur-md lg:backdrop-blur-none hover:bg-[#F0F0F0] flex items-center justify-center transition-colors border border-black/5 shadow-sm lg:shadow-none"
                 aria-label="Close modal"
@@ -246,8 +246,8 @@ export default function OurTeamPage() {
                     </h4>
                     <div className="flex flex-wrap gap-2 lg:gap-2.5">
                       {selectedMember.projects.map((project, i) => (
-                        <span 
-                          key={i} 
+                        <span
+                          key={i}
                           className="px-3.5 py-1.5 lg:px-4 lg:py-2 rounded-full border border-black/10 text-charcoal/80 text-[11px] lg:text-xs hover:border-primary-green hover:text-primary-green transition-colors cursor-default bg-black/[0.02]"
                         >
                           {project} ↗
@@ -261,10 +261,10 @@ export default function OurTeamPage() {
               {/* Right Side: Large Portrait (Desktop Only) */}
               <div className="hidden lg:block w-[45%] relative bg-[#F5F5F5] overflow-hidden shrink-0">
                 {selectedMember.image && selectedMember.image !== '/team/placeholder.jpg' ? (
-                  <Image 
-                    src={selectedMember.image} 
-                    alt={selectedMember.name} 
-                    fill 
+                  <Image
+                    src={selectedMember.image}
+                    alt={selectedMember.name}
+                    fill
                     className="object-cover"
                     style={{ objectPosition: selectedMember.imagePosition || 'center 25%' }}
                     sizes="(max-width: 1600px) 45vw, 700px"

@@ -12,7 +12,6 @@ const InteractiveMapbox = dynamic(
   { ssr: false, loading: () => <div className="w-full h-full bg-primary-ivory animate-pulse" /> }
 )
 import { getOptimalZoom } from './map/map-utils'
-import { MapSearch } from './map/map-search'
 
 import {
   type Region,
@@ -109,14 +108,6 @@ export default function InteractiveMap() {
 
         {/* Map Canvas - scales with flex-1 */}
         <div className="flex-1 relative h-full w-full">
-          {/* Floating Farm Africa Multi-Faceted Discovery Palette */}
-          <div className="absolute top-4 left-4 z-30 max-w-[calc(100vw-5.5rem)] sm:max-w-xs md:max-w-sm pointer-events-auto">
-            <MapSearch
-              onCountrySelect={handleCountryClickWrapper}
-              countries={countrySeeds}
-            />
-          </div>
-
           <div className="absolute inset-0 z-0">
             <InteractiveMapbox
               onMapReady={(m) => mapboxMapRef.current = m}

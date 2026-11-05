@@ -205,19 +205,26 @@
 
 @layer components {
   .btn-premium {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded font-semibold transition-[transform, background-color, box-shadow, opacity] duration-200 ease-[cubic-bezier(0.23, 1, 0.32, 1)] hover:scale-[1.02] hover:shadow-xl active:scale-[0.98] disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 bg-primary text-primary-foreground rounded font-semibold duration-200 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98] disabled:opacity-50;
+    transition-property: transform, background-color, box-shadow, opacity;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .btn-premium-outline {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-primary text-primary rounded font-semibold transition-[transform, background-color, border-color, color] duration-200 ease-[cubic-bezier(0.23, 1, 0.32, 1)] hover:bg-primary/5 active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 bg-transparent border-2 border-primary text-primary rounded font-semibold duration-200 hover:bg-primary/5 active:scale-[0.98];
+    transition-property: transform, background-color, border-color, color;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .glass-panel {
-    @apply bg-white/75 backdrop-blur-xl border border-white/30 shadow-[0_8px_32px_rgba(26, 77, 46, 0.08)];
+    @apply bg-white/75 backdrop-blur-xl border border-white/30;
+    box-shadow: 0 8px 32px rgba(26, 77, 46, 0.08);
   }
 
   .bento-card {
-    @apply relative overflow-hidden rounded-3xl border border-primary/5 bg-white p-8 transition-[transform, background-color, border-color, box-shadow] duration-200 ease-[cubic-bezier(0.23, 1, 0.32, 1)] hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5;
+    @apply relative overflow-hidden rounded-3xl border border-primary/5 bg-white p-6 sm:p-8 duration-200 hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5;
+    transition-property: transform, background-color, border-color, box-shadow;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
 }
 
@@ -327,30 +334,41 @@
 }
 
 
+/* ─── Global Navbar Height & Multi-Device Media Rules ─── */
 @media (min-width: 1024px) {
   :root {
     --header-height: 5.5rem;
   }
 }
 
-/* ─── Global Navbar Height (REM Based) ─── */
-@media (min-width: 1024px) {
+/* Compact header on short landscape mobile screens */
+@media (max-height: 500px) and (orientation: landscape) {
   :root {
-    --header-height: 5.5rem;
+    --header-height: 3.75rem;
   }
 }
 
-/* ─── 14-inch & 15-inch Baseline ─── */
+/* ─── Responsive Root Typography Scaling ─── */
+@media (max-width: 374px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  html {
+    font-size: 15.5px;
+  }
+}
+
 @media (min-width: 1440px) {
   html {
     font-size: 16px;
-  }
-}
-
-/* ─── Baseline (13-inch) ─── */
-@media (min-width: 1024px) and (max-width: 1439px) {
-  html {
-    /* Baseline between 14px and 15px for 13-inch displays */
-    font-size: clamp(14px, 1.6dvh, 15px);
   }
 }

@@ -77,7 +77,7 @@ export const MapSearch: React.FC<MapSearchProps> = ({ onCountrySelect, countries
         </button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[320px] sm:w-[380px] p-0 rounded-2xl border-stone-200 shadow-2xl overflow-hidden bg-white z-[100]"
+        className="w-[calc(100vw-2rem)] max-w-[320px] sm:max-w-[380px] sm:w-[380px] p-0 rounded-2xl border-stone-200 shadow-2xl overflow-hidden bg-white z-[100]"
         align="start"
       >
         <Command shouldFilter={false} className="bg-white">

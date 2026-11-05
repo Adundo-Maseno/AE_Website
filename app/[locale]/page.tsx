@@ -69,7 +69,7 @@ export default function Home() {
 
     let mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
       const container = sequenceWrapperRef.current;
 
       const getScroll1 = () => {
@@ -137,26 +137,26 @@ export default function Home() {
     {
       title: t('belief_4_title'),
       text: t('belief_4_text'),
-      width: "w-[290px] lg:w-[330px] xl:w-[370px] min-[1440px]:w-[430px] 2xl:w-[470px]"
+      width: "w-[290px] lg:w-[350px] xl:w-[380px] min-[1440px]:w-[430px] 2xl:w-[470px]"
     },
     {
       title: t('belief_3_title'),
       text: t('belief_3_text'),
-      width: "w-[290px] lg:w-[330px] xl:w-[370px] min-[1440px]:w-[430px] 2xl:w-[470px]"
+      width: "w-[290px] lg:w-[350px] xl:w-[380px] min-[1440px]:w-[430px] 2xl:w-[470px]"
     },
     {
       title: t('belief_1_title'),
       text: t('belief_1_text'),
-      width: "w-[310px] lg:w-[350px] xl:w-[400px] min-[1440px]:w-[470px] 2xl:w-[510px]"
+      width: "w-[310px] lg:w-[380px] xl:w-[420px] min-[1440px]:w-[470px] 2xl:w-[510px]"
     },
     {
       title: t('belief_2_title'),
       text: t('belief_2_text'),
-      width: "w-[310px] lg:w-[350px] xl:w-[400px] min-[1440px]:w-[470px] 2xl:w-[510px]"
+      width: "w-[310px] lg:w-[380px] xl:w-[420px] min-[1440px]:w-[470px] 2xl:w-[510px]"
     }
   ]
 
-  const UNIFORM_CARD_WIDTH = "w-[290px] lg:w-[320px] xl:w-[350px] min-[1440px]:w-[420px] 2xl:w-[460px]"
+  const UNIFORM_CARD_WIDTH = "w-[290px] lg:w-[340px] xl:w-[360px] min-[1440px]:w-[420px] 2xl:w-[460px]"
 
   const agriCards = [
     { text: tAgri('card_3'), width: UNIFORM_CARD_WIDTH },
@@ -168,10 +168,10 @@ export default function Home() {
 
   return (
     <>
-      <main className="-mt-[4.5rem] lg:-mt-[5.5rem] bg-background overflow-x-clip">
+      <main className="-mt-[var(--header-height)] bg-background overflow-x-clip">
 
         {/* Premium Full-Bleed Video Hero Section */}
-        <section ref={heroRef} className="relative w-full min-h-[90vh] md:min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-[6.5rem] pb-12 bg-white z-0">
+        <section ref={heroRef} className="relative w-full min-h-[90dvh] md:min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-[calc(var(--header-height)+2rem)] pb-12 bg-white z-0">
 
           {/* Background Media Container (Contained within hero section) */}
           <div ref={heroBgRef} className="absolute inset-0 md:-top-[20vh] left-0 w-full h-full md:h-[120vh] z-0 origin-center bg-black overflow-hidden">
@@ -284,7 +284,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="hidden md:motion-safe:block">
+        <div className="hidden lg:motion-safe:block">
           {/* Pinned Horizontal Sequence Wrapper */}
           <div ref={sequenceWrapperRef} className="relative z-20 bg-mist">
             <div className="relative h-[100dvh] w-full overflow-hidden">
@@ -304,7 +304,7 @@ export default function Home() {
                     </motion.div>
                   </div>
 
-                  <div className="grid grid-rows-2 grid-flow-col gap-3 lg:gap-3.5 xl:gap-4 min-[1440px]:gap-6 shrink-0 py-2 lg:py-3 h-[clamp(350px,52vh,520px)]">
+                  <div className="grid grid-rows-2 grid-flow-col gap-3 lg:gap-3.5 xl:gap-4 min-[1440px]:gap-6 shrink-0 py-2 lg:py-3 h-[clamp(380px,58dvh,540px)]">
                     {agriCards.map((item, idx) => (
                       <div
                         key={idx}
@@ -336,16 +336,16 @@ export default function Home() {
                     </motion.div>
                   </div>
 
-                  <div className="grid grid-rows-2 grid-flow-col gap-3.5 lg:gap-4 xl:gap-5 min-[1440px]:gap-6 shrink-0 py-2 lg:py-3 h-[clamp(360px,54vh,530px)]">
+                  <div className="grid grid-rows-2 grid-flow-col gap-3.5 lg:gap-4 xl:gap-5 min-[1440px]:gap-6 shrink-0 py-2 lg:py-3 h-[clamp(390px,60dvh,550px)]">
                     {beliefs.map((belief, idx) => (
                       <div
                         key={idx}
-                        className={`${belief.width} h-full shrink-0 bg-white/[0.06] backdrop-blur-md border border-white/12 p-4 sm:p-5 lg:p-6 xl:p-7 min-[1440px]:p-8 rounded-2xl xl:rounded-3xl hover:bg-white/[0.11] hover:border-white/25 transition-[transform,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 flex flex-col justify-center overflow-hidden shadow-lg shadow-black/10`}
+                        className={`${belief.width} h-full shrink-0 bg-white/[0.06] backdrop-blur-md border border-white/12 p-4 sm:p-5 lg:p-5 xl:p-6 min-[1440px]:p-8 rounded-2xl xl:rounded-3xl hover:bg-white/[0.11] hover:border-white/25 transition-[transform,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-0.5 flex flex-col justify-center overflow-hidden shadow-lg shadow-black/10`}
                       >
                         <div className="flex flex-col justify-center gap-1.5 xl:gap-2 min-[1440px]:gap-2.5 h-full overflow-hidden">
-                          <h3 className="text-sm sm:text-base lg:text-[17px] xl:text-lg min-[1440px]:text-xl font-serif text-white font-bold leading-snug">{belief.title}</h3>
+                          <h3 className="text-sm sm:text-base lg:text-[16.5px] xl:text-lg min-[1440px]:text-xl font-serif text-white font-bold leading-snug">{belief.title}</h3>
                           <p
-                            className="text-white/80 font-normal leading-relaxed text-xs sm:text-[13px] lg:text-[13.5px] xl:text-[14px] min-[1440px]:text-[15.5px] 2xl:text-[17px]"
+                            className="text-white/80 font-normal leading-snug xl:leading-relaxed text-xs sm:text-[13px] lg:text-[13px] xl:text-[14px] min-[1440px]:text-[15.5px] 2xl:text-[17px]"
                           >
                             {belief.text}
                           </p>
@@ -360,7 +360,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="block md:motion-safe:hidden">
+        <div className="block lg:motion-safe:hidden">
           {/* Vertical Fallback for Mobile / Reduced Motion */}
           <div className="relative z-20 bg-mist">
             <WhyAgriExperience />

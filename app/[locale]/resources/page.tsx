@@ -91,12 +91,12 @@ function ResourcesContent() {
               </p>
 
               {/* Filter Pills */}
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                 {categories.map((category) => (
                   <button
                     key={category}
                     onClick={() => handleCategoryChange(category)}
-                    className={`group relative overflow-hidden inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-150 ease-out active:scale-[0.97] cursor-pointer ${activeCategory === category
+                    className={`group relative overflow-hidden inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-[transform,background-color,color,box-shadow] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] cursor-pointer ${activeCategory === category
                         ? 'bg-primary-green text-white shadow-md'
                         : 'bg-mist text-deep-forest hover:bg-primary-green/10'
                       }`}
@@ -109,7 +109,7 @@ function ResourcesContent() {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {filteredDownloads.map((download) => {
                 // Find index to get correct translation from the array
                 const originalIdx = publicDownloads.findIndex(d => d.title === download.title);

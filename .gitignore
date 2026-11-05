@@ -21,6 +21,7 @@ hostinger_production.env
 
 # Graph & temporary artifacts
 graphify-out/
+.playwright-mcp/
 *.log
 
 # OS files

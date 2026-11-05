@@ -103,7 +103,7 @@ export default function DigitalPlatformsPage() {
                 className="flex-1 lg:pt-16 relative"
               >
                 <div className="hidden lg:block absolute left-0 top-16 bottom-0 w-px bg-primary-green/20" />
-                <p className="text-base sm:text-lg lg:text-[14.5px] min-[1440px]:text-xl text-charcoal/85 leading-relaxed font-normal lg:pl-10">
+                <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal lg:pl-10">
                   {t('hero_desc')}
                 </p>
                 <div className="lg:pl-10 mt-8 flex flex-wrap gap-4">

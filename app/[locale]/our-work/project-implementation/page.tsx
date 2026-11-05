@@ -147,10 +147,10 @@ export default function ProjectImplementationPage() {
               >
                 <div className="hidden lg:block absolute left-0 top-16 bottom-0 w-px bg-deep-forest/10" />
                 <div className="lg:pl-10 space-y-4">
-                  <p className="text-base sm:text-lg lg:text-[14.5px] min-[1440px]:text-xl text-charcoal/85 leading-relaxed font-normal">
+                  <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal">
                     {t('hero_desc1')}
                   </p>
-                  <p className="text-base sm:text-lg lg:text-[14.5px] min-[1440px]:text-xl text-charcoal/85 leading-relaxed font-normal">
+                  <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal">
                     {t('hero_desc2')}
                   </p>
                   <div className="mt-8 flex flex-wrap gap-4">

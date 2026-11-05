@@ -229,7 +229,7 @@ export default function OurTeamPage() {
                 <div>
                   <h2
                     className="font-serif text-deep-forest font-normal leading-tight tracking-tight pb-2 mb-4 lg:mb-6 pr-12 lg:pr-0"
-                    style={{ fontSize: 'clamp(2.25rem, 9vh, 7.5rem)' }}
+                    style={{ fontSize: 'clamp(1.75rem, 1.2rem + 2.8vw, 4.25rem)' }}
                   >
                     {selectedMember.name.split(' ')[0]}
                     <br className="hidden lg:block" />

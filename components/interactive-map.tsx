@@ -52,7 +52,13 @@ export default function InteractiveMap() {
     if (desktopDossierRef.current) {
       const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
       if (!isMobile) {
-        desktopDossierRef.current.style.transform = `translate3d(${pos.x + 40}px, ${pos.y - 100}px, 0)`
+        const cw = containerRef.current?.clientWidth || window.innerWidth;
+        const ch = containerRef.current?.clientHeight || window.innerHeight;
+        const cardWidth = 420;
+        const cardHeight = Math.min(ch * 0.82, 520);
+        const clampedX = Math.min(Math.max(16, pos.x + 40), Math.max(16, cw - cardWidth - 20));
+        const clampedY = Math.min(Math.max(16, pos.y - 120), Math.max(16, ch - cardHeight - 20));
+        desktopDossierRef.current.style.transform = `translate3d(${clampedX}px, ${clampedY}px, 0)`
       } else {
         desktopDossierRef.current.style.transform = 'none'
       }
@@ -104,7 +110,7 @@ export default function InteractiveMap() {
         {/* Map Canvas - scales with flex-1 */}
         <div className="flex-1 relative h-full w-full">
           {/* Floating Farm Africa Multi-Faceted Discovery Palette */}
-          <div className="absolute top-4 left-4 z-30 max-w-[280px] sm:max-w-xs md:max-w-sm pointer-events-auto">
+          <div className="absolute top-4 left-4 z-30 max-w-[calc(100vw-5.5rem)] sm:max-w-xs md:max-w-sm pointer-events-auto">
             <MapSearch
               onCountrySelect={handleCountryClickWrapper}
               countries={countrySeeds}
@@ -168,15 +174,15 @@ export default function InteractiveMap() {
                 transition={{ type: 'spring', damping: 25, stiffness: 200, mass: 0.8 }}
                 className={[
                   'pointer-events-auto',
-                  // Mobile: bottom sheet — fills width, sits at bottom
-                  'absolute bottom-0 left-0 right-0 h-[calc(50vh+100px)]',
+                  // Mobile: bottom sheet — fills width, sits at bottom, aligned with 50dvh camera math
+                  'absolute bottom-0 left-0 right-0 h-[52dvh] max-h-[440px]',
                   'rounded-t-3xl',
-                  // Desktop: floating overlay card positioned right next to the selected country (which is centered)
+                  // Desktop: floating overlay card positioned right next to the selected country (clamped to viewport)
                   'lg:relative lg:bottom-auto lg:left-auto lg:right-auto',
-                  'lg:w-full lg:h-auto lg:max-h-[85vh]',
+                  'lg:w-full lg:h-auto lg:max-h-[calc(100dvh-7rem)]',
                   'lg:rounded-2xl',
                   // Shared glass styling matching the label
-                  'bg-deep-forest/80 lg:bg-deep-forest/70 backdrop-blur-xl',
+                  'bg-deep-forest/85 lg:bg-deep-forest/75 backdrop-blur-xl',
                   'border border-white/20',
                   'shadow-2xl',
                   'flex flex-col overflow-hidden',

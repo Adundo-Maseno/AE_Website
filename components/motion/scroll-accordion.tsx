@@ -28,7 +28,7 @@ export function ScrollAccordion({
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
-    const mqlMobile = window.matchMedia('(max-width: 768px)')
+    const mqlMobile = window.matchMedia('(max-width: 1023px)')
     const mqlMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     const update = () => setIsFallback(mqlMobile.matches || mqlMotion.matches)
@@ -250,10 +250,10 @@ function DesktopStickyAccordion({ title, items }: { title: string, items: any[] 
                           scrollToItem(i);
                         }
                       }}
-                      className={`item-title-${i} group font-serif py-3 lg:py-3.5 cursor-pointer hover:opacity-80 active:scale-[0.99] transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] z-20 relative w-full lg:w-2/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-green rounded-sm`}
+                      className={`item-title-${i} group font-serif py-2.5 lg:py-3 cursor-pointer hover:opacity-80 active:scale-[0.99] transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] z-20 relative w-full lg:w-2/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-green rounded-sm`}
                       style={{
                         color: i === 0 ? "#3ab44a" : "rgba(26,77,46,0.5)",
-                        fontSize: 'clamp(1.875rem, 1.4rem + 2.4vw, 4.5rem)'
+                        fontSize: 'clamp(1.75rem, 1.25rem + 2.1vw, 3.75rem)'
                       }}
                     >
                       <RollingText>{item.title}</RollingText>
@@ -267,8 +267,8 @@ function DesktopStickyAccordion({ title, items }: { title: string, items: any[] 
                         <p className="text-pretty">{item.desc}</p>
 
                         {item.isGoal && (
-                          <div className="mt-3 lg:mt-6">
-                            <div className="grid grid-cols-3 gap-1.5 lg:gap-3 w-4/5 lg:w-3/4 mx-auto">
+                          <div className="mt-2.5 lg:mt-4">
+                            <div className="grid grid-cols-3 gap-1.5 lg:gap-2.5 w-3/4 lg:w-2/3 max-w-[260px] mx-auto">
                               {[1, 2, 3, 5, 8, 13].map((num) => (
                                 <div key={num} className="w-full aspect-square relative">
                                   <Image

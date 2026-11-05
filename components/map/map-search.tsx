@@ -58,7 +58,7 @@ export const MapSearch: React.FC<MapSearchProps> = ({ onCountrySelect, countries
           role="combobox"
           aria-expanded={open}
           aria-label="Search and filter countries by region or agricultural theme"
-          className={`flex items-center gap-3 px-4 py-2.5 bg-white/90 hover:bg-white backdrop-blur-md border border-stone-200/90 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer group text-left ${className}`}
+          className={`flex items-center gap-3 px-4 py-2.5 bg-white/90 hover:bg-white backdrop-blur-md border border-stone-200/90 rounded-2xl shadow-lg hover:shadow-xl transition-[transform,background-color,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-green focus-visible:ring-offset-2 cursor-pointer group text-left ${className}`}
         >
           <div className="w-8 h-8 rounded-xl bg-primary-green/10 flex items-center justify-center text-primary-green group-hover:bg-primary-green group-hover:text-white transition-colors duration-300">
             <Search className="w-4 h-4" />
@@ -95,7 +95,7 @@ export const MapSearch: React.FC<MapSearchProps> = ({ onCountrySelect, countries
                   key={r}
                   type="button"
                   onClick={() => setSelectedRegion(r)}
-                  className={`px-2.5 py-1 rounded-full whitespace-nowrap transition-all duration-200 font-medium ${selectedRegion === r
+                  className={`px-2.5 py-1 rounded-full whitespace-nowrap transition-[transform,background-color,color,border-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-green font-medium ${selectedRegion === r
                     ? 'bg-deep-forest text-white shadow-sm'
                     : 'bg-white border border-stone-200/80 text-charcoal/70 hover:bg-stone-100'
                     }`}
@@ -111,7 +111,7 @@ export const MapSearch: React.FC<MapSearchProps> = ({ onCountrySelect, countries
               No matching agricultural programs found.
             </CommandEmpty>
 
-            <CommandGroup heading={`Portfolio Countries (${filteredCountries.length})`}>
+            <CommandGroup heading={`Portfolio Countries (${filteredCountries.length})`} className="tabular-nums">
               {filteredCountries.map((country) => (
                 <CommandItem
                   key={country.code}
@@ -131,7 +131,7 @@ export const MapSearch: React.FC<MapSearchProps> = ({ onCountrySelect, countries
                       <span className="text-sm font-semibold text-deep-forest truncate">{country.name}</span>
                       <span className="text-[10px] text-charcoal/50 flex items-center gap-1.5">
                         <span className="uppercase tracking-wider font-semibold">{country.region}</span>
-                        {country.projects ? <span>• {country.projects} projects</span> : null}
+                        {country.projects ? <span className="tabular-nums">• {country.projects} projects</span> : null}
                       </span>
                     </div>
                   </div>
@@ -150,7 +150,7 @@ export const MapSearch: React.FC<MapSearchProps> = ({ onCountrySelect, countries
                       key={theme}
                       type="button"
                       onClick={() => setQuery(theme)}
-                      className="text-[10px] px-2.5 py-1 rounded-md bg-mist/60 hover:bg-primary-green/15 text-deep-forest border border-stone-200/50 transition-colors font-medium text-left"
+                      className="text-[10px] px-2.5 py-1 rounded-md bg-mist/60 hover:bg-primary-green/15 text-deep-forest border border-stone-200/50 transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-green font-medium text-left"
                     >
                       {theme}
                     </button>

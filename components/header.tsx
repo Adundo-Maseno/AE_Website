@@ -224,8 +224,8 @@ export default function Header() {
                           else buttonRefs.current.delete(item.href);
                         }}
                         className={`relative px-3 py-1.5 min-[1440px]:px-4 min-[1440px]:py-2 text-[13px] min-[1440px]:text-sm font-medium rounded-full transition-colors duration-150 ${isActive
-                            ? 'text-deep-forest z-20'
-                            : 'text-charcoal/80 hover:text-deep-forest z-10'
+                          ? 'text-deep-forest z-20'
+                          : 'text-charcoal/80 hover:text-deep-forest z-10'
                           }`}
                       >
                         {/* Hover pill — always rendered, toggled via opacity to avoid remount flash */}
@@ -242,60 +242,57 @@ export default function Header() {
                 </nav>
 
                 <div className="flex items-center gap-4">
-                  {/* Language Switcher */}
-                  <div
-                    ref={langButtonRef}
-                    onMouseEnter={() => {
-                      if (!TRANSLATION_FEATURE_ACTIVE) {
-                        updatePopupPosition();
-                        setIsLangHovered(true);
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      if (!TRANSLATION_FEATURE_ACTIVE) {
-                        setIsLangHovered(false);
-                      }
-                    }}
-                    className="relative hidden md:flex items-center"
-                  >
+                  {/* Language Switcher — hidden while TRANSLATION_FEATURE_ACTIVE is false */}
+                  {TRANSLATION_FEATURE_ACTIVE && (
                     <div
-                      className={`flex items-center gap-1 bg-black/5 rounded-full p-1 border border-black/5 transition-all ${!TRANSLATION_FEATURE_ACTIVE
-                          ? 'opacity-40 grayscale cursor-not-allowed select-none'
-                          : 'opacity-100'
-                        }`}
-                      aria-disabled={!TRANSLATION_FEATURE_ACTIVE}
+                      ref={langButtonRef}
+                      onMouseEnter={() => {
+                        if (!TRANSLATION_FEATURE_ACTIVE) {
+                          updatePopupPosition();
+                          setIsLangHovered(true);
+                        }
+                      }}
+                      onMouseLeave={() => {
+                        if (!TRANSLATION_FEATURE_ACTIVE) {
+                          setIsLangHovered(false);
+                        }
+                      }}
+                      className="relative hidden md:flex items-center"
                     >
-                      {[
-                        { code: 'en', label: 'EN' },
-                        { code: 'fr', label: 'FR' }
-                      ].map(loc => {
-                        const isActive = loc.code === currentLocale;
-                        return (
-                          <button
-                            key={loc.code}
-                            disabled={!TRANSLATION_FEATURE_ACTIVE}
-                            onClick={() => {
-                              if (TRANSLATION_FEATURE_ACTIVE && !isActive) {
-                                triggerLanguageSwitch();
-                                router.replace(pathname, { locale: loc.code as any, scroll: false });
-                              }
-                            }}
-                            className={`text-[11.5px] min-[1440px]:text-xs font-bold px-2 min-[1440px]:px-2.5 py-1 min-[1440px]:py-1.5 rounded-full transition-all ${isActive
+                      <div
+                        className="flex items-center gap-1 bg-black/5 rounded-full p-1 border border-black/5 transition-[opacity,background-color,border-color] duration-200"
+                      >
+                        {[
+                          { code: 'en', label: 'EN' },
+                          { code: 'fr', label: 'FR' }
+                        ].map(loc => {
+                          const isActive = loc.code === currentLocale;
+                          return (
+                            <button
+                              key={loc.code}
+                              onClick={() => {
+                                if (!isActive) {
+                                  triggerLanguageSwitch();
+                                  router.replace(pathname, { locale: loc.code as any, scroll: false });
+                                }
+                              }}
+                              className={`text-[11.5px] min-[1440px]:text-xs font-bold px-2 min-[1440px]:px-2.5 py-1 min-[1440px]:py-1.5 rounded-full transition-[background-color,color,box-shadow,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] ${isActive
                                 ? 'bg-white text-deep-forest shadow-sm'
-                                : 'text-charcoal/60 hover:text-charcoal'
-                              } ${!TRANSLATION_FEATURE_ACTIVE ? 'cursor-not-allowed pointer-events-none' : 'hover:bg-black/5'}`}
-                          >
-                            {loc.label}
-                          </button>
-                        )
-                      })}
+                                : 'text-charcoal/60 hover:text-charcoal hover:bg-black/5'
+                                }`}
+                            >
+                              {loc.label}
+                            </button>
+                          )
+                        })}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <Link
                     href="/contact"
                     onClick={() => { setClickedPath('/contact'); }}
-                    className="group relative overflow-hidden hidden md:inline-flex px-3.5 py-1.5 min-[1440px]:px-5 min-[1440px]:py-2.5 bg-deep-forest text-white rounded-full text-[13px] min-[1440px]:text-sm font-medium hover:bg-deep-forest/90 transition-all duration-150 ease-out active:scale-[0.98] shadow-xs hover:shadow-sm"
+                    className="group relative overflow-hidden hidden md:inline-flex px-3.5 py-1.5 min-[1440px]:px-5 min-[1440px]:py-2.5 bg-deep-forest text-white rounded-full text-[13px] min-[1440px]:text-sm font-medium hover:bg-deep-forest/90 transition-[transform,background-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] shadow-xs hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-green/60 focus-visible:ring-offset-2"
                   >
                     <RollingText>
                       {t('contact')}
@@ -388,9 +385,9 @@ export default function Header() {
                         key={item.href}
                         href={item.href}
                         onClick={() => { setIsOpen(false); }}
-                        className={`px-4 py-3.5 text-base font-semibold rounded-2xl transition-all duration-200 flex items-center justify-between ${isActive
-                            ? 'text-deep-forest bg-[#F1F6F3]'
-                            : 'text-charcoal/80 hover:text-deep-forest hover:bg-black/5'
+                        className={`px-4 py-3.5 text-base font-semibold rounded-2xl transition-[background-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] flex items-center justify-between ${isActive
+                          ? 'text-deep-forest bg-[#F1F6F3]'
+                          : 'text-charcoal/80 hover:text-deep-forest hover:bg-black/5'
                           }`}
                       >
                         {t(item.key as any)}
@@ -401,53 +398,44 @@ export default function Header() {
                 </nav>
 
                 <div className="mt-auto pt-8 pb-6">
-                  {/* Language Switcher */}
-                  <div className="relative group flex flex-col items-center mb-6">
-                    <div
-                      className={`w-full flex items-center justify-center p-1 bg-black/5 rounded-full border border-black/5 transition-all ${!TRANSLATION_FEATURE_ACTIVE
-                          ? 'opacity-40 grayscale cursor-not-allowed select-none'
-                          : 'opacity-100'
-                        }`}
-                      aria-disabled={!TRANSLATION_FEATURE_ACTIVE}
-                    >
-                      {[
-                        { code: 'en', label: 'English' },
-                        { code: 'fr', label: 'Français' }
-                      ].map(loc => {
-                        const isActive = loc.code === currentLocale;
-                        return (
-                          <button
-                            key={loc.code}
-                            disabled={!TRANSLATION_FEATURE_ACTIVE}
-                            onClick={() => {
-                              if (TRANSLATION_FEATURE_ACTIVE && !isActive) {
-                                triggerLanguageSwitch();
-                                router.replace(pathname, { locale: loc.code as any, scroll: false });
-                                setIsOpen(false);
-                              }
-                            }}
-                            className={`flex-1 text-[13px] font-bold py-2.5 rounded-full transition-all ${isActive
+                  {/* Language Switcher — hidden while TRANSLATION_FEATURE_ACTIVE is false */}
+                  {TRANSLATION_FEATURE_ACTIVE && (
+                    <div className="relative group flex flex-col items-center mb-6">
+                      <div
+                        className="w-full flex items-center justify-center p-1 bg-black/5 rounded-full border border-black/5 transition-[opacity,background-color,border-color] duration-200"
+                      >
+                        {[
+                          { code: 'en', label: 'English' },
+                          { code: 'fr', label: 'Français' }
+                        ].map(loc => {
+                          const isActive = loc.code === currentLocale;
+                          return (
+                            <button
+                              key={loc.code}
+                              onClick={() => {
+                                if (!isActive) {
+                                  triggerLanguageSwitch();
+                                  router.replace(pathname, { locale: loc.code as any, scroll: false });
+                                  setIsOpen(false);
+                                }
+                              }}
+                              className={`flex-1 text-[13px] font-bold py-2.5 rounded-full transition-[background-color,color,box-shadow,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] ${isActive
                                 ? 'bg-white text-deep-forest shadow-sm'
                                 : 'text-charcoal/60 hover:text-charcoal'
-                              } ${!TRANSLATION_FEATURE_ACTIVE ? 'cursor-not-allowed pointer-events-none' : ''}`}
-                          >
-                            {loc.label}
-                          </button>
-                        )
-                      })}
-                    </div>
-                    {!TRANSLATION_FEATURE_ACTIVE && (
-                      <div className="mt-2.5 px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-black/[0.08] shadow-sm text-[11.5px] text-deep-forest font-semibold flex items-center gap-1.5 select-none">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0" />
-                        <span className="tracking-tight font-medium">Under Linguistic Review</span>
+                                }`}
+                            >
+                              {loc.label}
+                            </button>
+                          )
+                        })}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
                   <Link
                     href="/contact"
                     onClick={() => { setIsOpen(false); }}
-                    className="group relative overflow-hidden w-full py-4 bg-deep-forest text-white rounded-2xl text-base font-semibold text-center shadow-lg flex items-center justify-center transition-transform active:scale-[0.98]"
+                    className="group relative overflow-hidden w-full py-4 bg-deep-forest text-white rounded-2xl text-base font-semibold text-center shadow-lg flex items-center justify-center transition-[transform,background-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-deep-forest/95 active:scale-[0.98]"
                   >
                     <RollingText>
                       {t('contact')}

@@ -72,9 +72,18 @@ function AccordionSlice({
 
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-expanded={isActive}
       onMouseEnter={onHover}
       onClick={onClick}
-      className={`relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isActive
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      className={`relative overflow-hidden rounded-2xl cursor-pointer transition-[flex-grow,height,transform,opacity] duration-[500ms] ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-green focus-visible:ring-offset-2 ${isActive
           ? 'h-[300px] lg:h-auto lg:flex-[6_0_0%]'
           : 'h-[72px] lg:h-auto lg:flex-[1_1_0%]'
         }`}
@@ -177,7 +186,7 @@ function AccordionSlice({
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
-              transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.4, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
               className="absolute inset-0 flex flex-col justify-center p-4 sm:p-5 lg:inset-auto lg:bottom-0 lg:left-0 lg:right-0 lg:block lg:p-7"
             >
               {/* Mobile: show SDG bookmark inline */}
@@ -199,10 +208,10 @@ function AccordionSlice({
                 </div>
                 <span className="text-white font-bold text-sm sm:text-base drop-shadow-md">{t(card.shortTitle)}</span>
               </div>
-              <p className="text-[13px] sm:text-[15px] text-white leading-relaxed font-semibold line-clamp-3 sm:line-clamp-2 mb-2 sm:mb-3 drop-shadow-md">
+              <p className="text-[13px] sm:text-[15px] text-white leading-relaxed font-semibold line-clamp-3 sm:line-clamp-2 mb-2 sm:mb-3 drop-shadow-md text-pretty">
                 {t(card.aspect)}
               </p>
-              <p className="text-[12px] sm:text-[14px] text-white/80 leading-relaxed font-medium line-clamp-3 sm:line-clamp-2 drop-shadow-md">
+              <p className="text-[12px] sm:text-[14px] text-white/80 leading-relaxed font-medium line-clamp-3 sm:line-clamp-2 drop-shadow-md text-pretty">
                 {t(card.examples)}
               </p>
             </motion.div>
@@ -283,7 +292,7 @@ export default function ImpactAlignment() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-serif font-bold text-deep-forest mb-4"
+            className="font-serif font-bold text-deep-forest mb-4 text-balance"
             style={{ fontSize: 'clamp(2.25rem, 2rem + 1vw, 3rem)' }}
           >
             {t("sdgs.header_title")}
@@ -292,7 +301,7 @@ export default function ImpactAlignment() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg lg:text-xl text-charcoal/85 font-normal max-w-2xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg lg:text-xl text-charcoal/85 font-normal max-w-2xl mx-auto leading-relaxed text-pretty"
           >
             {t("sdgs.header_desc")}
           </motion.p>

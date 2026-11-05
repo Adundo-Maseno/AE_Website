@@ -102,7 +102,7 @@ export default function InteractiveMap() {
 
 
         {/* Map Canvas - scales with flex-1 */}
-        <div className="flex-1 relative h-full w-full transition-all duration-500 ease-in-out">
+        <div className="flex-1 relative h-full w-full">
           {/* Floating Farm Africa Multi-Faceted Discovery Palette */}
           <div className="absolute top-4 left-4 z-30 max-w-[280px] sm:max-w-xs md:max-w-sm pointer-events-auto">
             <MapSearch
@@ -205,7 +205,7 @@ export default function InteractiveMap() {
                   </div>
                   <button
                     onClick={closeCountryOverlay}
-                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-white/50 transition-all duration-150 ease-out hover:bg-white/20 hover:text-white hover:scale-105 active:scale-95"
+                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-white/60 transition-[transform,background-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-white/20 hover:text-white hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                     aria-label="Close country dossier"
                   >
                     <X size={16} strokeWidth={2.5} />

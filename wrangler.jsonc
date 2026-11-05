@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "agri-experience-website",
+  "name": "ae-website",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-05-20",
   "compatibility_flags": [
@@ -11,4 +11,3 @@
     "binding": "ASSETS"
   }
 }
-

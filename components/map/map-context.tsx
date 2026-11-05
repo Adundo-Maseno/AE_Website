@@ -39,10 +39,17 @@ export const MapProvider: React.FC<MapProviderProps> = ({ children, initialOptio
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    if (!process.env.NEXT_PUBLIC_MAPBOX_TOKEN) {
+    const token =
+      process.env.NEXT_PUBLIC_MAPBOX_TOKEN ||
+      (typeof document !== 'undefined' ? document.body?.dataset?.mapboxToken : '') ||
+      '';
+
+    if (!token) {
       console.error('NEXT_PUBLIC_MAPBOX_TOKEN is missing!');
       return;
     }
+
+    mapboxgl.accessToken = token;
 
     const defaultOptions: Omit<mapboxgl.MapboxOptions, 'container'> = {
       style: 'mapbox://styles/mapbox/outdoors-v12',

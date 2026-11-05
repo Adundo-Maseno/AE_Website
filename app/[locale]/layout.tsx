@@ -148,13 +148,22 @@ export default async function RootLayout({
     description: t('root_desc'),
   };
 
+  const runtimeMapboxToken =
+    process.env['NEXT_PUBLIC_MAPBOX_TOKEN'] ||
+    process.env['MAPBOX_TOKEN'] ||
+    '';
+
   return (
     <html
       lang={locale}
       suppressHydrationWarning
       className={`${playfairDisplay.variable} ${dmSans.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-background`}
     >
-      <body suppressHydrationWarning className="font-dm-sans antialiased text-foreground flex flex-col min-h-screen">
+      <body
+        suppressHydrationWarning
+        data-mapbox-token={runtimeMapboxToken || undefined}
+        className="font-dm-sans antialiased text-foreground flex flex-col min-h-screen"
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

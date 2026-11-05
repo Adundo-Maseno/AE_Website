@@ -67,44 +67,62 @@ export default function ContactPage() {
   ]
 
   return (
-    <>      <main className="bg-white min-h-[100dvh]">
-      {/* Hero */}
-      <section className="relative w-full pt-16 lg:pt-28 pb-10 overflow-hidden border-b border-mist">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--mist)_0%,transparent_50%)] opacity-50"></div>
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 text-center space-y-4 lg:space-y-6 w-full">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="font-serif font-bold text-deep-forest tracking-tight pb-1"
-            style={{ fontSize: 'clamp(1.875rem, 1.4rem + 2.4vw, 4.5rem)' }}
-          >
-            {t('title')}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-base sm:text-lg lg:text-xl text-charcoal/85 max-w-2xl mx-auto font-normal leading-relaxed"
-          >
-            {t('subtitle')}
-          </motion.p>
-        </div>
-      </section>
+    <>
+      <main className="bg-[#F8F6F0] min-h-[100dvh]">
+        {/* Editorial Consultancy Masthead */}
+        <section className="relative w-full pt-14 lg:pt-24 pb-10 lg:pb-14 overflow-hidden bg-white border-b border-stone-200/80">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-green/[0.04] rounded-full blur-[110px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+          <div className="relative z-10 max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 lg:gap-16">
+              <div className="flex-1 space-y-4">
+                <span className="editorial-eyebrow">Executive Advisory Inquiries</span>
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.1]"
+                  style={{ fontSize: 'clamp(2.125rem, 1.5rem + 2.5vw, 4.25rem)' }}
+                >
+                  {t('title')}
+                </motion.h1>
+              </div>
+              <div className="flex-1 relative">
+                <div className="hidden lg:block absolute left-0 top-1 bottom-1 w-[1.5px] bg-[#1A4D2E]/20" />
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="text-base sm:text-lg lg:text-xl text-charcoal/85 font-normal leading-relaxed lg:pl-10"
+                >
+                  {t('subtitle')}
+                </motion.p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      {/* Contact Form & Info */}
-      <section className="w-full py-16 lg:py-16 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-            {/* Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl font-serif font-bold text-deep-forest mb-8">
-                {t('form_title')}
-              </h2>
+        {/* Contact Form & Headquarters Dossier */}
+        <section className="w-full py-12 sm:py-16 lg:py-20">
+          <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              {/* Form Card (7 columns on desktop) */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="lg:col-span-7 bg-white rounded-[24px] p-6 sm:p-8 lg:p-10 border border-stone-200/90 shadow-xs"
+              >
+                <div className="pb-5 mb-7 border-b border-stone-100 flex items-center justify-between">
+                  <div>
+                    <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1A4D2E]/70 block mb-1">
+                      Direct Consultation // 01
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1F15]">
+                      {t('form_title')}
+                    </h2>
+                  </div>
+                </div>
 
               {status === 'success' ? (
                 <motion.div
@@ -244,94 +262,98 @@ export default function ContactPage() {
               )}
             </motion.div>
 
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="space-y-10"
-            >
-              <div>
-                <h2 className="text-3xl font-serif font-bold text-deep-forest mb-6">
-                  {t('info_title')}
-                </h2>
-                <p className="text-charcoal/80 font-light leading-relaxed mb-8">
-                  {t('info_desc')}
-                </p>
-              </div>
+              {/* Contact Info Dossier (5 columns on desktop) */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="lg:col-span-5 space-y-6"
+              >
+                <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-stone-200/90 shadow-xs space-y-6">
+                  <div className="pb-4 border-b border-stone-100">
+                    <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1A4D2E]/70 block mb-1">
+                      Headquarters // 02
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1F15] mb-2">
+                      {t('info_title')}
+                    </h2>
+                    <p className="text-sm sm:text-[15px] text-charcoal/80 font-normal leading-relaxed">
+                      {t('info_desc')}
+                    </p>
+                  </div>
 
-              {/* Offices */}
-              <div className="space-y-6">
-                {offices.map((office, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className="p-5 sm:p-8 rounded-3xl bg-mist border border-mist hover:border-primary-green/20 transition-[background-color,border-color,box-shadow] duration-200"
-                  >
-                    <p className="text-sm font-bold text-primary-green tracking-widest uppercase mb-3">{office.region}</p>
-                    <h3 className="text-2xl font-serif font-bold text-deep-forest mb-6">{office.country}</h3>
+                  {/* Offices */}
+                  <div className="space-y-6">
+                    {offices.map((office, idx) => (
+                      <div
+                        key={idx}
+                        className="p-5 sm:p-6 rounded-2xl bg-[#F8F6F0] border border-stone-200/80"
+                      >
+                        <p className="font-mono text-[11px] font-bold text-primary-green tracking-[0.2em] uppercase mb-1.5">
+                          {office.region}
+                        </p>
+                        <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1F15] mb-5">
+                          {office.country}
+                        </h3>
 
-                    <div className="space-y-4">
-                      <div className="flex gap-4 items-start">
-                        <MapPin size={20} className="text-primary-green flex-shrink-0 mt-0.5" />
-                        <p className="text-charcoal/80 font-light leading-relaxed whitespace-pre-line">{office.address}</p>
-                      </div>
-                      <div className="flex gap-4 items-start">
-                        <Mail size={20} className="text-primary-green flex-shrink-0 mt-0.5" />
-                        <a
-                          href={`mailto:${office.email}`}
-                          className="text-charcoal/80 hover:text-primary-green font-light transition-colors"
-                        >
-                          {office.email}
-                        </a>
-                      </div>
-                      <div className="flex gap-4 items-start">
-                        <Phone size={20} className="text-primary-green flex-shrink-0 mt-0.5" />
-                        <a
-                          href={`tel:${office.phone}`}
-                          className="text-charcoal/80 hover:text-primary-green font-light transition-colors"
-                        >
-                          {office.phone}
-                        </a>
-                      </div>
-                      {office.mobile && (
-                        <div className="flex gap-4 items-start">
-                          <Phone size={20} className="text-primary-green flex-shrink-0 mt-0.5" />
-                          <a
-                            href={`tel:${office.mobile}`}
-                            className="text-charcoal/80 hover:text-primary-green font-light transition-colors"
-                          >
-                            {office.mobile}
-                          </a>
+                        <div className="space-y-3.5 text-sm sm:text-[15px]">
+                          <div className="flex gap-3.5 items-start">
+                            <MapPin size={18} className="text-primary-green flex-shrink-0 mt-1" />
+                            <p className="text-charcoal/85 font-normal leading-relaxed whitespace-pre-line">{office.address}</p>
+                          </div>
+                          <div className="flex gap-3.5 items-center">
+                            <Mail size={18} className="text-primary-green flex-shrink-0" />
+                            <a
+                              href={`mailto:${office.email}`}
+                              className="text-charcoal/85 hover:text-primary-green font-medium transition-colors"
+                            >
+                              {office.email}
+                            </a>
+                          </div>
+                          <div className="flex gap-3.5 items-center">
+                            <Phone size={18} className="text-primary-green flex-shrink-0" />
+                            <a
+                              href={`tel:${office.phone}`}
+                              className="text-charcoal/85 hover:text-primary-green font-medium tabular-nums transition-colors"
+                            >
+                              {office.phone}
+                            </a>
+                          </div>
+                          {office.mobile && (
+                            <div className="flex gap-3.5 items-center">
+                              <Phone size={18} className="text-primary-green flex-shrink-0" />
+                              <a
+                                href={`tel:${office.mobile}`}
+                                className="text-charcoal/85 hover:text-primary-green font-medium tabular-nums transition-colors"
+                              >
+                                {office.mobile}
+                              </a>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
+                      </div>
+                    ))}
 
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="w-full h-64 rounded-3xl overflow-hidden shadow-lg border border-mist mt-8"
-                >
-                  <iframe
-                    src="https://maps.google.com/maps?q=Watermark%20Business%20Park,%20Spring%20Court,%20Karen,%20Nairobi&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen={false}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
-                </motion.div>
-              </div>
-            </motion.div>
+                    <div className="w-full h-60 rounded-2xl overflow-hidden border border-stone-200/80">
+                      <iframe
+                        src="https://maps.google.com/maps?q=Watermark%20Business%20Park,%20Spring%20Court,%20Karen,%20Nairobi&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen={false}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Agri Experience Nairobi Headquarters Map"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>    </>
+        </section>
+      </main>
+    </>
   )
 }

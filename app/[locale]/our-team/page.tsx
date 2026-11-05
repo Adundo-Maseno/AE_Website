@@ -103,27 +103,33 @@ export default function OurTeamPage() {
   ]
 
   return (
-    <main className="bg-[#FAFAFA] min-h-[100dvh]">
+    <main className="bg-[#F8F6F0] min-h-[100dvh]">
       
-      {/* Editorial Hero */}
-      <section className="relative w-full pt-16 lg:pt-[min(5.5rem,8vh)] pb-8 lg:pb-[min(2.75rem,4vh)] overflow-hidden border-b border-mist snap-start scroll-mt-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--mist)_0%,transparent_50%)] opacity-50"></div>
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      {/* Editorial Consultancy Masthead */}
+      <section className="relative w-full pt-14 lg:pt-24 pb-10 lg:pb-14 overflow-hidden bg-white border-b border-stone-200/80 snap-start scroll-mt-20">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-green/[0.04] rounded-full blur-[110px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="relative z-10 max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-4 lg:space-y-[min(1.25rem,2vh)] text-center"
+            transition={{ duration: 0.7 }}
+            className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 lg:gap-16"
           >
-            <h1
-              className="font-serif text-deep-forest font-bold tracking-tight pb-2"
-              style={{ fontSize: 'clamp(1.875rem, 1.4rem + 2.4vw, 4.5rem)' }}
-            >
-              {t('title')}
-            </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-charcoal/90 max-w-3xl mx-auto leading-relaxed font-normal">
-              {t('subtitle')}
-            </p>
+            <div className="flex-1 space-y-4">
+              <span className="editorial-eyebrow">Senior Leadership &amp; Technical Specialists</span>
+              <h1
+                className="font-serif text-[#0F1F15] font-bold tracking-tight leading-[1.1]"
+                style={{ fontSize: 'clamp(2.125rem, 1.5rem + 2.5vw, 4.25rem)' }}
+              >
+                {t('title')}
+              </h1>
+            </div>
+            <div className="flex-1 relative">
+              <div className="hidden lg:block absolute left-0 top-1 bottom-1 w-[1.5px] bg-[#1A4D2E]/20" />
+              <p className="text-base sm:text-lg lg:text-xl text-charcoal/85 leading-relaxed font-normal lg:pl-10">
+                {t('subtitle')}
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>

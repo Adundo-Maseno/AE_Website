@@ -104,19 +104,11 @@ export default function OurTeamPage() {
 
   return (
     <main className="bg-[#F8F6F0] min-h-[100dvh]">
-      
-      {/* Editorial Consultancy Masthead */}
-      <section className="relative w-full pt-14 lg:pt-24 pb-10 lg:pb-14 overflow-hidden bg-white border-b border-stone-200/80 snap-start scroll-mt-20">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-green/[0.04] rounded-full blur-[110px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      {/* Masthead */}
+      <section className="relative w-full pt-14 lg:pt-24 pb-10 lg:pb-14 bg-white border-b border-stone-200/80 snap-start scroll-mt-20">
         <div className="relative z-10 max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 lg:gap-16"
-          >
-            <div className="flex-1 space-y-4">
-              <span className="editorial-eyebrow">Senior Leadership &amp; Technical Specialists</span>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 lg:gap-16">
+            <div className="flex-1">
               <h1
                 className="font-serif text-[#0F1F15] font-bold tracking-tight leading-[1.1]"
                 style={{ fontSize: 'clamp(2.125rem, 1.5rem + 2.5vw, 4.25rem)' }}
@@ -125,12 +117,12 @@ export default function OurTeamPage() {
               </h1>
             </div>
             <div className="flex-1 relative">
-              <div className="hidden lg:block absolute left-0 top-1 bottom-1 w-[1.5px] bg-[#1A4D2E]/20" />
-              <p className="text-base sm:text-lg lg:text-xl text-charcoal/85 leading-relaxed font-normal lg:pl-10">
+              <div className="hidden lg:block absolute left-0 top-1 bottom-1 w-px bg-stone-200" />
+              <p className="text-base sm:text-lg lg:text-xl text-[#2A3830] leading-[1.6] font-normal lg:pl-10">
                 {t('subtitle')}
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -138,12 +130,8 @@ export default function OurTeamPage() {
       <section className="w-full max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 pt-8 lg:pt-[min(2.75rem,4vh)] pb-16 lg:pb-16 snap-start scroll-mt-20">
         <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-12 lg:gap-x-3 lg:gap-y-[min(4rem,6vh)]">
           {fullTeam.map((member, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: (idx % 4) * 0.08 }}
               className="group cursor-pointer flex flex-col"
               onClick={() => setSelectedMember(member)}
             >
@@ -183,14 +171,14 @@ export default function OurTeamPage() {
 
               {/* Text Information */}
               <div className="text-left px-2">
-                <h3 className="text-xl sm:text-2xl font-serif font-bold text-deep-forest group-hover:text-primary-green transition-colors duration-300">
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1F15] group-hover:text-[#1A4D2E] transition-colors duration-200">
                   {member.name}
                 </h3>
-                <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.15em] text-charcoal/70 mt-1.5">
+                <p className="text-sm font-medium text-[#46584D] mt-1">
                   {member.role}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>

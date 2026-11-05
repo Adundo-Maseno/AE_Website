@@ -144,31 +144,30 @@
      handles Safari's elastic scroll which ignores the property. */
   html {
     overscroll-behavior-y: none;
-    background-color: #000;
+    background-color: #0F1F15;
+    caret-color: #1A4D2E;
+    scrollbar-color: rgba(26, 77, 46, 0.35) #F8F6F0;
+    scrollbar-width: thin;
+  }
+
+  ::selection {
+    background-color: rgba(26, 77, 46, 0.16);
+    color: #0F1F15;
   }
 
   * {
     @apply border-border outline-ring/50;
   }
 
-  body {
-    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
-    position: relative;
-    overscroll-behavior-y: none;
+  :focus-visible {
+    outline: 2px solid #1A4D2E;
+    outline-offset: 2px;
   }
 
-  /* Noise Overlay for Premium Texture */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.03;
-    z-index: 9999;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  body {
+    @apply bg-background text-foreground antialiased;
+    position: relative;
+    overscroll-behavior-y: none;
   }
 
   /* Professional Typography - Fluid Scaling */
@@ -178,23 +177,26 @@
   h4,
   h5,
   h6 {
-    @apply font-serif tracking-tight text-[#1A4D2E];
-    line-height: 1.2;
+    @apply font-serif tracking-tight text-[#0F1F15];
+    line-height: 1.15;
     text-wrap: balance;
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
-
   p {
-    @apply font-sans text-gray-600 leading-relaxed max-w-prose;
-    font-size: clamp(1rem, 1vw + 0.5rem, 1.125rem);
-    /* Prevents small text breaking */
+    @apply font-sans text-[#2A3830] leading-[1.65] max-w-[68ch];
+    font-size: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
     text-wrap: pretty;
     overflow-wrap: anywhere;
-    /* Fallback for unbreakable strings */
   }
 
-  a,
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
   span {
     overflow-wrap: anywhere;
     word-break: break-word;
@@ -226,29 +228,20 @@
   }
 
   .bento-card {
-    @apply relative overflow-hidden rounded-3xl border border-primary/5 bg-white p-6 sm:p-8 duration-200 hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5;
-    transition-property: transform, background-color, border-color, box-shadow;
+    @apply relative overflow-hidden rounded-3xl border border-primary/5 bg-white p-6 sm:p-8 duration-200 hover:border-primary/20;
+    transition-property: border-color, background-color;
     transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  .editorial-eyebrow {
-    @apply inline-flex items-center gap-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] text-[#1A4D2E];
-  }
-
-  .editorial-eyebrow::before {
-    content: "";
-    @apply inline-block w-6 h-[1.5px] bg-[#3ab44a] shrink-0;
-  }
-
   .consultancy-card {
-    @apply relative overflow-hidden rounded-2xl sm:rounded-[24px] bg-white border border-stone-200/80 duration-250 hover:-translate-y-0.5 hover:border-[#1A4D2E]/30;
-    box-shadow: 0 1px 3px rgba(15, 31, 21, 0.03), 0 10px 30px -10px rgba(15, 31, 21, 0.05);
-    transition-property: transform, border-color, box-shadow, background-color;
+    @apply relative overflow-hidden rounded-2xl bg-white border border-stone-200/90 duration-200 hover:border-[#1A4D2E]/40;
+    box-shadow: 0 2px 6px rgba(15, 31, 21, 0.03), 0 12px 24px -8px rgba(15, 31, 21, 0.04);
+    transition-property: border-color, box-shadow, background-color;
     transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .consultancy-card:hover {
-    box-shadow: 0 4px 12px rgba(15, 31, 21, 0.05), 0 20px 40px -15px rgba(26, 77, 46, 0.10);
+    box-shadow: 0 4px 12px rgba(15, 31, 21, 0.05), 0 18px 36px -12px rgba(26, 77, 46, 0.08);
   }
 }
 

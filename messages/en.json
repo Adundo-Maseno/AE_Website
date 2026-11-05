@@ -1,0 +1,1313 @@
+{
+  "Header": {
+    "home": "Home",
+    "about": "About",
+    "our_work": "Our Work",
+    "our_team": "Our Team",
+    "our_impact": "Our Impact",
+    "resources": "Resources",
+    "contact": "Contact Us",
+    "aria_open_menu": "Open navigation menu",
+    "aria_close_menu": "Close navigation menu"
+  },
+  "ClientLogos": {
+    "development_partners": "Development Partners",
+    "government": "Government",
+    "regulators": "Regulators",
+    "breeding_institutions": "Breeding Institutions",
+    "private_sector": "Private Sector"
+  },
+  "InteractiveMap": {
+    "activities": "Activities",
+    "outcomes": "Outcomes",
+    "work_done": "Work Done",
+    "deep_dive": "Deep Dive",
+    "full_report": "Full {country} report"
+  },
+  "Home": {
+    "hero_title_1": "Driving Resilient",
+    "hero_title_2": "Agricultural & Seed Systems",
+    "hero_title_3": "Across Africa",
+    "hero_desc": "Through innovation, expert advisory, and digital transformation.",
+    "explore_impact": "Explore Our Impact",
+    "stat_1_val": "20+",
+    "stat_1_lbl": "African Countries",
+    "stat_2_val": "20+",
+    "stat_2_lbl": "Partners",
+    "stat_3_val": "100+",
+    "stat_3_lbl": "Institutions Supported",
+    "what_we_believe": "What We Believe",
+    "belief_1_title": "Agriculture is Foundational",
+    "belief_1_text": "We believe that agriculture is one of the most important sectors in the world, with major impacts on health, nutrition, the environment, security, economies, and social development.",
+    "belief_2_title": "Unlocking Untapped Potential",
+    "belief_2_text": "We believe that sub-Saharan Africa has vast untapped agricultural potential, and that African farmers and entrepreneurs should be given the opportunity and tools to tap this potential.",
+    "belief_3_title": "Practical Solutions",
+    "belief_3_text": "We believe that practical solutions to agricultural challenges, based on deep experience and not just theory, can deliver significant results in sub-Saharan Africa.",
+    "belief_4_title": "Empowering Women & Youth",
+    "belief_4_text": "We believe that Africa’s women and youth farmers should play significant roles in developing agriculture in their countries.",
+    "trusted_leaders": "Our Partners",
+    "trusted_leaders_desc": "Our impact is measured through the success of our partners and the resilience of the communities we serve.",
+    "cta_title": "Ready to Grow Together?",
+    "cta_desc": "Join our network of transformative agricultural projects across Africa. Let's build sustainable systems that last for generations.",
+    "cta_btn_1": "Work With Us",
+    "cta_btn_2": "View Case Studies"
+  },
+  "About": {
+    "title": "About Us",
+    "subtitle": "Transforming agricultural systems and empowering farmers across sub-Saharan Africa.",
+    "vision_title": "Our Vision",
+    "vision_desc": "Our vision is a <strong>food secure</strong> and <strong>environmentally healthy</strong> Africa.",
+    "mission_title": "Our Mission",
+    "mission_desc": "Our mission is to help create great crop seed systems that enable African farmers to achieve their production potential and advance environmental sustainability.",
+    "goal_title": "Our Goal",
+    "goal_desc": "To accomplish this mission, our goal is to become the most respected advisor and service provider in the crop seed sector to private and public stakeholders and major development partners, and contribute towards achieving the following Sustainable Development Goals: <br/><br/>",
+    "expertise_title": "Our Expertise",
+    "expertise_desc": "We build resilient seed systems by supporting policy interventions, strengthening quality seed production, distribution, quality assurance, and improving farmer access to improved seed.",
+    "view_services": "View All Services",
+    "expertise_cards": [
+      {
+        "title": "Seed Systems and Market Development",
+        "desc": "Tracking seed market performance and developing actionable recommendations from longitudinal seed data to support evidence-based decision-making and guide investment and policy, while analyzing value chains and business ecosystems to improve competitiveness, investment, and market access for producers and agribusinesses."
+      },
+      {
+        "title": "Policy and Regulatory Advisory",
+        "desc": "Providing technical support for policy development, regulatory reforms, institutional governance, and implementation of seed industry standards and guidelines."
+      },
+      {
+        "title": "Capacity Building",
+        "desc": "Strengthening the skills and institutional capacity of governments, research institutions, seed companies, extension services, agrodealers and farmer organizations through training and technical assistance."
+      },
+      {
+        "title": "Strategic Advisory, Monitoring, Evaluation and Learning (MEL)",
+        "desc": "Conducting thematic studies, assessments, feasibility analyses, and strategic planning to support investment decisions and agricultural transformation programs. Designing comprehensive MEL frameworks and learning processes to measure project performance, outcomes, and impact."
+      },
+      {
+        "title": "Digital Platforms",
+        "desc": "Designing, developing, and implementing web and mobile platforms, databases, dashboards, and information systems that improve data management, service delivery, collaboration, and decision-making across the seed sector."
+      }
+    ],
+    "values_title": "Our Core Values",
+    "values_subtitle": "The principles that guide our work",
+    "cta_title": "Partner With Us",
+    "cta_desc": "Let's collaborate to transform agricultural systems and create sustainable impact for generations to come.",
+    "get_in_touch": "Get In Touch"
+  },
+  "WhyAgriExperience": {
+    "subtitle": "Our Advantage",
+    "title": "Why Agri Experience",
+    "card_1": "We carefully develop recommendations that are grounded in behavioural patterns and evidence.",
+    "card_2": "We bring deep, based-in-Africa, experience and expertise to our assignments.",
+    "card_3": "We understand that farmer empowerment is a major force for positive change.",
+    "card_4": "We embed our work and recommendations with permanent stakeholders through a collaborative, public/private approach.",
+    "card_5": "We have first-hand knowledge of systemic change, and what is required to achieve it."
+  },
+  "Footer": {
+    "newsletter_title": "The Field Brief",
+    "newsletter_desc": "Sign up for our newsletter to get actionable insights on African seed systems and value chains, right to your inbox.",
+    "newsletter_desc_mobile": "Actionable insights on African seed systems, right to your inbox.",
+    "subscribed": "You're subscribed — thank you.",
+    "credit": "Designed & Developed by Kenan William",
+    "email_placeholder": "Enter your email",
+    "our_work": "Our Work",
+    "digital_platforms": "Digital Platforms",
+    "technical_studies": "Technical Studies",
+    "project_implementation": "Project Implementation",
+    "client_advisory": "Client Advisory",
+    "capacity_building": "Capacity Building",
+    "stakeholder_convenings": "Stakeholder Convenings",
+    "seed_systems": "Seed Systems",
+    "digital_tools": "Digital Tools",
+    "field_projects": "Field Projects",
+    "case_studies": "Case Studies",
+    "company": "Company",
+    "about_us": "About Us",
+    "our_impact": "Our Impact",
+    "our_results": "Our Results",
+    "contact": "Contact",
+    "resources": "Resources",
+    "insights": "Insights",
+    "newsletter": "Newsletter",
+    "privacy": "Privacy Policy",
+    "privacy_mobile": "Privacy",
+    "terms": "Terms of Service",
+    "work_with_us": "Work With Us",
+    "request_concept": "Request a Concept Note",
+    "view_projects": "View Our Projects",
+    "get_in_touch": "Get in Touch",
+    "address": "Watermark Business Park\nSpring Court, Karen\nP.O. Box 1720 - 00606, Nairobi",
+    "copyright": "© {year} Agri Experience Ltd.",
+    "designed_by": "Designed & Developed by Kenan William",
+    "aria_linkedin": "Follow Agri Experience on LinkedIn",
+    "linkedin": "LinkedIn",
+    "aria_subscribe": "Subscribe to newsletter"
+  },
+  "OurTeam": {
+    "title": "Our Team",
+    "subtitle": "Dedicated experts. Shared vision. Cultivating sustainable seed systems across Africa.",
+    "expertise_label": "Expertise / Focus:",
+    "aline_name": "Aline O'Connor",
+    "aline_role": "Founding Director",
+    "aline_bio": "Aline is an experienced seed company practitioner, teacher, writer, manager, strategist, and entrepreneur, who has worked on seed systems in Africa since 2007. Aline has worked in the crop seed industry in the US and Africa for close to 30 years, including nine years as the CEO of a large US crop seed company. As the Founding Director of Agri Experience, Aline is highly committed to building and supporting local teams to catalyze growth and opportunity in Africa, and remains available as an advisor to the company.",
+    "aline_projects": "Seed Systems, Crop Seed Industry, Strategic Advising, Entrepreneurship",
+    "mulemia_name": "Mulemia Maina",
+    "mulemia_role": "Managing Director",
+    "mulemia_bio": "Mulemia Maina who leads the team, is a distinguished leader in Africa’s seed sector with over 25 years of expertise in the seed and agricultural sector, spanning public-private partnerships, enterprise development, strategic programming, and development partner relations. She has managed over 350 projects across 22 countries, collaborating with governments, regional bodies, and over 100 seed companies to strengthen policy, capacity, and last-mile delivery. Passionate about empowering farmers, Mulemia champions improved technologies and transformative seed system initiatives to enhance livelihoods across sub-Saharan Africa. She is fluent in English, French, and Kiswahili.",
+    "mulemia_projects": "Seed Systems, AGRA Grants, Rockefeller Foundation",
+    "jayne_name": "Jayne Ngugi",
+    "jayne_role": "Director, Finance & Administration",
+    "jayne_bio": "Jayne leads the finance and administration portfolio, overseeing the firm's financial management, governance, and administrative operations. With over 30 years of experience in finance and administration, she manages donor and program funds and brings expertise in grant management, financial compliance, internal controls, donor reporting, and financial governance. She provides strategic financial leadership that ensures sound stewardship, operational excellence, and the highest standards of integrity and accountability across the organization.",
+    "jayne_projects": "Finance, Administration",
+    "ronald_name": "Ronald Misigo",
+    "ronald_role": "Technical Lead",
+    "ronald_bio": "Ronald serves as technical lead and is a digital agriculture specialist with over 13 years of experience in seed systems and digital transformation. He specializes in designing innovative digital platforms, databases, dashboards, as well as information systems that strengthen seed systems while advancing agricultural value chains across Africa. His expertise spans technical studies, client advisory, policy and regulatory reform, together with seed systems analytics enabling governments, development partners and private sector organizations to make evidence-based investment and strategic decisions. Ronald has developed impactful national and regional seed-focused tools including SMS based digital feedback solutions that empower farmers, agrodealers, seed companies, as well as regulators in decision making.",
+    "ronald_projects": "System Architecture, Technical Design, Integration",
+    "denis_name": "Denis Langat",
+    "denis_role": "M+E Specialist",
+    "denis_bio": "Denis is a young and dynamic project monitoring specialist who supports client related activities with a focus on general research, documentation, record keeping, project monitoring, data collection and analysis.",
+    "denis_projects": "PSTA-5 Indicators, Data Analysis, Dashboard Development",
+    "moses_name": "Moses Adundo",
+    "moses_role": "Data Analyst",
+    "moses_bio": "Moses serves as a data analyst, supporting data-driven decision-making through advanced analytics, data management, and visualization. With over 7 years of experience in data analysis and digital information systems, he specializes in data collection, quality assurance, statistical analysis, dashboard development, and business intelligence. Moses transforms complex datasets into actionable insights that enable governments, development partners, and private sector organizations to make evidence-based decisions and improve program performance.",
+    "moses_projects": "Quality Assurance, Testing Processes, User Acceptance Testing",
+    "claire_name": "Claire Wanjiru",
+    "claire_role": "Executive Assistant",
+    "claire_bio": "Claire provides high-level administrative and logistics support to ensure seamless company operations. She supports technical operations including asset management, budget coordination, process optimization and keeps operations well aligned by managing workflows and complex schedules. Her dedication to operational excellence and organizational effectiveness enables the team to focus on strategic priorities and ensures that company’s objectives are met with precision, supporting the broader mission and driving sustainable success.",
+    "claire_projects": "Executive Support, Operations",
+    "nicholas_name": "Nicholas Kilonzo",
+    "nicholas_role": "Office Assistant",
+    "nicholas_bio": "An integral part of the team, providing essential logistical and office support.",
+    "nicholas_projects": "Logistics, Office Support"
+  },
+  "OurImpact": {
+    "journey_title": "Our<br/>Journey.",
+    "journey_desc": "Over 30 years of seed sector experience, accelerating growth and sustainable seed systems across Africa.",
+    "milestones": "Milestones",
+    "m1_year": "1991",
+    "m1_desc": "Seed sector experience begins",
+    "m2_year": "2007",
+    "m2_desc": "Work across Africa accelerates",
+    "m3_year": "2012",
+    "m3_desc": "Agri Experience is founded",
+    "achievements_title": "Our Key Achievements",
+    "achievements_desc": "Our consulting work has led to major advancements in seed systems and farmer empowerment across the continent. Here is a look at some of our transformative programs.",
+    "kenya_title": "Revolutionizing Kenya's Seed Sector",
+    "kenya_desc": "We partnered with MoA, KEPHIS, seed companies, and STAK to make significant improvements in the Kenyan seed sector.",
+    "k1_title": "Policy & Regulatory Reforms",
+    "k1_desc": "Enabled authorization of private seed inspection, gazetting over 40 inspectors and 17 analysts. Piloted \"standard seed\" to increase non-maize and non-hybrid crops.",
+    "k2_title": "Authentication & Traceability",
+    "k2_desc": "Introduced scratch-off labels, reducing counterfeits by over 40% and label costs by 85%, empowering farmers to confirm seed quality.",
+    "k3_title": "Institutional Strengthening",
+    "k3_desc": "Revitalized STAK, growing membership by over 30%. Created County Agrodealer Associations in 10 counties and trained agrodealers through Mazao forums.",
+    "k4_title": "Regional Influence",
+    "k4_desc": "Kenya's innovations spread! Scratch labels were adopted in Nigeria, Tanzania, and Uganda, and Tanzania benchmarked Kenya's private inspection model.",
+    "tz_title": "Strengthening Tanzania's Seed Systems",
+    "tz_desc": "A six-year initiative aimed at modernizing three key public institutions to enhance the delivery of quality seed to farmers and foster a private sector-oriented industry.",
+    "t1": "<strong>Strengthened Institutional Capacity:</strong> Established the National Planning and Coordination Unit for effective oversight.",
+    "t2": "<strong>Streamlined Certification:</strong> Reduced delays and increased efficiency with a fully digitized certification system.",
+    "t3": "<strong>Enhanced Laboratory Services:</strong> Renovated two labs, cutting sample wait times by over 50% and expanding seed variety availability.",
+    "t4": "<strong>Decentralized Quality Assurance:</strong> Recognized authorized private seed inspectors and laboratory analysts.",
+    "t5": "<strong>Improved Information Flow:</strong> Deployed a digitized platform for accurate seed demand forecasting.",
+    "cta_title": "Be Part of the Impact",
+    "cta_desc": "Join us in transforming agricultural systems and improving livelihoods across Africa.",
+    "work_with_us": "Work With Us",
+    "partner_with_us": "Partner With Us",
+    "sdgs": {
+      "1": {
+        "shortTitle": "No Poverty",
+        "title": "SDG 1: No Poverty",
+        "aspect": "Improved farmer productivity, seed enterprise growth, and rural income opportunities.",
+        "examples": "Training seed companies, agrodealers, outgrowers and CBOs to improve seed production, marketing, business management and access to quality seed."
+      },
+      "2": {
+        "shortTitle": "Zero Hunger",
+        "title": "SDG 2: Zero Hunger",
+        "aspect": "Strengthened food security through wider access to quality seed and improved crop varieties.",
+        "examples": "MbeguChoice, Seed Sector Platform Kenya, standard certified seed class, farmer demos, and training on variety selection and certified seed use."
+      },
+      "3": {
+        "shortTitle": "Good Health",
+        "title": "SDG 3: Good Health and Well-being",
+        "aspect": "Indirect contribution to household nutrition and well-being through improved agricultural productivity and food availability.",
+        "examples": "Support for improved varieties, farmer awareness, and production of diverse crops under standard certified seed arrangements."
+      },
+      "5": {
+        "shortTitle": "Gender Equality",
+        "title": "SDG 5: Gender Equality",
+        "aspect": "Supported more inclusive access to training, seed information, and market opportunities.",
+        "examples": "Digital tools and county-level agrodealer networks reduce information barriers for women farmers, youth and small enterprises."
+      },
+      "8": {
+        "shortTitle": "Economic Growth",
+        "title": "SDG 8: Decent Work and Economic Growth",
+        "aspect": "Strengthened seed-sector businesses, agrodealer enterprises, associations and local employment opportunities.",
+        "examples": "Business development services for seed companies, training of over 3,000 agrodealers, and formation of 16 county agrodealer associations."
+      },
+      "13": {
+        "shortTitle": "Climate Action",
+        "title": "SDG 13: Climate Action",
+        "aspect": "Improved resilience through climate-smart agriculture, variety choice, and locally adapted seed systems.",
+        "examples": "Climate-smart agrodealer-led demos, variety positioning, farmer field days, and promotion of locally suitable improved varieties."
+      },
+      "17": {
+        "shortTitle": "Partnerships",
+        "title": "SDG 17: Partnerships for the Goals",
+        "aspect": "Built partnerships across government, private sector, associations, development partners, research bodies and farmers.",
+        "examples": "Collaboration with MoA, KEPHIS, STAK, KALRO, seed companies, agrodealers, county officers, AGRA, CRS, Gatsby Africa and other partners."
+      },
+      "header_tag": "Strategic Alignment",
+      "header_title": "Our Impact",
+      "header_desc": "Our work directly aligns with the UN Sustainable Development Goals. Hover over a goal to explore our contribution."
+    }
+  },
+  "OurWork": {
+    "title": "Solutions that cultivate impact.",
+    "subtitle": "At Agri Experience, we combine knowledge, technology, and field expertise to deliver end-to-end solutions for a smarter, more sustainable agricultural future.",
+    "practice": "Our Practice",
+    "c1_title": "Digital Platforms",
+    "c1_desc": "Smart, scalable digital solutions that connect data, people, and decisions across the agricultural value chain.",
+    "c1_mobile_desc": "Connecting data and decisions.",
+    "c2_title": "Technical Studies",
+    "c2_desc": "In-depth analysis and feasibility studies that turn complex challenges into clear, actionable insights.",
+    "c2_mobile_desc": "Actionable insights and analysis.",
+    "c3_title": "Project Implementation",
+    "c3_desc": "From strategy to execution, we manage and implement projects that deliver measurable results on the ground.",
+    "c3_mobile_desc": "Delivering measurable field results.",
+    "c4_title": "Client Advisory and Analytical Work",
+    "c4_desc": "Strategic guidance and in-depth analysis to navigate complex agricultural value chains and optimize seed systems.",
+    "c4_mobile_desc": "Strategic guidance for value chains.",
+    "c5_title": "Capacity-building",
+    "c5_desc": "Empowering stakeholders through targeted training, skill development, and knowledge transfer to ensure sustainable growth.",
+    "c5_mobile_desc": "Empowering growth through training.",
+    "c6_title": "Stakeholder Convenings and Learning Trips",
+    "c6_desc": "Facilitating impactful gatherings and immersive learning experiences to foster collaboration and share best practices.",
+    "c6_mobile_desc": "Fostering collaboration and learning.",
+    "learn_more": "Learn more",
+    "s1_label": "Experts & Partners",
+    "s2_label": "Projects Delivered",
+    "s3_label": "Countries Impacted",
+    "s4_label": "Commitment to Impact"
+  },
+  "OurResults": {
+    "title": "Our Results",
+    "subtitle": "The breadth and impact of our work are highlighted in selected reports and examples of assignments.",
+    "downloads_title": "Downloads",
+    "downloads_desc": "Below are downloadable versions of client reports and case studies that are in the public domain. Additional significant client work has been completed but is not available to the public per the terms of client engagement.",
+    "download_pdf": "Download PDF",
+    "client_link": "Client Link",
+    "examples_title": "Examples of Assignments",
+    "challenge_label": "Client challenge:",
+    "solution_label": "Agri Experience solution:",
+    "benefit_label": "Client benefit:",
+    "visit_resource": "Visit resource",
+    "a1_title": "Bringing accurate and transparent information to seed sector stakeholders",
+    "a1_challenge": "Kenya Markets Trust identified a lack of accessible, decision-ready information for the crop seed sector, limiting investment and growth.",
+    "a1_solution": "Agri Experience surveyed stakeholders, partnered with KEPHIS, KALRO, and STAK, and built a comprehensive, searchable platform with mapping and filters.",
+    "a1_benefit": "The platform has 1,200+ repeat users and supports seed companies, analysts, and regulators; STAK assumed responsibility for ongoing stewardship.",
+    "a2_title": "Educating crop breeders about crop seed commercialisation",
+    "a2_challenge": "WACCI needed its PhD breeding program to prepare scientists to bring improved varieties to farmers at scale.",
+    "a2_solution": "Agri Experience delivered Seed Business Management training on production, quality, marketing, profitability, and the role of breeders.",
+    "a2_benefit": "Graduates are better equipped to work with commercial partners and deliver real-world farmer impact at scale.",
+    "a3_title": "Introducing new drought tolerant maize varieties into the market",
+    "a3_challenge": "A client needed to support private sector licensees to rapidly produce, market, and distribute new drought tolerant maize varieties.",
+    "a3_solution": "Agri Experience surveyed seed companies, clarified information needs, and trained senior staff to think like private sector seed companies.",
+    "a3_benefit": "The first-generation rollout was rapid and successful, enabling strong momentum for subsequent variety releases.",
+    "cta_title": "Work With Us",
+    "cta_desc": "Contact our team to discuss your seed sector priorities and potential collaborations.",
+    "get_in_touch": "Get In Touch"
+  },
+  "Contact": {
+    "title": "Get In Touch",
+    "subtitle": "Agri Experience is an African consulting firm focused on developing strong seed systems in sub-Saharan Africa. We look forward to hearing from you.",
+    "form_title": "Send us a Message",
+    "name": "Full Name",
+    "email": "Email",
+    "org": "Organization",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "sent": "✓ Message Sent!",
+    "success_title": "Thank You for Reaching Out",
+    "success_desc": "Your message has been delivered to info@agri-experience.com. An automated acknowledgment has also been sent to your email address.",
+    "error_alert": "Unable to send your message at this moment. Please try again, or email us directly at info@agri-experience.com.",
+    "send_another": "Send Another Message",
+    "info_title": "Contact Information",
+    "info_desc": "Contact Agri Experience to learn more about our firm and how we can support seed sector development across sub-Saharan Africa.",
+    "region": "Head Office",
+    "country": "Kenya",
+    "address": "Watermark Business Park\nSpring Court, Karen\nP.O. Box 1720 - 00606, Nairobi, Kenya"
+  },
+  "Insights": {
+    "title": "Insights",
+    "subtitle": "Selected examples of how our work delivers practical, scalable seed sector impact.",
+    "i1_title": "Bringing accurate and transparent information to seed sector stakeholders",
+    "i1_summary": "Agri Experience partnered with KEPHIS, KALRO, and STAK to build a searchable seed sector information platform for decision-makers.",
+    "i2_title": "Educating crop breeders about crop seed commercialisation",
+    "i2_summary": "Seed Business Management training for WACCI PhD students strengthened the link between research and large-scale farmer impact.",
+    "i3_title": "Introducing new drought tolerant maize varieties into the market",
+    "i3_summary": "Private sector surveys and rollout support enabled rapid, successful introductions of drought tolerant maize varieties.",
+    "visit_resource": "Visit resource",
+    "cta_title": "Explore Our Results",
+    "cta_desc": "Browse reports and case studies from public-domain assignments.",
+    "view_results": "View Results"
+  },
+  "Gallery": {
+    "title": "Visual Gallery",
+    "subtitle": "Experience our interactive 3D gallery."
+  },
+  "Resources": {
+    "title": "Downloads",
+    "subtitle": "These resources are available to the public. Additional client work is not published per the terms of engagement.",
+    "cta_title": "Looking for more?",
+    "cta_desc": "Contact our team to discuss additional reports, services, or collaboration opportunities.",
+    "contact_us": "Contact Us",
+    "categories": [
+      "All",
+      "Reports & Analysis",
+      "Case Studies",
+      "Scoping Studies",
+      "Toolkits & Guides"
+    ],
+    "download_pdf": "Download PDF",
+    "client_link": "Client Link",
+    "downloads": [
+      {
+        "title": "Empowering Tanzania's Farmers to Report Low Quality or Fake Seed to the Regulator",
+        "client": "Catholic Relief Services, USAID Feed the Future Global Supporting Seed Systems for Development Activity",
+        "citation": "Agri Experience Ltd. (2023). Ripoti Mbegu Isiyo Bora (RIMI) - Empowering Tanzania's Farmers to Report Low Quality or Fake Seed to the Regulator.",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Empowering Kenyan Farmers to Report Low Quality or Fake Seed to the Regulator",
+        "client": "Agri Experience Social Corporate Responsibilities supporting KEPHIS",
+        "citation": "Agri Experience Ltd. (2021). Case Study: Mulika Mbegu Mbovu (M3) - Empowering Kenyan Farmers to Report Low Quality or Fake Seed to the Regulator.",
+        "category": "Case Studies"
+      },
+      {
+        "title": "Assessment to Support the Promotion of Regional Seed Trade in East Africa",
+        "client": "USAID/FTF: Building Capacity for African Agricultural Transformation (DAI), October 2018",
+        "citation": "Agri Experience Ltd. (2018). Assessment to Support the Promotion of Regional Seed Trade in East Africa. Nairobi: USAID/FTF: Building Capacity for African Agricultural Transformation (DAI).",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Scoping Study: Pasture and Fodder Planting Materials in Kenya",
+        "client": "USAID/Kenya Crop and Dairy Market Systems Activity (RTI), July 2018",
+        "citation": "Agri Experience Ltd. (2018). Scoping Study: Pasture and Fodder Planting Materials in Kenya. Nairobi: Kenya Crops and Dairy Market Systems Activity (KCDMS).",
+        "category": "Scoping Studies"
+      },
+      {
+        "title": "Scoping Study: Planting Materials for Value Chain Crops in Kenya (banana, avocado, mango, pineapples, passion fruit, sweet potatoes, African leafy vegetables)",
+        "client": "USAID/Kenya Crop and Dairy Market Systems Activity (RTI), July 2018",
+        "citation": "Agri Experience Ltd. (2018). Scoping Study: Planting Materials for Value Chain Crops in Kenya. Nairobi: Kenya Crops and Dairy Market Systems Activity (KCDMS).",
+        "category": "Scoping Studies"
+      },
+      {
+        "title": "Scoping Study: Horticulture Seedling Nurseries as a Viable Business Model in Kenya",
+        "client": "USAID/Kenya Crop and Dairy Market Systems Activity (RTI), July 2018",
+        "citation": "Agri Experience Ltd. (2018). Scoping Study: Horticulture Seedling Nurseries as a Viable Business Model in Kenya. Nairobi: Kenya Crops and Dairy Market Systems Activity (KCDMS).",
+        "category": "Scoping Studies"
+      },
+      {
+        "title": "Agrodealer Mapping in Twelve Counties in Kenya",
+        "client": "USAID/Kenya Crop and Dairy Market Systems Activity (RTI), July 2018",
+        "citation": "Agri Experience Ltd. (2018). Agrodealer Mapping in Twelve KCMD Counties of Operation in Kenya. Nairobi: Kenya Crops and Dairy Market Systems Activity (KCDMS).",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Scoping Study: Agrodealer Association Development in Twelve Counties in Kenya",
+        "client": "USAID/Kenya Crop and Dairy Market Systems Activity (RTI), July 2018",
+        "citation": "Agri Experience Ltd. (2018). Scoping Study: Agrodealer Association Development in Twelve Counties in Kenya. Nairobi: Kenya Crops and Dairy Market Systems Activity (KCDMS).",
+        "category": "Scoping Studies"
+      },
+      {
+        "title": "Seed Company Survey and Analysis - Sub-Saharan Africa",
+        "client": "AGRA (pro bono), 2018",
+        "citation": "Agri Experience, Ltd., O'Connor, Misigo, et al. \"Seed Company Survey and Analysis, Sub-Saharan Africa.\" 26 November 2018.",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Case Study: MbeguChoice Seed Variety IT Platform",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2018",
+        "citation": "Agri Experience Ltd. (2018). Case Study: MbeguChoice Seed Variety IT Platform. Nairobi: Kenya Markets Trust.",
+        "category": "Case Studies"
+      },
+      {
+        "title": "Case Study: Revising Kenya's Seed Regulations",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2018",
+        "citation": "Agri Experience Ltd. (2018). Case Study: Revising Kenya's Seed Regulation. Nairobi: Kenya Markets Trust.",
+        "category": "Case Studies"
+      },
+      {
+        "title": "Case Study: County Agrodealer Association Strengthening in Kenya",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2018",
+        "citation": "Agri Experience Ltd. (2018). Case Study: County Agrodealer Association Strengthening in Kenya. Nairobi: Kenya Markets Trust.",
+        "category": "Case Studies"
+      },
+      {
+        "title": "Case Study: Scratch-Off Labels for Certified Seed in Kenya",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2018",
+        "citation": "Agri Experience Ltd. (2018). Case Study: Scratch-Off Labels for Certified Seed in Kenya. Nairobi: Kenya Markets Trust.",
+        "category": "Case Studies"
+      },
+      {
+        "title": "Case Study: Strengthening a Seed Trade Association in Kenya",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2018",
+        "citation": "Agri Experience Ltd. (2018). Case Study: Strengthening a Seed Trade Association in Kenya. Nairobi: Kenya Markets Trust.",
+        "category": "Case Studies"
+      },
+      {
+        "title": "Case Study: The African Seed Access Index (TASAI) Pilot",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2018",
+        "citation": "Agri Experience Ltd. (2018). Case Study: The African Seed Access Index (TASAI) Pilot. Nairobi: Kenya Markets Trust.",
+        "category": "Case Studies"
+      },
+      {
+        "title": "Variety Identification Number (VIN) System (Summary Report of Scoping Study)",
+        "client": "USAID, 2017",
+        "citation": "O'Connor, A., & Maina, M. (2017). Scoping Study: Summary Report of Variety Identification Number (VIN) System Report. Agri Experience Ltd. Nairobi: USAID.",
+        "category": "Scoping Studies"
+      },
+      {
+        "title": "Reaching More Farmers with High Quality Seed for Drought Tolerant Crops",
+        "client": "DfID: VUNA Climate Smart Agriculture (ASI), 2016",
+        "citation": "Agri Experience Ltd. (2016). Reaching More Farmers with High Quality Seed for Drought Tolerant Crops. Vuna Research Report. Pretoria: Vuna.",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Crop Seed Company Proposition for Improving Current Seed Regulation in Kenya",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2016",
+        "citation": "Agri Experience Ltd. (2016). Crop Seed Company Proposition for Improving Current Seed Regulation in Kenya. Nairobi: Kenya Markets Trust.",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Agrodealer Baseline Study",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2016",
+        "citation": "Agri Experience Ltd. (2016). Agrodealer Baseline Study. Nairobi: Kenya Markets Trust.",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Food Security & Crop Seed in Kenya (Part 2): Big Payoffs We Cannot Afford to Ignore",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2016",
+        "citation": "Kariuki, J., & Templer, N. A. (2016). Food Security & Crop Seed in Kenya (Part 2): Big Payoffs We Cannot Afford to Ignore. Agri Experience Ltd. Nairobi: Kenya Markets Trust.",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Food Security & Crop Seed in Kenya (Part 1): Challenging Trends We Cannot Afford to Ignore",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector, 2015",
+        "citation": "Kariuki, J. (2015). Food Security & Crop Seed in Kenya (Part 1): Challenging Trends We Cannot Afford to Ignore. Nairobi: Kenya Markets Trust.",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "Kenya Seed Industry Study",
+        "client": "DfID/Kenya Markets Trust Market Assistance Program: Seed Sector (ASI), 2012",
+        "citation": "Agri Experience Ltd. (2012). Kenya Seed Industry Study. Nairobi: Kenya Markets Trust.",
+        "category": "Reports & Analysis"
+      },
+      {
+        "title": "The African Seed Company Toolbox: 52 Tools Every Seed Company Manager Should Know How to Use (English)",
+        "client": "Gates Foundation Agricultural Development, 2009",
+        "citation": "O'Connor, A. (2009). The African Seed Company Toolbox: 52 Tools Every Seed Company Manager Should Know How to Use (English Version). Nairobi: Gates Foundation Agricultural Development.",
+        "category": "Toolkits & Guides"
+      },
+      {
+        "title": "The African Seed Company Toolbox: 52 Tools Every Seed Company Manager Should Know How to Use (French)",
+        "client": "Gates Foundation Agricultural Development, 2009",
+        "citation": "O'Connor, A. (2009). The African Seed Company Toolbox: 52 Tools Every Seed Company Manager Should Know How to Use (French Version). Nairobi: Gates Foundation Agricultural Development.",
+        "category": "Toolkits & Guides"
+      }
+    ]
+  },
+  "Legal": {
+    "back": "Back to Home",
+    "privacy_title": "Privacy Policy",
+    "terms_title": "Terms of Service"
+  },
+  "Newsletter": {
+    "title": "Subscribe for Updates",
+    "subtitle": "Receive periodic updates, reports, and case studies from Agri Experience.",
+    "sign_up": "Sign Up",
+    "confirmed": "Subscription Confirmed",
+    "thank_you": "Thank you for subscribing. We will be in touch with updates and publications.",
+    "name": "Full Name",
+    "email": "Email Address",
+    "agree": "I agree to receive updates and publications",
+    "subscribe": "Subscribe"
+  },
+  "CapacityBuilding": {
+    "our_work": "Our Work",
+    "hero_title1": "Building Skills,",
+    "hero_title2": "Growing Futures.",
+    "hero_subtitle": "Capacity Building",
+    "hero_desc": "Empowering stakeholders through targeted skill development, and knowledge transfer to ensure sustainable growth in agricultural systems.",
+    "start_conversation": "Start a Conversation",
+    "our_philosophy": "Our Philosophy",
+    "phil_title": "Lasting change comes from building local capacity.",
+    "phil_desc": "Agri Experience’s training programs equip seed companies, breeders, agrodealers, extension agents and industry leaders with the skills and knowledge they need to drive sustainable sector growth. We believe that when people have the right tools and knowledge, they can transform their organizations and communities from the inside out.",
+    "step1_title": "Needs Assessment",
+    "step1_desc": "Identify knowledge gaps and training priorities with stakeholders",
+    "step2_title": "Curriculum Design",
+    "step2_desc": "Develop tailored, practical training materials and resources",
+    "step3_title": "Delivery & Facilitation",
+    "step3_desc": "Conduct interactive workshops, field training, and mentoring",
+    "step4_title": "Follow-up & Support",
+    "step4_desc": "Provide ongoing support and measure capability improvements",
+    "th1": "52 practical management tools in one comprehensive resource",
+    "th2": "Business planning, forecasting, and financial management",
+    "th3": "Quality assurance and production planning frameworks",
+    "th4": "Customer relationship and marketing strategies",
+    "th5": "Human resource management and team development",
+    "th6": "Used in training programs across sub-Saharan Africa",
+    "tp_tag": "Training Programs",
+    "tp_title": "Comprehensive capacity development",
+    "tp_desc": "From seed business managers to farmers, our programs are tailored to the unique needs of every stakeholder in the agricultural value chain.",
+    "oa_tag": "Our Approach",
+    "oa_title": "A proven path to capability growth",
+    "oa_desc": "Every capacity building engagement follows a structured, participatory approach that ensures lasting impact.",
+    "fr_tag": "Featured Resource",
+    "fr_title": "The African Seed Company Toolbox",
+    "fr_subtitle": "52 Tools Every Seed Company Manager Should Know How to Use",
+    "fr_author_label": "Author",
+    "fr_author_name": "Aline O'Connor",
+    "fr_author_desc": "— AE Founding Director",
+    "th_tag": "Toolbox Highlights",
+    "th_title": "52 practical tools for seed company success in one comprehensive resource",
+    "th_desc": "This comprehensive resource has become the standard reference for seed company managers across sub-Saharan Africa, providing actionable frameworks for every aspect of seed enterprise management.",
+    "stats": [
+      {
+        "value": "1,000+",
+        "label": "Professionals Trained"
+      },
+      {
+        "value": "52",
+        "label": "Management Tools Developed"
+      },
+      {
+        "value": "20+",
+        "label": "Countries Reached"
+      },
+      {
+        "value": "100%",
+        "label": "Practical, Hands-On Approach"
+      }
+    ],
+    "cta_tag": "Get Started",
+    "cta_title": "Invest in Your Team's Growth",
+    "cta_desc": "Equip your organization with the skills, tools, and knowledge to thrive in Africa's dynamic agricultural sector.",
+    "cta_btn1": "Contact Us",
+    "cta_btn2": "Explore Our Work",
+    "tp": [
+      {
+        "title": "Seed Business Management Training",
+        "description": "Training seed company managers on forecasting, quality control, HR, and business operations. Partnership with WACCI PhD students in plant breeding.",
+        "detail": "Practical, business-focused curriculum for seed enterprise professionalization."
+      },
+      {
+        "title": "Seed Company Professionalization",
+        "description": "Using “The African Seed Company Toolbox: 52 Tools Every Seed Company Manager Should Know How to Use” (authored by Aline O’Connor).",
+        "detail": "Covers “meaningful moments” with customers, business management, and operational strategies designed specifically for seed enterprises in Africa."
+      },
+      {
+        "title": "Agrodealer Development",
+        "description": "Training agrodealers on product knowledge, customer service, and business management. Building agrodealer associations and networks.",
+        "detail": "Supporting last-mile delivery capacity for quality inputs."
+      },
+      {
+        "title": "Breeder & Researcher Training",
+        "description": "Equipping plant breeders with commercial awareness and seed business knowledge. Bridging the gap between research and market needs.",
+        "detail": "Understanding seed production, marketing, and distribution."
+      },
+      {
+        "title": "Industry Association Strengthening",
+        "description": "Building organizational capacity for seed trade associations. Governance, advocacy, and member services training.",
+        "detail": "Strengthening industry self-regulation capabilities."
+      },
+      {
+        "title": "Educational Campaigns",
+        "description": "Radio campaigns related to seed awareness and quality. Public education on identifying genuine vs. counterfeit seed.",
+        "detail": "Farmer education on variety selection and best practices."
+      }
+    ],
+    "hero_title": "Building Skills, Growing Futures.",
+    "philosophy_title": "Lasting change comes from building local capacity.",
+    "philosophy_desc": "Agri Experience’s training programs equip seed companies, breeders, agrodealers, extension agents and industry leaders with the skills and knowledge they need to drive sustainable sector growth. We believe that when people have the right tools and knowledge, they can transform their organizations and communities from the inside out."
+  },
+  "ClientAdvisory": {
+    "our_work": "Our Work",
+    "hero_title1": "Client Advisory",
+    "hero_title2": "& Analytical Work",
+    "hero_subtitle": "Strategic Counsel for Agricultural Transformation",
+    "hero_desc1": "Strategic guidance and in-depth analysis to navigate complex agricultural value chains, optimize seed systems, and drive policy reform.",
+    "hero_desc2": "Agri Experience operates as a practice — like a medical or legal firm — providing customized, experience-based strategic advice. Our advisory services draw on 85+ years of collective seed sector expertise.",
+    "req_advisory": "Request Advisory",
+    "adv_services_tag": "Our Advisory Services",
+    "adv_services_title": "Expertise Across the<br />Agricultural Value Chain",
+    "oa_tag": "Our Approach",
+    "oa_title": "Three Pillars of Advisory Excellence",
+    "ws_tag": "Who We Serve",
+    "ws_title": "Trusted by Leaders in<br />African Agriculture",
+    "pm_tag": "The AE Practice Model",
+    "pm_title": "We operate as a practice — not a consultancy.",
+    "pm_desc": "Like a medical or legal firm, Agri Experience draws on deep collective expertise to deliver customized strategic advice. Our team's 85+ years of combined seed sector experience means every engagement benefits from hard-won field knowledge — not generic frameworks.",
+    "stats": [
+      {
+        "value": "85+",
+        "label": "Years Combined Expertise"
+      },
+      {
+        "value": "20+",
+        "label": "Countries Served"
+      },
+      {
+        "value": "250+",
+        "label": "Projects Delivered"
+      },
+      {
+        "value": "100%",
+        "label": "Tailored Engagements"
+      }
+    ],
+    "cta_tag": "Engage With Us",
+    "cta_title": "Seeking Expert<br />Agricultural Advisory?",
+    "cta_desc": "Whether you need strategic counsel for a seed system transformation, a regulatory review, or market entry strategy, our practice is ready to partner with you.",
+    "cta_btn1": "Contact Us",
+    "cta_btn2": "Explore Our Work",
+    "adv_services": [
+      {
+        "title": "Strategic Consulting",
+        "description": "Advisory on seed and agricultural systems development, including seed production, marketing and distribution. Helping private sector companies navigate regulatory environments. Long-term strategic planning for agricultural enterprises."
+      },
+      {
+        "title": "Policy Advisory",
+        "description": "Advocate for regulatory reforms that support private sector investment. Supporting harmonization of seed trade protocols. Advocating for evidence-based regulatory reform."
+      },
+      {
+        "title": "Development Partner Reviews",
+        "description": "Reviews of proposed or ongoing development partner-funded programs. Independent assessment of project design and implementation approaches. Recommendations for program optimization."
+      },
+      {
+        "title": "Seed Market Strategy",
+        "description": "Advisory on market positioning and competitive strategy. Optimizing seed production, processing, and distribution. Distribution channel optimization. Go-to-market strategies for seed companies entering new markets."
+      }
+    ],
+    "pillars": [
+      {
+        "title": "Experience-Based Analysis",
+        "description": "85+ years of collective expertise applied to every engagement. Field-grounded insights, not theoretical models."
+      },
+      {
+        "title": "Customized Solutions",
+        "description": "Every engagement is tailored. Not a static menu of services but bespoke advisory work designed for each client's unique context."
+      },
+      {
+        "title": "Sustainable Impact",
+        "description": "Recommendations designed for long-term systemic change, not quick fixes. Building local capacity alongside advisory delivery."
+      }
+    ],
+    "clients": [
+      {
+        "category": "Development Partners",
+        "names": "USAID, Gates Foundation, AGRA, World Bank"
+      },
+      {
+        "category": "Seed Companies & Agribusinesses",
+        "names": "Private sector seed and agri-input companies across Africa"
+      },
+      {
+        "category": "Government Ministries & Regulatory Bodies",
+        "names": "KEPHIS and national agricultural ministries"
+      },
+      {
+        "category": "Research Organizations",
+        "names": "KALRO, CIMMYT, and partner research institutions"
+      },
+      {
+        "category": "Industry Associations",
+        "names": "Seed trade associations and farmer organizations"
+      }
+    ],
+    "cs_title": "KEPHIS Regulatory Modernization: Private Seed Inspection & Standard Seed Pilot",
+    "cs_desc1": "In partnership with the Kenya Plant Health Inspectorate Service (KEPHIS), the Ministry of Agriculture, and the Seed Trade Association of Kenya (STAK), Agri Experience provided strategic advisory to unlock critical regulatory bottlenecks in Kenya's seed certification ecosystem.",
+    "cs_desc2": "By structuring policy frameworks for private inspector authorization and piloting the 'standard seed' class, the intervention decentralized quality assurance, expanded seed supply for non-hybrid crops, and established a sustainable model that later informed regional regulatory benchmarking across East Africa.",
+    "cs_section_title": "Key Regulatory Milestones & Systemic Impact",
+    "cs_pillar1_tag": "Regulatory Framework",
+    "cs_pillar1_title": "Private Seed Inspector Authorization",
+    "cs_pillar1_desc": "Structured the operational and institutional framework enabling KEPHIS to formally authorize and gazette private seed inspectors and laboratory analysts within seed companies, drastically expanding inspection capacity.",
+    "cs_pillar2_tag": "Market Innovation",
+    "cs_pillar2_title": "Standard Seed Class Pilot",
+    "cs_pillar2_desc": "Designed and piloted standard seed certification protocols for non-hybrid and food security crops, establishing pragmatic field requirements while upholding mandatory germination and purity quality standards.",
+    "cs_pillar3_tag": "Public-Private Consensus",
+    "cs_pillar3_title": "Institutional Alignment with STAK",
+    "cs_pillar3_desc": "Bridged public regulatory mandates with private sector capabilities, fostering sustained alignment between KEPHIS and the Seed Trade Association of Kenya (STAK) to operationalize co-regulation.",
+    "cs_pillar4_tag": "Regional Diffusion",
+    "cs_pillar4_title": "Cross-Border Regulatory Influence",
+    "cs_pillar4_desc": "Generated an empirical evidence base demonstrating the viability of private inspection authorization, serving as a regional benchmark for neighboring seed authorities across East Africa.",
+    "cs_cta_btn": "Explore Our Advisory Practice"
+  },
+  "DigitalPlatforms": {
+    "our_work": "Our Work",
+    "hero_title": "Digital Platforms",
+    "hero_subtitle": "Technology for Smarter Agriculture",
+    "hero_desc": "Developing and deploying digital solutions that bridge information gaps, enhance seed authentication, and connect stakeholders across the agricultural ecosystem.",
+    "req_platform": "Request Platform Demo",
+    "dp_tag": "Our Platforms",
+    "dp_title": "Digital Solutions for<br />Agricultural Systems",
+    "oa_tag": "Our Methodology",
+    "oa_title": "How We Build Digital Solutions",
+    "oa_desc": "Our approach combines deep agricultural domain expertise with modern software development practices to create platforms that actually work in the field.",
+    "sp_tag": "Platform Spotlight",
+    "sp_title": "MbeguChoice",
+    "sp_subtitle": "Kenya's premier online seed catalogue",
+    "sp_desc": "Developed in partnership with KALRO, KEPHIS, with support from Kenya Markets Trust/Gatsby Africa, MbeguChoice helps farmers and agrodealers identify the right seed varieties for their specific ecological zones, taking the guesswork out of planting.",
+    "sp_feat1": "Digital Variety Catalogue",
+    "sp_feat2": "Digital Seed Certification System",
+    "sp_feat3": "Stakeholder Information Platforms",
+    "sp_feat4": "SMS-Based Feedback Tools",
+    "sp_feat5": "Seed System Indicators Platforms.",
+    "stats": [
+      {
+        "value": "200+",
+        "label": "Varieties Catalogued"
+      },
+      {
+        "value": "Multi-Zone",
+        "label": "Ecological Coverage"
+      },
+      {
+        "value": "3",
+        "label": "Key Partnerships"
+      },
+      {
+        "value": "Live",
+        "label": "Platform Status"
+      }
+    ],
+    "cta_tag": "Digital Transformation",
+    "cta_title": "Ready to Digitize Your<br />Agricultural Systems?",
+    "cta_desc": "Whether you need a national variety catalogue, a seed verification system, or custom data analytics, we have the expertise to build and deploy solutions that scale.",
+    "cta_btn1": "Contact Us",
+    "cta_btn2": "Explore Our Work",
+    "platforms": [
+      {
+        "title": "Africa Digital Crop Variety Catalogue",
+        "description": "An online, searchable platform that consolidates officially released and registered crop varieties from multiple African countries into a single database.",
+        "tag": "Platform"
+      },
+      {
+        "title": "Kenya Plant Variety List",
+        "description": "An online, searchable platform containing all officially released and registered crop varieties in Kenya, featuring both public access for general information and restricted access for proprietary information.",
+        "tag": "Platform"
+      },
+      {
+        "title": "Tanzania Agri-Inputs Platform",
+        "description": "An online interactive and searchable database of industry stakeholders, varieties released in Tanzania, registered agrochemicals, and agrodealers mapped to their locations.",
+        "tag": "Platform"
+      },
+      {
+        "title": "MbeguChoice",
+        "description": "A farmer-centric digital platform with an offline-capable mobile app that catalogues commercialized crop varieties in Kenya. It provides detailed information on disease resistance, maturity periods, agroecological suitability, and other key varietal characteristics. The platform empowers farmers, extension workers, and agrodealers to make informed variety selection decisions that enhance productivity, resilience, and performance.",
+        "tag": "Tool"
+      },
+      {
+        "title": "Seed Sector Platform Kenya",
+        "description": "An online interactive and searchable database of industry stakeholders, varieties released in Kenya, and agrodealers mapped to their locations.",
+        "tag": "Platform"
+      },
+      {
+        "title": "Agricultural Inputs Platform Uganda",
+        "description": "An online interactive and searchable database of industry stakeholders, varieties released in Uganda, registered agrochemicals, and agrodealers mapped to their locations.",
+        "tag": "Platform"
+      },
+      {
+        "title": "Mulika Mbegu Mbovu (M3)",
+        "description": "An SMS-based feedback mechanism for farmers to report low-quality and fake seeds to KEPHIS, helping to combat fake and counterfeit seeds in the Kenyan market.",
+        "tag": "Feedback Tool"
+      }
+    ],
+    "approach": [
+      {
+        "title": "Assess & Design",
+        "description": "Understand stakeholder needs through deep consultation and design intuitive digital interfaces that solve real problems in the agricultural value chain."
+      },
+      {
+        "title": "Build & Integrate",
+        "description": "Develop scalable, robust platforms connected to existing agricultural systems — ensuring interoperability and seamless data flow across institutions."
+      },
+      {
+        "title": "Deploy & Support",
+        "description": "Launch solutions with comprehensive training and ongoing technical support, ensuring adoption and long-term sustainability across stakeholder groups."
+      }
+    ],
+    "sp_title2": "Transforming Seed Selection in Kenya",
+    "sp_desc2": "MbeguChoice represents the future of agricultural decision support — a digital platform that puts critical variety information directly in the hands of those who need it most.",
+    "sp_points": [
+      "Over 200 crop varieties catalogued with full performance data",
+      "Coverage across multiple ecological zones for location-specific recommendations",
+      "Disease tolerance and maturity period data for every listed variety",
+      "Partnership with KALRO, KEPHIS, and Kenya Markets Trust",
+      "Helps farmers and agrodealers choose seeds with confidence"
+    ],
+    "why_title": "Why Digital Matters",
+    "why_desc": "Across sub-Saharan Africa, digital tools are reshaping how seed systems operate — improving transparency, reducing fraud, and connecting stakeholders at scale.",
+    "why_cards": [
+      {
+        "title": "Connected Ecosystems",
+        "text": "Our platforms create digital bridges between research institutions, seed companies, regulators, and the farming communities they serve."
+      },
+      {
+        "title": "Trust & Verification",
+        "text": "From SMS-based seed authentication to real-time reporting, our tools help combat counterfeiting and build trust across supply chains."
+      },
+      {
+        "title": "Data-Driven Decisions",
+        "text": "By digitizing variety catalogues and performance data, we empower every stakeholder to make smarter, evidence-based choices."
+      }
+    ]
+  },
+  "ProjectImplementation": {
+    "our_work": "Our Work",
+    "hero_title": "Project Implementation",
+    "hero_subtitle": "Turning Agricultural Strategy into Field Reality",
+    "hero_desc1": "Bridging the gap between agricultural strategy and field-level execution. Agri Experience executes complex, multi-stakeholder programs that deliver tangible and sustainable results on the ground, benefiting permanent actors and farmers.",
+    "hero_desc2": "Our implementation practice combines deep technical expertise with rigorous project management to execute seed sector interventions, agrodealer capacity programs, and technology deployments across Sub-Saharan Africa.",
+    "req_partnership": "Discuss Partnership",
+    "ia_tag": "Areas of Implementation",
+    "ia_title": "Where We Execute",
+    "pm_tag": "Our Approach",
+    "pm_title": "Rigorous Project Management",
+    "pm_desc": "We treat implementation as a discipline. Every project is guided by structured methodologies to ensure on-time delivery, stakeholder alignment, and verifiable impact.",
+    "pm_step1": "1. Rapid Inception & Planning",
+    "pm_step1_desc": "We quickly move from concept to detailed operational planning. This includes mobilizing teams, defining clear KPIs, establishing reporting structures, and aligning all stakeholders around shared objectives.",
+    "pm_step2": "2. Adaptive Execution",
+    "pm_step2_desc": "Field realities often diverge from boardroom plans. We utilize agile management principles, allowing us to pivot strategies based on real-time feedback from the ground while maintaining focus on the ultimate goals.",
+    "pm_step3": "3. Rigorous Monitoring",
+    "pm_step3_desc": "Implementation is meaningless without measurement. We embed M&E into our daily operations, utilizing digital tools to track progress, ensure quality assurance, and provide transparent reporting to partners.",
+    "pm_step4": "4. Capacity Transfer",
+    "pm_step4_desc": "We don't just execute; we build local capability. Our projects are designed to transfer knowledge and operational skills to local institutions, ensuring that impact sustains long after our direct involvement ends.",
+    "cs_title": "Enhancing the Seed Systems in Tanzania (ESSETA) – A turning point for Tanzania’s Seed Sector",
+    "cs_desc1": "Over the past five years, Tanzania’s seed sector has recorded significant progress, driven in large part by Agri Experience’s leadership in implementing ESSETA, a Gates Foundation-funded initiative, which aimed to improve the efficiency, coordination, and performance of key public institutions responsible for delivering quality seed to farmers while fostering a sustainable, private sector-led seed industry.",
+    "cs_desc2": "Interventions included the development of a digital seed sector platform to strengthen information sharing and improve seed demand forecasting, the renovation and equipping of two strategic seed testing laboratories, and support for a decentralized seed quality assurance system that enables authorized private seed inspectors and laboratory analysts. These efforts have contributed to stronger national planning and improved information exchange within the Ministry of Agriculture, supporting the continued growth of Tanzania’s seed sector.",
+    "cs_section_title": "Key Institutional Modernization Pillars",
+    "cs_pillar1_title": "Strategic Laboratory Renovation & Equipping",
+    "cs_pillar1_desc": "Renovation and equipping of two strategic seed testing laboratories in Morogoro and the Southern Highlands, cutting sample result wait times by over 50% and expanding availability of diverse, high-quality seed varieties tailored to farmers’ needs.",
+    "cs_pillar2_title": "Digital Seed Sector Platform",
+    "cs_pillar2_desc": "Development of a digital seed sector platform to streamline certification workflows, enhance data capture, and enable accurate seed demand forecasting and future planning.",
+    "cs_pillar3_title": "Decentralized Seed Quality Assurance",
+    "cs_pillar3_desc": "Decentralization of national seed quality assurance through the authorization and deployment of private seed inspectors and accredited private laboratory analysts.",
+    "cs_pillar4_title": "National Planning & Institutional Governance",
+    "cs_pillar4_desc": "Establishment of the National Planning and Coordination Unit within the Ministry of Agriculture, strengthening information exchange, policy alignment, and national seed distribution oversight.",
+    "cs_cta_btn": "Discuss Implementation Partnerships",
+    "cta_tag": "Execution Partners",
+    "cta_title": "Looking for an Implementation Partner?",
+    "cta_desc": "Whether you need to manage a national agricultural survey, deploy a digital platform, or coordinate a multi-county training program, our team has the proven capability to deliver.",
+    "cta_btn1": "Partner With Us",
+    "cta_btn2": "Explore Our Work",
+    "areas": [
+      {
+        "title": "Seed Systems Development",
+        "points": [
+          "Designing and implementing tools to improve seed quality and transparency",
+          "Building infrastructure for better seed access and distribution",
+          "Supporting national seed system strengthening"
+        ]
+      },
+      {
+        "title": "Agrodealer Network Development",
+        "points": [
+          "Operational support for agrodealer-led climate-smart demonstrations",
+          "Mapping and organizing agrodealer networks across counties",
+          "Strengthening last-mile seed and input delivery"
+        ]
+      },
+      {
+        "title": "Regional Seed Trade",
+        "points": [
+          "Development of strategies to promote regional seed trade",
+          "Supporting harmonization of seed certification regulations",
+          "Facilitating cross-border seed movement and compliance"
+        ]
+      },
+      {
+        "title": "Quality Assurance Programs",
+        "points": [
+          "Conducting seed sector assessments",
+          "Designing and implementing seed quality verification systems",
+          "Developing frameworks for authorized private seed certification"
+        ]
+      },
+      {
+        "title": "Field Operations Management",
+        "points": [
+          "Coordinating regional, multi-stakeholder field activities",
+          "Managing survey teams, data collection, and logistics",
+          "Ensuring quality and timeliness of field survey deliverables"
+        ]
+      },
+      {
+        "title": "Monitoring, Evaluation & Learning",
+        "points": [
+          "Tracking project outcomes and impact metrics",
+          "Adaptive management based on field data",
+          "Reporting to development partners and stakeholders"
+        ]
+      }
+    ],
+    "processSteps": [
+      {
+        "title": "Scoping & Planning",
+        "description": "Define objectives, stakeholders, and success metrics"
+      },
+      {
+        "title": "Team Mobilization",
+        "description": "Assemble local teams with deep sector knowledge"
+      },
+      {
+        "title": "Field Execution",
+        "description": "Implement activities with rigorous quality control"
+      },
+      {
+        "title": "Monitoring",
+        "description": "Track progress and adapt strategies in real-time"
+      },
+      {
+        "title": "Reporting & Handover",
+        "description": "Deliver results and ensure sustainability"
+      }
+    ],
+    "stats": [
+      {
+        "value": "45+",
+        "label": "Counties Reached"
+      },
+      {
+        "value": "1,200+",
+        "label": "Agrodealers Trained"
+      },
+      {
+        "value": "300%",
+        "label": "Increase in Certified Seed Sales"
+      }
+    ],
+    "cs_period": "USAID / RTI International • KCDMS Activity",
+    "cs_client_label": "Development Partner & Client",
+    "cs_client_val": "USAID Feed the Future / RTI International — Kenya Crops and Dairy Market Systems Activity",
+    "cs_meth_label": "Key Focus Areas & Methodologies",
+    "cs_meth_points": [
+      "Field mapping & surveys across 12 high-potential Kenyan counties",
+      "Commercial viability & business model analysis for private seedling nurseries",
+      "Systemic market analysis identifying root supply bottlenecks in vegetative seed",
+      "Close collaboration with county agricultural leadership and private sector actors"
+    ],
+    "cs_scope_label": "Scope of Engagement",
+    "cs_scope_points": [
+      "Planting materials analysis for 7 value chain crops (Banana, Avocado, Mango, Passion Fruit, ALVs)",
+      "Commercial fodder seed multiplication & quality certification frameworks for dairy",
+      "Private horticulture nursery enterprise sustainability assessments"
+    ],
+    "cs_client": "Client: USAID / RTI International"
+  },
+  "StakeholderConvenings": {
+    "our_work": "Our Work",
+    "hero_title1": "Stakeholder",
+    "hero_title2": "Convenings",
+    "hero_subtitle": "Bringing the Seed-focused, Agricultural Ecosystem Together",
+    "hero_desc1": "Complex agricultural challenges require coordinated action. Agri Experience designs, facilitates, and manages convenings that turn disparate stakeholders into aligned partnerships focusing on a common goal.",
+    "hero_desc2": "From high-level policy roundtables to cross-border learning trips, Agri Experience provides the logistical precision and sector knowledge needed to make every convening impactful.",
+    "req_convening": "Request a Convening",
+    "ct_tag": "Our Formats",
+    "ct_title": "Ways We Bring People Together",
+    "wcm_tag": "The Impact",
+    "wcm_title": "Why Convenings Matter",
+    "wcm_desc": "We don't just organize meetings; we orchestrate outcomes. Strategic convenings are catalysts for agricultural transformation.",
+    "pm_tag": "Our Methodology",
+    "pm_title": "How We Deliver",
+    "pm_subtitle": "End-to-End Convening Management",
+    "pm_step1": "1. Strategic Design",
+    "pm_step1_desc": "We don't do generic agendas. Every convening is designed around specific policy or operational objectives.",
+    "pm_step2": "2. Expert Facilitation",
+    "pm_step2_desc": "Our team's deep sector knowledge ensures that conversations stay focused, technical, and productive.",
+    "pm_step3": "3. Flawless Logistics",
+    "pm_step3_desc": "From complex visa arrangements for regional trips to on-the-ground event management, we handle all details.",
+    "pm_step4": "4. Actionable Follow-up",
+    "pm_step4_desc": "We provide comprehensive documentation and track post-event commitments to ensure momentum isn't lost.",
+    "cs_tag": "Flagship Event",
+    "cs_title": "Seed Industry Private Sector Roundtables",
+    "cs_subtitle": "In partnership with Kenya Markets Trust",
+    "cs_desc1": "Agri Experience facilitated a crucial series of roundtables that brought together private seed companies, regulatory bodies, and development partners to address systemic bottlenecks in Kenya's seed sector.",
+    "cs_desc2": "These convenings were instrumental in building consensus around policy reforms, harmonizing standards, and fostering a more collaborative relationship between the public and private sectors.",
+    "cs_res1": "15+",
+    "cs_res1_label": "Roundtables Held",
+    "cs_res2": "100%",
+    "cs_res2_label": "Major Companies Engaged",
+    "cs_res3": "Policy",
+    "cs_res3_label": "Reforms Initiated",
+    "cta_tag": "Start a Conversation",
+    "cta_title": "Need to Align Your Stakeholders?",
+    "cta_desc": "Whether you're planning a multi-country learning journey, a technical workshop, or a high-level policy dialogue, our team has the expertise to make it a success.",
+    "cta_btn1": "Contact Us",
+    "cta_btn2": "Explore Our Work",
+    "conveningTypes": [
+      {
+        "title": "Seed Industry Roundtables",
+        "description": "Multi-stakeholder dialogue platforms bringing together government, private sector, and development partners. Policy discussion and reform advocacy forums.",
+        "detail": "Such as the “Seed Industry Private Sector Roundtable” series with Kenya Markets Trust."
+      },
+      {
+        "title": "Learning Trips & Field Visits",
+        "description": "Immersive experiences visiting successful seed systems and agricultural operations in other countries, enabling knowledge exchange for policymakers and practitioners.",
+        "detail": "Exposure to best practices in seed legislation, production, distribution, and quality assurance."
+      },
+      {
+        "title": "Multi-Stakeholder Platforms",
+        "description": "Creating and facilitating ongoing dialogue platforms. Connecting development partners, government, private sector, and farmer organizations.",
+        "detail": "Building consensus on sector priorities and interventions."
+      },
+      {
+        "title": "Knowledge Sharing Forums",
+        "description": "Technical workshops and seminars on seed sector topics. Presentation of research findings and position papers.",
+        "detail": "Dissemination of Seed Sector Insights publications and policy briefs."
+      },
+      {
+        "title": "Partnership Facilitation",
+        "description": "Brokering partnerships between research institutions and commercial entities. Connecting international development partners with local stakeholders.",
+        "detail": "Facilitating public-private partnerships for seed sector development."
+      },
+      {
+        "title": "Conference & Event Management",
+        "description": "End-to-end event planning and logistics for agricultural convenings. Speaker coordination, agenda design, and facilitation.",
+        "detail": "Documentation and post-event follow-up."
+      }
+    ],
+    "whyConveningsMatter": [
+      {
+        "title": "Knowledge Exchange",
+        "description": "Best practices spread when stakeholders meet face-to-face. Learning trips provide firsthand exposure to successful models that can be adapted and replicated."
+      },
+      {
+        "title": "Policy Influence",
+        "description": "Roundtables and forums create direct channels between practitioners and policymakers. Evidence-based advocacy drives meaningful regulatory reform."
+      },
+      {
+        "title": "Partnership Building",
+        "description": "Convenings create the trust and relationships that underpin successful collaboration. Networks formed at events lead to lasting partnerships."
+      }
+    ],
+    "regions": [
+      {
+        "name": "East Africa",
+        "countries": "Kenya, Tanzania, Uganda, Ethiopia, Rwanda, South Sudan"
+      },
+      {
+        "name": "West Africa",
+        "countries": "Ghana, Nigeria, Senegal, Mali, Burkina Faso, Niger"
+      },
+      {
+        "name": "Central Africa",
+        "countries": "DRC, Republic of Congo"
+      },
+      {
+        "name": "Southern Africa",
+        "countries": "Zambia, Malawi, Mozambique, Zimbabwe, Madagascar"
+      }
+    ],
+    "stats": [
+      {
+        "value": "20+",
+        "label": "Countries Reached"
+      },
+      {
+        "value": "100+",
+        "label": "Events Facilitated"
+      },
+      {
+        "value": "500+",
+        "label": "Stakeholders Convened"
+      },
+      {
+        "value": "4",
+        "label": "African Regions"
+      }
+    ],
+    "callout_text": "From Nairobi to Accra, Lusaka to Lagos — we bring stakeholders together where it matters most.",
+    "sp_tag": "Flagship Event",
+    "sp_title": "Seed Industry Private Sector Roundtables",
+    "sp_subtitle": "In partnership with Kenya Markets Trust",
+    "sp_desc1": "Agri Experience facilitated a crucial series of roundtables that brought together private seed companies, regulatory bodies, and development partners to address systemic bottlenecks in Kenya’s seed sector.",
+    "sp_desc2": "These convenings were instrumental in building consensus around policy reforms, harmonizing standards, and fostering a more collaborative relationship between the public and private sectors. As a result, the Seeds Regulations were revised and gazetted in 2016, allowing for an increased private sector enabling environment."
+  },
+  "TechnicalStudies": {
+    "our_work": "Our Work",
+    "hero_title": "Technical<br />Studies & Scoping",
+    "hero_subtitle": "Data-Driven Insights for the Seed Sector",
+    "hero_desc1": "At Agri Experience, we believe that effective strategy begins with accurate, field-tested data.",
+    "hero_desc2": "We conduct rigorous technical studies and scoping exercises that provide development partners, governments, and private sector players with the evidence base needed to design impactful interventions and policies.",
+    "req_study": "Request a Study",
+    "types_tag": "Areas of Study",
+    "types_title": "Our Technical Studies",
+    "meth_tag": "Our Approach",
+    "meth_title": "Rigorous, Field-Tested Methodology",
+    "cs_tag": "Case Study",
+    "cs_title": "USAID’s KCDMS Studies",
+    "cs_desc1": "Commissioned by RTI International under the USAID Kenya Crops and Dairy Market Systems (KCDMS) Activity, Agri Experience executed a comprehensive mapping of agrodealers across 12 counties, with geolocation and contact information.",
+    "cs_desc2": "Agri Experience mapped existing agrodealer networks, assessed gaps in last-mile delivery, and provided actionable recommendations to strengthen input distribution systems for smallholder farmers.",
+    "cs_studies_title": "Published Field Studies & Technical Assessments",
+    "cs_client_tag": "USAID / KCDMS Activity (RTI)",
+    "cs_download_pdf": "Download PDF",
+    "cs_view_all_studies": "View All Scoping Studies in Resources",
+    "cs_study1_title": "Scoping Study: Pasture and Fodder Planting Materials in Kenya",
+    "cs_study1_citation": "Agri Experience, Ltd. 2020. Prepared for RTI International under the USAID Kenya Crops and Dairy Market Systems (KCDMS) Activity.",
+    "cs_study2_title": "Scoping Study: Planting Materials for Value Chain Crops in Kenya",
+    "cs_study2_citation": "Agri Experience, Ltd. 2020. Banana, avocado, mango, pineapple, passion fruit, sweet potato, and African leafy vegetables. Prepared for RTI International under USAID KCDMS.",
+    "cs_study3_title": "Scoping Study: Horticulture Seedling Nurseries as a Viable Business Model in Kenya",
+    "cs_study3_citation": "Agri Experience, Ltd. 2020. Prepared for RTI International under the USAID Kenya Crops and Dairy Market Systems (KCDMS) Activity.",
+    "cs_study4_title": "Scoping Study: Agro-Dealer Association Development in Twelve Counties in Kenya",
+    "cs_study4_citation": "Agri Experience, Ltd. 2020. Prepared for RTI International under the USAID Kenya Crops and Dairy Market Systems (KCDMS) Activity.",
+    "cta_tag": "Start a Study",
+    "cta_title": "Need Data-Driven Insights?",
+    "cta_desc": "Whether you need a comprehensive sector assessment or a targeted feasibility study, our research teams are ready to deploy.",
+    "cta_btn1": "Contact Us",
+    "cta_btn2": "Explore Our Work",
+    "studyTypes": [
+      {
+        "title": "Market & Sector Assessments",
+        "description": "Comprehensive surveys of market participants — farmers, seed producers, agrodealers, and regulators — delivering industry landscape analysis and competitive positioning."
+      },
+      {
+        "title": "Scoping Studies",
+        "description": "Field-based analysis for seed and input sector assessments, identifying opportunities, challenges, and intervention points across value chains."
+      },
+      {
+        "title": "Crop Value Chain Analysis",
+        "description": "End-to-end analysis of crop value chains — mapping production, distribution, and market access pathways while identifying bottlenecks and growth opportunities."
+      },
+      {
+        "title": "Industry Benchmarking",
+        "description": "Development of industry benchmarking tools, performance metrics, and comparative analysis — setting standards for seed sector development."
+      },
+      {
+        "title": "Policy & Regulatory Analysis",
+        "description": "Analysis of seed policy frameworks and regulations, comparison with global best practices, and recommendations for regulatory reform and harmonization."
+      },
+      {
+        "title": "Feasibility Studies",
+        "description": "Assessing viability of new programs, platforms, and interventions through risk assessment, mitigation strategies, and cost-benefit analysis for agricultural investments."
+      }
+    ],
+    "methodology": [
+      {
+        "step": 1,
+        "title": "Define Scope",
+        "description": "Work with clients to establish clear research objectives and methodology, ensuring every study is purpose-built for the decisions that matter."
+      },
+      {
+        "step": 2,
+        "title": "Field Research",
+        "description": "Deploy experienced teams for surveys, interviews, and on-ground data collection across the relevant geographies and stakeholder groups."
+      },
+      {
+        "step": 3,
+        "title": "Analysis & Synthesis",
+        "description": "Apply rigorous analytical frameworks to transform raw data into structured insights, identifying patterns, risks, and opportunities."
+      },
+      {
+        "step": 4,
+        "title": "Actionable Reporting",
+        "description": "Deliver comprehensive reports with practical, implementable recommendations that clients can act on immediately."
+      }
+    ],
+    "caseStudyDetails": [
+      {
+        "label": "Client",
+        "value": "RTI International (USAID-funded)"
+      },
+      {
+        "label": "Scope",
+        "value": "12 Kenyan Counties"
+      },
+      {
+        "label": "Methods",
+        "value": "3 Mapping Methodologies"
+      },
+      {
+        "label": "Add-ons",
+        "value": "Association & Planting Material Studies"
+      }
+    ],
+    "cs_bullets": [
+      "Mapped agrodealers across 12 Kenyan counties",
+      "Three mapping methodologies tested and compared",
+      "Additional scoping on agrodealer associations",
+      "Planting materials distribution assessment",
+      "Evidence base for last-mile input delivery systems"
+    ],
+    "clients": [
+      {
+        "title": "Development Partners",
+        "description": "Bilateral donor agencies, philanthropic foundations, and multilateral development programs investing in agricultural transformation, food security, and market systems development across Sub-Saharan Africa."
+      },
+      {
+        "title": "Governments & Regulators",
+        "description": "National ministries of agriculture, plant health inspectorates, and public regulatory authorities modernizing seed certification standards and agricultural policy frameworks."
+      },
+      {
+        "title": "Private Sector Enterprises",
+        "description": "Commercial seed producers, agricultural input enterprises, and last-mile distribution networks seeking empirical market intelligence and commercial viability insights."
+      },
+      {
+        "title": "Research Institutions",
+        "description": "International agricultural research centers, national crop breeding institutes, and academic institutions translating scientific advances into accessible, commercial seed pathways for smallholder farmers."
+      }
+    ],
+    "clients_title": "Who Our Studies Serve",
+    "funded_by": "Funded by USAID via RTI International"
+  },
+  "CookieToast": {
+    "title": "We value your privacy",
+    "desc": "We use analytics cookies to understand how visitors interact with our website and help us improve your experience.",
+    "privacy_policy": "Privacy Policy",
+    "accept": "Accept All",
+    "decline": "Decline"
+  },
+  "Metadata": {
+    "about_title": "About Us",
+    "about_desc": "Learn about Agri Experience, our mission, values, and our dedication to transforming agricultural value chains across sub-Saharan Africa.",
+    "contact_title": "Contact Us",
+    "contact_desc": "Get in touch with Agri Experience to discuss consultancy, partnerships, or agricultural development opportunities across Africa.",
+    "insights_title": "Insights",
+    "insights_desc": "Explore the latest insights, strategies, and industry news in seed systems and agricultural development from Agri Experience.",
+    "newsletter_title": "Newsletter",
+    "newsletter_desc": "Subscribe to the Agri Experience newsletter to receive updates on agricultural value chains, seed systems, and our latest projects.",
+    "our_impact_title": "Our Impact",
+    "our_impact_desc": "Discover the profound impact Agri Experience has made on agricultural development, improving farmer yields and seed access in sub-Saharan Africa.",
+    "our_results_title": "Our Results",
+    "our_results_desc": "Review the tangible results and metrics of our consultancy work, showcasing successful seed system developments and agricultural transformations.",
+    "our_team_title": "Our Team",
+    "our_team_desc": "Meet the dedicated experts and agricultural development professionals driving the vision and success behind Agri Experience.",
+    "our_work_title": "Our Work",
+    "our_work_desc": "Explore the portfolio of consultancy projects, initiatives, and value chain transformations led by Agri Experience across 21 African countries.",
+    "our_work_capacity_building_title": "Capacity Building",
+    "our_work_capacity_building_desc": "Empowering stakeholders through targeted training, skill development, and knowledge transfer to ensure sustainable growth in agricultural systems.",
+    "our_work_client_advisory_title": "Client Advisory and Analytical Work",
+    "our_work_client_advisory_desc": "Strategic guidance and in-depth analysis to navigate complex agricultural value chains, optimize seed systems, and drive policy reform.",
+    "our_work_digital_platforms_title": "Digital Platforms | Agri Experience",
+    "our_work_digital_platforms_desc": "Smart, scalable digital solutions that connect data, people, and decisions across the agricultural value chain. Explore MbeguChoice, M3, and more.",
+    "our_work_project_implementation_title": "Project Implementation",
+    "our_work_project_implementation_desc": "From strategy to execution, we manage and implement projects that deliver measurable results on the ground across sub-Saharan Africa.",
+    "our_work_stakeholder_convenings_title": "Stakeholder Convenings and Learning Trips",
+    "our_work_stakeholder_convenings_desc": "Facilitating impactful gatherings and immersive learning experiences that bring together diverse stakeholders to foster collaboration and share best practices across agricultural systems.",
+    "our_work_technical_studies_title": "Technical Studies | Agri Experience",
+    "our_work_technical_studies_desc": "In-depth analysis and feasibility studies that turn complex challenges into clear, actionable insights for seed systems and agricultural value chains.",
+    "resources_title": "Resources",
+    "resources_desc": "Access a wealth of public-domain reports, case studies, scoping studies, and toolkits curated by Agri Experience for agricultural professionals.",
+    "root_title_default": "Agri Experience | Seed Systems & Agricultural Development",
+    "root_title_template": "%s | Agri Experience",
+    "root_desc": "Expert consultancy transforming agricultural value chains and seed systems across sub-Saharan Africa. Sustainable development for growing communities.",
+    "root_og_alt": "Agri Experience - Agricultural Development",
+    "gallery_title": "Visual Gallery",
+    "gallery_desc": "Explore our interactive 3D visual showcase highlighting the agricultural transformation and milestones of Agri Experience across Africa.",
+    "map_title": "Interactive Seed Systems Map",
+    "map_desc": "Explore our interactive footprint across 21 sub-Saharan African countries, tracking seed commercialization, regulatory reforms, and impactful projects.",
+    "privacy_title": "Privacy Policy",
+    "privacy_desc": "Review Agri Experience's privacy policy and data governance practices.",
+    "terms_title": "Terms of Service",
+    "terms_desc": "Review the terms and conditions governing the use of the Agri Experience website and digital platforms."
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #2484c6;
+      }
+
+      .cls-2 {
+        fill: #3ab44a;
+      }
+
+      .cls-3 {
+        font-family: Georgia, Georgia;
+        font-size: 352.5px;
+      }
+    </style>
+  </defs>
+  <text class="cls-3" transform="translate(26.13 351.74)"><tspan class="cls-2" x="0" y="0">A</tspan><tspan class="cls-1" x="236.49" y="0">E</tspan></text>
+</svg>

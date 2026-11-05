@@ -1,0 +1,3 @@
+npm run translate
+git add messages/fr.json
+git add .translation-cache.json

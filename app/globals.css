@@ -1,0 +1,339 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* Premium Agri Experience Color Palette - High-End Nature */
+:root {
+  --header-height: 4.5rem;
+
+  /* New Palette */
+  --primary-green: #3ab44a;
+  --primary-blue: #2484c6;
+  --deep-forest: #1A4D2E;
+  --warm-earth: #f5efe0;
+  --charcoal: #1c2b22;
+  --mist: #F9FAFB;
+  --accent-gold: #E2703A;
+  --lighter-dark-green: #05632a;
+  
+  /* Legacy names mapped to new palette */
+  --primary-forest: var(--deep-forest);
+  --primary-gold: var(--accent-gold);
+  --primary-ivory: var(--warm-earth);
+  --dark-charcoal: var(--charcoal);
+  --sage-green: var(--mist);
+  --warm-gray: #71717A;
+  
+  /* Design System Colors */
+  --background: #ffffff; /* White background */
+  --foreground: var(--charcoal);
+  --card: #ffffff;
+  --card-foreground: var(--charcoal);
+  --popover: #ffffff;
+  --popover-foreground: var(--charcoal);
+  
+  /* Primary */
+  --primary: var(--primary-green);
+  --primary-foreground: #ffffff;
+  
+  /* Secondary */
+  --secondary: var(--primary-blue);
+  --secondary-foreground: #ffffff;
+  
+  --muted: var(--mist);
+  --muted-foreground: var(--lighter-dark-green);
+  
+  --accent: var(--accent-gold);
+  --accent-foreground: var(--charcoal);
+  
+  --destructive: #EF4444;
+  --destructive-foreground: #ffffff;
+  
+  --border: var(--mist);
+  --input: var(--mist);
+  --ring: var(--primary-green);
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: var(--deep-forest);
+  --foreground: var(--warm-earth);
+  --card: var(--charcoal);
+  --card-foreground: var(--warm-earth);
+  --popover: var(--charcoal);
+  --popover-foreground: var(--warm-earth);
+  --primary: var(--primary-green);
+  --primary-foreground: var(--deep-forest);
+  --secondary: var(--primary-blue);
+  --secondary-foreground: var(--warm-earth);
+  --muted: var(--lighter-dark-green);
+  --muted-foreground: var(--mist);
+  --accent: var(--accent-gold);
+  --accent-foreground: var(--deep-forest);
+  --border: var(--lighter-dark-green);
+  --input: var(--lighter-dark-green);
+  --ring: var(--primary-green);
+}
+
+@theme inline {
+  --breakpoint-3xl: 1920px;
+  --breakpoint-4xl: 2560px;
+
+  --font-sans: var(--font-dm-sans);
+  --font-serif: var(--font-playfair);
+  --font-data: var(--font-bebas);
+  --font-mono: var(--font-space-grotesk);
+
+  /* Custom Colors */
+  --color-primary-green: var(--primary-green);
+  --color-primary-blue: var(--primary-blue);
+  --color-deep-forest: var(--deep-forest);
+  --color-warm-earth: var(--warm-earth);
+  --color-charcoal: var(--charcoal);
+  --color-mist: var(--mist);
+  --color-accent-gold: var(--accent-gold);
+  --color-lighter-dark-green: var(--lighter-dark-green);
+  
+  /* Legacy Color mappings */
+  --color-white: #ffffff;
+  --color-primary-forest: var(--primary-forest);
+  --color-primary-gold: var(--primary-gold);
+  --color-primary-ivory: var(--primary-ivory);
+  --color-dark-charcoal: var(--dark-charcoal);
+  --color-sage-green: var(--sage-green);
+  --color-warm-gray: var(--warm-gray);
+  --color-dark-green: var(--deep-forest);
+  --color-cream: var(--mist);
+  --color-dark-blue-gray: var(--primary-blue);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  /* Prevent overscroll bounce revealing a white gutter behind the footer.
+     overscroll-behavior covers Chrome/Edge/Firefox; the black bg fallback
+     handles Safari's elastic scroll which ignores the property. */
+  html {
+    overscroll-behavior-y: none;
+    background-color: #000;
+  }
+
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    position: relative;
+    overscroll-behavior-y: none;
+  }
+
+  /* Noise Overlay for Premium Texture */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    z-index: 9999;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+  
+  /* Professional Typography - Fluid Scaling */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight text-[#1A4D2E];
+    line-height: 1.25;
+  }
+
+            
+  p {
+    @apply font-sans text-gray-600 leading-relaxed max-w-prose;
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.125rem); /* Prevents small text breaking */
+    overflow-wrap: anywhere; /* Fallback for unbreakable strings */
+  }
+
+  a, span {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Prevent string overflow globally for text containers */
+  .text-wrap-anywhere {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+@layer components {
+  .btn-premium {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded font-semibold transition-all hover:scale-[1.02] hover:shadow-xl active:scale-[0.98] disabled:opacity-50;
+  }
+
+  .btn-premium-outline {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-primary text-primary rounded font-semibold transition-all hover:bg-primary/5 active:scale-[0.98];
+  }
+
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-lg;
+  }
+
+  .bento-card {
+    @apply relative overflow-hidden rounded-3xl border border-primary/5 bg-white p-8 transition-[background-color,border-color,box-shadow] duration-200 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5;
+  }
+}
+
+/* Custom Keyframes */
+@keyframes revealText {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.animate-reveal {
+  animation: revealText 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* Mapbox UI Overrides for shadcn */
+.mapboxgl-popup {
+  z-index: 50;
+}
+
+.mapboxgl-popup-content {
+  background-color: var(--card) !important;
+  color: var(--card-foreground) !important;
+  border-radius: var(--radius) !important;
+  padding: 12px 16px !important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.mapboxgl-popup-tip {
+  border-top-color: var(--card) !important;
+  border-bottom-color: var(--card) !important;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: var(--card) !important;
+  border-top-color: transparent !important;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: var(--card) !important;
+  border-bottom-color: transparent !important;
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: var(--card) !important;
+  border-left-color: transparent !important;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: var(--card) !important;
+  border-right-color: transparent !important;
+}
+
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right,
+.mapboxgl-ctrl-top-left,
+.mapboxgl-ctrl-top-right {
+  z-index: 10;
+}
+
+/* Mapbox Cooperative Gesture Overlay - Snappy Dismissal & Subtle Visuals */
+@keyframes quickGestureDismiss {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  12% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.98);
+    pointer-events: none;
+  }
+}
+
+.mapboxgl-scroll-zoom-blocker,
+.mapboxgl-touch-pan-blocker {
+  background: rgba(15, 38, 24, 0.55) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  font-family: var(--font-sans, inherit) !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  color: #ffffff !important;
+  padding: 1.25rem !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mapboxgl-scroll-zoom-blocker-show,
+.mapboxgl-touch-pan-blocker-show {
+  animation: quickGestureDismiss 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 5.5rem;
+  }
+}
+
+/* ─── Global Navbar Height (REM Based) ─── */
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 5.5rem;
+  }
+}
+
+/* ─── 14-inch & 15-inch Baseline ─── */
+@media (min-width: 1440px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* ─── Baseline (13-inch) ─── */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  html {
+    /* Baseline between 14px and 15px for 13-inch displays */
+    font-size: clamp(14px, 1.6dvh, 15px);
+  }
+}

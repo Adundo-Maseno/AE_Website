@@ -1,0 +1,24 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  sharp: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@next/env@16.4.5'
+  - '@next/eslint-plugin-next@16.4.5'
+  - '@next/swc-darwin-arm64@16.4.5'
+  - '@next/swc-darwin-x64@16.4.5'
+  - '@next/swc-linux-arm64-gnu@16.4.5'
+  - '@next/swc-linux-arm64-musl@16.4.5'
+  - '@next/swc-linux-x64-gnu@16.4.5'
+  - '@next/swc-linux-x64-musl@16.4.5'
+  - '@next/swc-win32-arm64-msvc@16.4.5'
+  - '@next/swc-win32-x64-msvc@16.4.5'
+  - eslint-config-next@16.4.5
+  - next@16.4.5
+overrides:
+  brace-expansion: latest
+  postcss: ^8.5.25
+  sharp: latest
+  '@types/react': 19.2.18
+  '@types/react-dom': 19.2.5

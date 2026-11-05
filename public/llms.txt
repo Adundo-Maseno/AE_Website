@@ -1,0 +1,37 @@
+# Agri Experience
+
+> Agri Experience is an international agricultural consulting firm transforming seed systems and agricultural value chains across 21 African countries. The organization works with development partners, governments, regulators, breeding institutions, and the private sector to strengthen food security and farmer livelihoods.
+
+Agri Experience operates across East, West, Central, and Southern Africa. Core services include seed systems development, digital agricultural tools, field project implementation, institutional capacity building, technical studies, and stakeholder convenings. The website is available in English and French.
+
+## Core Pages
+
+- [Home](https://agri-experience.com/en): Overview of services, interactive map of 21 operating countries, partner organizations, and impact statistics.
+- [About Us](https://agri-experience.com/en/about): Mission, vision, values, organizational journey timeline, and company background.
+- [Our Impact](https://agri-experience.com/en/our-impact): Impact areas, SDG alignment, impact stories, and verified metrics across African seed systems.
+- [Interactive Map](https://agri-experience.com/en/map): A detailed interactive map showcasing our projects and impact across 21 African countries.
+- [Our Team](https://agri-experience.com/en/our-team): Profiles of our leadership team, senior agronomists, and staff.
+- [Contact](https://agri-experience.com/en/contact): Contact form, inquiry information, and regional office locations.
+- [Newsletter](https://agri-experience.com/en/newsletter): Newsletter subscription for industry updates, publications, and seed sector analysis.
+
+## Our Work
+
+- [Our Work Overview](https://agri-experience.com/en/our-work): Comprehensive overview of our six specialized consulting practice areas.
+- [Capacity Building](https://agri-experience.com/en/our-work/capacity-building): Training, institutional strengthening, and curriculum development for seed sector stakeholders.
+- [Client Advisory](https://agri-experience.com/en/our-work/client-advisory): Strategic consulting, regulatory analysis, and market entry advisory for agricultural organizations.
+- [Digital Platforms](https://agri-experience.com/en/our-work/digital-platforms): Implementation and scaling of digital agricultural tools (such as MbeguChoice) for the seed sector.
+- [Project Implementation](https://agri-experience.com/en/our-work/project-implementation): Execution and management of complex agricultural field interventions.
+- [Stakeholder Convenings](https://agri-experience.com/en/our-work/stakeholder-convenings): Facilitation of multi-stakeholder roundtables, cross-border learning trips, and industry dialogues.
+- [Technical Studies](https://agri-experience.com/en/our-work/technical-studies): Rigorous scoping studies, market assessments, regulatory reviews, and seed sector research.
+
+## Resources & Insights
+
+- [Resources](https://agri-experience.com/en/resources): Downloadable publications, case studies, toolkits, and manuals for the agricultural sector.
+- [Insights](https://agri-experience.com/en/insights): Articles, news, research updates, and thought leadership on African agriculture and seed systems.
+- [Gallery](https://agri-experience.com/en/gallery): Photo gallery showcasing our field projects, stakeholder events, and team in action.
+
+## Connect
+
+- [LinkedIn](https://www.linkedin.com/company/agri-experience-ltd/): Follow Agri Experience on LinkedIn
+- [Email](mailto:info@agri-experience.com): General inquiries
+- [Nairobi Office](https://agri-experience.com/en/contact): Watermark Business Park, Spring Court, Karen, P.O. Box 1720 - 00606, Nairobi, Kenya

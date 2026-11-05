@@ -65,14 +65,11 @@
     "tw-animate-css": "1.3.3",
     "typescript": "5.7.3"
   },
-  "resolutions": {
-    "brace-expansion": "latest",
-    "postcss": "^8.5.25",
-    "sharp": "latest"
-  },
   "overrides": {
     "brace-expansion": "latest",
     "postcss": "^8.5.25",
-    "sharp": "latest"
+    "sharp": "latest",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5"
   }
 }

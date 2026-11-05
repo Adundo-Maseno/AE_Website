@@ -28,3 +28,4 @@ Write-Host "`n[3/3] Deploying to Cloudflare..." -ForegroundColor Cyan
 npx @opennextjs/cloudflare deploy
 
 Write-Host "`nDeployment completed successfully!" -ForegroundColor Green
+

@@ -21,3 +21,4 @@ echo -e "\n[3/3] Deploying to Cloudflare..."
 npx @opennextjs/cloudflare deploy
 
 echo -e "\nDeployment completed successfully!"
+

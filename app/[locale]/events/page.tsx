@@ -1,23 +1,27 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
 import { RollingText } from '@/components/ui/rolling-text'
 import {
   ArrowRight,
-  MapPin,
   Users,
   Search,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Globe,
   CheckCircle2,
   X,
+  Maximize2,
+  Camera,
 } from 'lucide-react'
 
 type FormatFilter = 'all' | 'roundtable' | 'learning_trip' | 'technical_forum' | 'field_day'
 type RegionFilter = 'all' | 'east' | 'southern' | 'west_central'
+type GalleryCategory = 'all' | 'roundtables' | 'field_days' | 'exchanges' | 'workshops'
 
 interface UpcomingEventItem {
   id: string
@@ -33,6 +37,7 @@ interface UpcomingEventItem {
   delegation: string
   partners: string
   themes: string[]
+  previewImage?: string
 }
 
 interface ArchiveEventItem {
@@ -49,6 +54,20 @@ interface ArchiveEventItem {
   metricBadge: string
   summary: string
   outcome: string
+  image: string
+}
+
+interface GalleryPhotoItem {
+  id: string
+  title: string
+  category: GalleryCategory
+  categoryLabel: string
+  image: string
+  location: string
+  country: string
+  flag: string
+  year: string
+  caption: string
 }
 
 export default function EventsPage() {
@@ -58,6 +77,10 @@ export default function EventsPage() {
   const [activeFormat, setActiveFormat] = useState<FormatFilter>('all')
   const [activeRegion, setActiveRegion] = useState<RegionFilter>('all')
   const [searchQuery, setSearchQuery] = useState('')
+
+  // Gallery state
+  const [activeGalleryCat, setActiveGalleryCat] = useState<GalleryCategory>('all')
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const upcomingEvents: UpcomingEventItem[] = [
     {
@@ -74,6 +97,7 @@ export default function EventsPage() {
       delegation: t('up_1_delegation'),
       partners: t('up_1_partners'),
       themes: [t('up_1_theme_1'), t('up_1_theme_2'), t('up_1_theme_3')],
+      previewImage: '/events-gallery/event-roundtable-nairobi.webp',
     },
     {
       id: 'up-2',
@@ -89,6 +113,7 @@ export default function EventsPage() {
       delegation: t('up_2_delegation'),
       partners: t('up_2_partners'),
       themes: [t('up_2_theme_1'), t('up_2_theme_2'), t('up_2_theme_3')],
+      previewImage: '/events-gallery/event-agrodealer-forum.webp',
     },
     {
       id: 'up-3',
@@ -104,6 +129,7 @@ export default function EventsPage() {
       delegation: t('up_3_delegation'),
       partners: t('up_3_partners'),
       themes: [t('up_3_theme_1'), t('up_3_theme_2'), t('up_3_theme_3')],
+      previewImage: '/events-gallery/event-executive-seminar.webp',
     },
     {
       id: 'up-4',
@@ -119,8 +145,137 @@ export default function EventsPage() {
       delegation: t('up_4_delegation'),
       partners: t('up_4_partners'),
       themes: [t('up_4_theme_1'), t('up_4_theme_2'), t('up_4_theme_3')],
+      previewImage: '/events-gallery/event-nursery-field-exchange.webp',
     },
   ]
+
+  const galleryPhotos: GalleryPhotoItem[] = [
+    {
+      id: 'p-1',
+      title: 'Seed Industry Private Sector Policy Roundtable',
+      category: 'roundtables',
+      categoryLabel: t('filter_roundtables'),
+      image: '/events-gallery/event-roundtable-nairobi.webp',
+      location: 'Nairobi, Kenya',
+      country: 'Kenya',
+      flag: '/flags/ke.png',
+      year: 'Multi-Year Policy Platform',
+      caption: 'Executive roundtable convening 100% of major commercial seed enterprises alongside KEPHIS and the Ministry of Agriculture, leading directly to the revision and gazetting of Kenya\'s Seeds Regulations.',
+    },
+    {
+      id: 'p-2',
+      title: 'Mazao Forums & 50 County Seed Field Days',
+      category: 'field_days',
+      categoryLabel: t('filter_field_days'),
+      image: '/events-gallery/event-field-day-kenya.webp',
+      location: 'Nakuru & 20 Counties, Kenya',
+      country: 'Kenya',
+      flag: '/flags/ke.png',
+      year: '50 Field Days · 3,000+ Attendees',
+      caption: 'County crop demonstration days connecting commercial seed breeders and agrodealer networks with smallholder farmers evaluating climate-smart maize and legume varieties.',
+    },
+    {
+      id: 'p-3',
+      title: 'WACCI PhD Plant Breeding & Seed Business Seminar',
+      category: 'workshops',
+      categoryLabel: t('filter_workshops'),
+      image: '/events-gallery/event-executive-seminar.webp',
+      location: 'Accra, Ghana',
+      country: 'Ghana',
+      flag: '/flags/gh.png',
+      year: 'Executive Management Seminars',
+      caption: 'Bridging academic plant breeding and agribusiness management: training PhD researchers and West African seed company directors on portfolio commercialization and unit economics.',
+    },
+    {
+      id: 'p-4',
+      title: 'Community Seed Multipliers & Agrodealer Convening',
+      category: 'field_days',
+      categoryLabel: t('filter_field_days'),
+      image: '/events-gallery/event-community-farmers.webp',
+      location: 'Western Kenya & Eastern Province, Zambia',
+      country: 'Kenya & Zambia',
+      flag: '/flags/ke.png',
+      year: 'Participatory Field Consultation',
+      caption: 'Consultative field session with local seed multipliers and retail agrodealers reviewing digital verification tags, variety performance, and last-mile input delivery.',
+    },
+    {
+      id: 'p-5',
+      title: 'National Seed Regulators & Policy Directors Summit',
+      category: 'roundtables',
+      categoryLabel: t('filter_roundtables'),
+      image: '/events-gallery/event-regulator-consultation.webp',
+      location: 'Nairobi & Dar es Salaam',
+      country: 'East Africa',
+      flag: '/flags/tz.png',
+      year: 'High-Level Regulatory Dialogue',
+      caption: 'Multi-country regulatory consultation on COMESA variety release harmonization, authorized private seed inspector accreditation, and cross-border trade facilitation.',
+    },
+    {
+      id: 'p-6',
+      title: 'Decentralized Nursery & Vegetative Propagation Field Day',
+      category: 'exchanges',
+      categoryLabel: t('filter_exchanges'),
+      image: '/events-gallery/event-nursery-field-exchange.webp',
+      location: 'Morogoro & Coast Region, Tanzania',
+      country: 'Tanzania',
+      flag: '/flags/tz.png',
+      year: 'Practical Field Exchange',
+      caption: 'On-site technical exchange examining disease-free planting materials for horticulture and root crops, quality declared seed systems, and commercial nursery business models.',
+    },
+    {
+      id: 'p-7',
+      title: 'County Agrodealer Association Governance Congress',
+      category: 'workshops',
+      categoryLabel: t('filter_workshops'),
+      image: '/events-gallery/event-agrodealer-forum.webp',
+      location: 'Eldoret & Kisumu, Kenya',
+      country: 'Kenya',
+      flag: '/flags/ke.png',
+      year: '16 Self-Governing Associations',
+      caption: 'Leadership retreat for 16 newly incorporated County Agrodealer Associations focusing on advocacy, bulk procurement, and anti-counterfeiting partnerships.',
+    },
+    {
+      id: 'p-8',
+      title: 'ESSETA Tanzania–Kenya Cross-Border Study Tour',
+      category: 'exchanges',
+      categoryLabel: t('filter_exchanges'),
+      image: '/events-gallery/event-pasture-fodder-tour.webp',
+      location: 'Arusha → Nairobi & Nakuru',
+      country: 'Tanzania & Kenya',
+      flag: '/flags/tz.png',
+      year: 'Cross-Border Study Tour',
+      caption: 'Tanzanian regulators (TOSCI, Ministry of Agriculture) and seed producers benchmarking authorized private seed inspection protocols and packaging verification in Kenya.',
+    },
+    {
+      id: 'p-9',
+      title: 'Semi-Arid Variety Release & Demonstration Day',
+      category: 'field_days',
+      categoryLabel: t('filter_field_days'),
+      image: '/events-gallery/event-variety-demo-trials.webp',
+      location: 'Machakos & Kitui, Kenya',
+      country: 'Kenya',
+      flag: '/flags/ke.png',
+      year: 'Drought-Tolerant Crop Trials',
+      caption: 'Comparative yield demonstrations showcasing climate-resilient sorghum, millet, and biofortified bean varieties directly to regional extension officers.',
+    },
+    {
+      id: 'p-10',
+      title: 'Pan-African Seed Production Corridors Scoping Mission',
+      category: 'exchanges',
+      categoryLabel: t('filter_exchanges'),
+      image: '/events-gallery/event-pan-african-landscape.webp',
+      location: 'East African Rift & Highland Corridors',
+      country: 'Regional',
+      flag: '/flags/ug.png',
+      year: 'Pan-African Geographic Scope',
+      caption: 'Field assessment of agro-ecological seed multiplication valleys and border transit corridors facilitating certified seed movement across sub-Saharan Africa.',
+    },
+  ]
+
+  const filteredPhotos = useMemo(() => {
+    if (activeGalleryCat === 'all') return galleryPhotos
+    return galleryPhotos.filter((p) => p.category === activeGalleryCat)
+  }, [activeGalleryCat])
 
   const archiveEvents: ArchiveEventItem[] = [
     {
@@ -137,6 +292,7 @@ export default function EventsPage() {
       metricBadge: t('arc_1_metric'),
       summary: t('arc_1_summary'),
       outcome: t('arc_1_outcome'),
+      image: '/events-gallery/event-roundtable-nairobi.webp',
     },
     {
       id: 'arc-2',
@@ -152,6 +308,7 @@ export default function EventsPage() {
       metricBadge: t('arc_2_metric'),
       summary: t('arc_2_summary'),
       outcome: t('arc_2_outcome'),
+      image: '/events-gallery/event-pasture-fodder-tour.webp',
     },
     {
       id: 'arc-3',
@@ -167,6 +324,7 @@ export default function EventsPage() {
       metricBadge: t('arc_3_metric'),
       summary: t('arc_3_summary'),
       outcome: t('arc_3_outcome'),
+      image: '/events-gallery/event-field-day-kenya.webp',
     },
     {
       id: 'arc-4',
@@ -182,6 +340,7 @@ export default function EventsPage() {
       metricBadge: t('arc_4_metric'),
       summary: t('arc_4_summary'),
       outcome: t('arc_4_outcome'),
+      image: '/events-gallery/event-regulator-consultation.webp',
     },
     {
       id: 'arc-5',
@@ -197,6 +356,7 @@ export default function EventsPage() {
       metricBadge: t('arc_5_metric'),
       summary: t('arc_5_summary'),
       outcome: t('arc_5_outcome'),
+      image: '/events-gallery/event-community-farmers.webp',
     },
     {
       id: 'arc-6',
@@ -212,6 +372,7 @@ export default function EventsPage() {
       metricBadge: t('arc_6_metric'),
       summary: t('arc_6_summary'),
       outcome: t('arc_6_outcome'),
+      image: '/events-gallery/event-agrodealer-forum.webp',
     },
     {
       id: 'arc-7',
@@ -227,6 +388,7 @@ export default function EventsPage() {
       metricBadge: t('arc_7_metric'),
       summary: t('arc_7_summary'),
       outcome: t('arc_7_outcome'),
+      image: '/events-gallery/event-variety-demo-trials.webp',
     },
     {
       id: 'arc-8',
@@ -242,6 +404,7 @@ export default function EventsPage() {
       metricBadge: t('arc_8_metric'),
       summary: t('arc_8_summary'),
       outcome: t('arc_8_outcome'),
+      image: '/events-gallery/event-executive-seminar.webp',
     },
   ]
 
@@ -276,6 +439,14 @@ export default function EventsPage() {
     { key: 'west_central', label: t('region_west_central') },
   ]
 
+  const galleryCategoryFilters: { key: GalleryCategory; label: string }[] = [
+    { key: 'all', label: t('filter_all_photos') },
+    { key: 'roundtables', label: t('filter_roundtables') },
+    { key: 'field_days', label: t('filter_field_days') },
+    { key: 'exchanges', label: t('filter_exchanges') },
+    { key: 'workshops', label: t('filter_workshops') },
+  ]
+
   const deliverySteps = [
     {
       step: '01',
@@ -298,6 +469,36 @@ export default function EventsPage() {
       desc: t('step_4_desc'),
     },
   ]
+
+  // Lightbox keyboard navigation
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return
+      if (e.key === 'Escape') {
+        setLightboxIndex(null)
+      } else if (e.key === 'ArrowRight') {
+        setLightboxIndex((prev) => (prev !== null ? (prev + 1) % filteredPhotos.length : 0))
+      } else if (e.key === 'ArrowLeft') {
+        setLightboxIndex((prev) =>
+          prev !== null ? (prev - 1 + filteredPhotos.length) % filteredPhotos.length : 0
+        )
+      }
+    },
+    [lightboxIndex, filteredPhotos.length]
+  )
+
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      window.addEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [lightboxIndex, handleKeyDown])
 
   const eventsJsonLd = {
     '@context': 'https://schema.org',
@@ -330,6 +531,8 @@ export default function EventsPage() {
       },
     })),
   }
+
+  const activeLightboxItem = lightboxIndex !== null ? filteredPhotos[lightboxIndex] : null
 
   return (
     <main className="bg-[#F8F6F0] min-h-[100dvh]">
@@ -408,13 +611,128 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* ===== 2. 2026 UPCOMING CONVENINGS SCHEDULE LEDGER ===== */}
+      {/* ===== 2. LIVELY PHOTO GALLERIES (OUR EVENTS IN ACTION) ===== */}
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-white border-b border-stone-200/80">
+        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 lg:mb-12 gap-6">
+            <div>
+              <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1A4D2E] mb-2">
+                <Camera size={15} />
+                <span>{t('gallery_section_kicker')}</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.15]">
+                {t('gallery_title')}
+              </h2>
+            </div>
+            <p className="text-base sm:text-lg text-[#2A3830] max-w-md leading-[1.6]">
+              {t('gallery_desc')}
+            </p>
+          </div>
+
+          {/* Gallery Category Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mb-8" role="group" aria-label="Filter photo galleries">
+            {galleryCategoryFilters.map((cat) => {
+              const active = activeGalleryCat === cat.key
+              return (
+                <button
+                  key={cat.key}
+                  type="button"
+                  onClick={() => setActiveGalleryCat(cat.key)}
+                  className={`group relative overflow-hidden inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-semibold transition-[transform,background-color,color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] cursor-pointer border ${
+                    active
+                      ? 'bg-[#0F1F15] border-[#0F1F15] text-white'
+                      : 'bg-[#F8F6F0] border-stone-200/80 text-[#0F1F15] hover:border-[#1A4D2E]/40 hover:bg-stone-100'
+                  }`}
+                >
+                  <RollingText>{cat.label}</RollingText>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Lively Asymmetric Photo Gallery Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+            {filteredPhotos.map((photo, index) => (
+              <article
+                key={photo.id}
+                onClick={() => setLightboxIndex(index)}
+                className="consultancy-card group cursor-pointer flex flex-col overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A4D2E]"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setLightboxIndex(index)
+                  }
+                }}
+              >
+                {/* Photo Container with Realistic Aspect Ratio and Smooth Zoom */}
+                <div className="relative w-full aspect-[16/11] bg-stone-100 overflow-hidden">
+                  <Image
+                    src={photo.image}
+                    alt={photo.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover object-center transform group-hover:scale-105 transition-transform duration-500 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F1F15]/85 via-[#0F1F15]/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+
+                  {/* Top Badge: Category */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                    <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#0F1F15]/75 backdrop-blur-md text-white border border-white/20">
+                      {photo.categoryLabel}
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-md text-[#0F1F15] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm">
+                      <Maximize2 size={14} />
+                    </div>
+                  </div>
+
+                  {/* Bottom Text Overlay */}
+                  <div className="absolute bottom-3 left-3 right-3 text-white pointer-events-none">
+                    <div className="flex items-center gap-2 text-xs font-medium text-stone-200 mb-1">
+                      <Image
+                        src={photo.flag}
+                        alt={photo.country}
+                        width={18}
+                        height={12}
+                        className="rounded-[2px] border border-white/30"
+                      />
+                      <span>{photo.location}</span>
+                    </div>
+                    <h3 className="font-serif font-bold text-base sm:text-lg text-white leading-snug line-clamp-1">
+                      {photo.title}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Card Caption & Field Context */}
+                <div className="p-5 flex flex-col justify-between flex-grow bg-white">
+                  <p className="text-[13px] sm:text-sm text-[#2A3830] leading-relaxed line-clamp-2 mb-3">
+                    {photo.caption}
+                  </p>
+                  <div className="flex items-center justify-between pt-3 border-t border-stone-100 text-xs font-semibold text-[#1A4D2E]">
+                    <span className="tabular-nums text-[#46584D] font-normal">
+                      {photo.year}
+                    </span>
+                    <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-200">
+                      <span>{t('gallery_open_lightbox')}</span>
+                      <ArrowRight size={13} />
+                    </span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 3. 2026 UPCOMING CONVENINGS SCHEDULE LEDGER ===== */}
       <section
         id="upcoming-schedule"
         className="w-full py-12 sm:py-16 lg:py-20 bg-[#F8F6F0] border-b border-stone-200/80 scroll-mt-20"
       >
         <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          {/* Section Header (Consistent Site Pattern) */}
+          {/* Section Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 lg:mb-12 gap-6">
             <div>
               <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1A4D2E] mb-2">
@@ -553,6 +871,17 @@ export default function EventsPage() {
                         </div>
 
                         <div className="lg:col-span-3 flex flex-col justify-between bg-white p-5 rounded-xl border border-stone-200/80 gap-4">
+                          {ev.previewImage && (
+                            <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-stone-200">
+                              <Image
+                                src={ev.previewImage}
+                                alt={ev.title}
+                                fill
+                                sizes="300px"
+                                className="object-cover"
+                              />
+                            </div>
+                          )}
                           <div className="space-y-1.5">
                             <p className="font-serif font-bold text-base text-[#0F1F15]">
                               {t('inquire_box_title')}
@@ -579,7 +908,7 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* ===== 3. FLAGSHIP POLICY CASE STUDY (DARK FOREST SECTION) ===== */}
+      {/* ===== 4. FLAGSHIP POLICY CASE STUDY (DARK FOREST SECTION) ===== */}
       <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#0F1F15] text-white border-t border-b border-[#2A4735]">
         <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -646,10 +975,10 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* ===== 4. PAN-AFRICAN CONVENINGS ARCHIVE (FACETED FILTER LEDGER) ===== */}
+      {/* ===== 5. PAN-AFRICAN CONVENINGS ARCHIVE (FACETED FILTER WITH PHOTO THUMBNAILS) ===== */}
       <section className="w-full py-12 sm:py-16 lg:py-20 bg-[#F8F6F0] border-b border-stone-200/80">
         <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          {/* Section Header (Consistent Site Pattern) */}
+          {/* Section Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 lg:mb-12 gap-6">
             <div>
               <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1A4D2E] mb-2">
@@ -664,7 +993,7 @@ export default function EventsPage() {
             </p>
           </div>
 
-          {/* Faceted Filter Bar (Matching Resources Page Filter Bar) */}
+          {/* Faceted Filter Bar */}
           <div className="bg-white rounded-2xl border border-stone-200/90 p-5 sm:p-6 mb-8 sm:mb-10 shadow-sm space-y-4">
             <div className="flex flex-col lg:flex-row gap-4 lg:items-center justify-between">
               {/* Format Pills */}
@@ -746,7 +1075,7 @@ export default function EventsPage() {
             </div>
           </div>
 
-          {/* Archive Results Grid */}
+          {/* Archive Results Grid with Photo Thumbnails */}
           {filteredArchive.length === 0 ? (
             <div className="consultancy-card p-10 text-center space-y-4">
               <p className="font-serif font-bold text-xl text-[#0F1F15]">
@@ -772,18 +1101,33 @@ export default function EventsPage() {
               {filteredArchive.map((item) => (
                 <article
                   key={item.id}
-                  className="consultancy-card flex flex-col justify-between p-6 sm:p-7 lg:p-8 rounded-2xl group"
+                  className="consultancy-card flex flex-col justify-between overflow-hidden rounded-2xl group"
                 >
-                  <div className="space-y-4">
-                    {/* Top Meta Bar */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                      <div className="flex items-center gap-2">
+                  {/* Photo Banner */}
+                  <div className="relative w-full aspect-[16/9] bg-stone-100 overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <span className="absolute bottom-2.5 left-3 px-2.5 py-0.5 rounded-full bg-[#0F1F15]/80 backdrop-blur-md border border-white/20 text-white font-semibold text-[11px]">
+                      {item.formatLabel}
+                    </span>
+                  </div>
+
+                  <div className="p-6 sm:p-7 flex flex-col justify-between flex-grow">
+                    <div className="space-y-3">
+                      {/* Top Meta Bar */}
+                      <div className="flex items-center gap-2 text-xs">
                         <Image
                           src={item.flag}
                           alt={item.location}
-                          width={20}
-                          height={14}
-                          className="rounded-[2px] border border-stone-200"
+                          width={18}
+                          height={12}
+                          className="rounded-[2px] border border-stone-200 shrink-0"
                         />
                         <span className="font-semibold text-[#0F1F15]">
                           {item.location}
@@ -794,13 +1138,7 @@ export default function EventsPage() {
                         </span>
                       </div>
 
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#F8F6F0] border border-stone-200/80 text-[#1A4D2E] font-semibold text-[11px]">
-                        {item.formatLabel}
-                      </span>
-                    </div>
-
-                    {/* Title & Summary */}
-                    <div className="space-y-2">
+                      {/* Title & Summary */}
                       <h3 className="text-[17px] sm:text-lg font-serif font-bold text-[#0F1F15] group-hover:text-[#1A4D2E] leading-snug transition-colors">
                         {item.title}
                       </h3>
@@ -808,30 +1146,30 @@ export default function EventsPage() {
                         {item.summary}
                       </p>
                     </div>
-                  </div>
 
-                  {/* Bottom Outcome & Partners Ledger */}
-                  <div className="pt-4 border-t border-stone-100 mt-5 space-y-2 text-xs sm:text-[13px]">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-[#1A4D2E]">
-                        {item.metricBadge}
-                      </span>
-                      <span className="text-xs text-[#46584D]">
-                        {item.regionLabel}
-                      </span>
+                    {/* Bottom Outcome & Partners */}
+                    <div className="pt-4 border-t border-stone-100 mt-5 space-y-2 text-xs sm:text-[13px]">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-semibold text-[#1A4D2E]">
+                          {item.metricBadge}
+                        </span>
+                        <span className="text-xs text-[#46584D]">
+                          {item.regionLabel}
+                        </span>
+                      </div>
+                      <p className="text-[#2A3830] leading-relaxed">
+                        <strong className="text-[#0F1F15] font-semibold">
+                          {t('label_outcome')}:{' '}
+                        </strong>
+                        {item.outcome}
+                      </p>
+                      <p className="text-xs text-[#46584D]">
+                        <strong className="text-[#0F1F15] font-medium">
+                          {t('label_partners')}:{' '}
+                        </strong>
+                        {item.partners}
+                      </p>
                     </div>
-                    <p className="text-[#2A3830] leading-relaxed">
-                      <strong className="text-[#0F1F15] font-semibold">
-                        {t('label_outcome')}:{' '}
-                      </strong>
-                      {item.outcome}
-                    </p>
-                    <p className="text-xs text-[#46584D]">
-                      <strong className="text-[#0F1F15] font-medium">
-                        {t('label_partners')}:{' '}
-                      </strong>
-                      {item.partners}
-                    </p>
                   </div>
                 </article>
               ))}
@@ -840,10 +1178,10 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* ===== 5. 4-STAGE METHODOLOGY SECTION ===== */}
+      {/* ===== 6. 4-STAGE METHODOLOGY SECTION ===== */}
       <section className="w-full py-14 sm:py-18 lg:py-24 bg-white border-b border-stone-200/80">
         <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          {/* Section Header (Consistent Site Pattern) */}
+          {/* Section Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 lg:mb-14 gap-6">
             <div>
               <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1A4D2E] mb-2">
@@ -881,7 +1219,7 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* ===== 6. SITE-WIDE EXECUTIVE CTA ===== */}
+      {/* ===== 7. SITE-WIDE EXECUTIVE CTA ===== */}
       <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#0F1F15] text-white border-t border-[#2A4735]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 text-center space-y-6 lg:space-y-7">
           <h2 className="text-white text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight">
@@ -909,6 +1247,144 @@ export default function EventsPage() {
           </div>
         </div>
       </section>
+
+      {/* ===== 8. ACCESSIBLE PHOTO LIGHTBOX MODAL ===== */}
+      {activeLightboxItem && lightboxIndex !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeLightboxItem.title}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-6 lg:p-8 animate-fadeIn"
+          onClick={() => setLightboxIndex(null)}
+        >
+          {/* Main Modal Window */}
+          <div
+            className="relative w-full max-w-5xl max-h-[92vh] bg-[#0F1F15] border border-stone-700/60 rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Bar */}
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-stone-800 bg-[#0F1F15]/90 text-white z-10">
+              <div className="flex items-center gap-2.5 text-xs sm:text-sm">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#1A4D2E] text-white font-semibold text-xs">
+                  {activeLightboxItem.categoryLabel}
+                </span>
+                <span className="text-stone-400">·</span>
+                <span className="text-stone-300 font-medium tabular-nums">
+                  {lightboxIndex + 1} / {filteredPhotos.length}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {/* Previous / Next on Header */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    setLightboxIndex((prev) =>
+                      prev !== null
+                        ? (prev - 1 + filteredPhotos.length) % filteredPhotos.length
+                        : 0
+                    )
+                  }
+                  aria-label={t('gallery_prev')}
+                  className="p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setLightboxIndex((prev) =>
+                      prev !== null ? (prev + 1) % filteredPhotos.length : 0
+                    )
+                  }
+                  aria-label={t('gallery_next')}
+                  className="p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer"
+                >
+                  <ChevronRight size={20} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLightboxIndex(null)}
+                  aria-label={t('gallery_close')}
+                  className="p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer ml-1"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+            </div>
+
+            {/* Photo View Area */}
+            <div className="relative w-full h-[50vh] sm:h-[60vh] bg-black/60 flex items-center justify-center overflow-hidden">
+              <Image
+                src={activeLightboxItem.image}
+                alt={activeLightboxItem.title}
+                fill
+                priority
+                sizes="(max-width: 1200px) 100vw, 1200px"
+                className="object-contain"
+              />
+
+              {/* In-photo Side Navigation Arrows for Large Screens */}
+              <button
+                type="button"
+                onClick={() =>
+                  setLightboxIndex((prev) =>
+                    prev !== null
+                      ? (prev - 1 + filteredPhotos.length) % filteredPhotos.length
+                      : 0
+                  )
+                }
+                aria-label={t('gallery_prev')}
+                className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#1A4D2E] items-center justify-center transition-colors cursor-pointer border border-white/20"
+              >
+                <ChevronLeft size={22} />
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setLightboxIndex((prev) =>
+                    prev !== null ? (prev + 1) % filteredPhotos.length : 0
+                  )
+                }
+                aria-label={t('gallery_next')}
+                className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#1A4D2E] items-center justify-center transition-colors cursor-pointer border border-white/20"
+              >
+                <ChevronRight size={22} />
+              </button>
+            </div>
+
+            {/* Bottom Caption & Field Context */}
+            <div className="p-5 sm:p-6 bg-[#0F1F15] text-white border-t border-stone-800 space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-300">
+                  <Image
+                    src={activeLightboxItem.flag}
+                    alt={activeLightboxItem.country}
+                    width={20}
+                    height={14}
+                    className="rounded-[2px] border border-white/20"
+                  />
+                  <span className="font-medium text-white">
+                    {activeLightboxItem.location}
+                  </span>
+                  <span className="text-stone-500">·</span>
+                  <span className="text-stone-400 tabular-nums">
+                    {activeLightboxItem.year}
+                  </span>
+                </div>
+              </div>
+
+              <h3 className="font-serif font-bold text-lg sm:text-xl text-white">
+                {activeLightboxItem.title}
+              </h3>
+
+              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed max-w-3xl">
+                {activeLightboxItem.caption}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

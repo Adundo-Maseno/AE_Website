@@ -1468,6 +1468,18 @@
     "cta_bottom_btn_1": "Organiser une Rencontre",
     "cta_bottom_btn_2": "Pratique Rencontres Multipartites",
     "title": "Événements & Rencontres",
-    "subtitle": "Tables rondes politiques de haut niveau, ateliers techniques et voyages d'étude transfrontaliers pour aligner régulateurs, sélectionneurs et entreprises semencières africaines."
+    "subtitle": "Tables rondes politiques de haut niveau, ateliers techniques et voyages d'étude transfrontaliers pour aligner régulateurs, sélectionneurs et entreprises semencières africaines.",
+    "gallery_section_kicker": "Galerie Photos",
+    "gallery_title": "Nos Événements et Moments de Terrain en Images",
+    "gallery_desc": "Instantanés visuels de nos tables rondes politiques, voyages d'étude transfrontaliers, journées de terrain et ateliers d'entreprises semencières en Afrique.",
+    "filter_all_photos": "Tous les Moments",
+    "filter_roundtables": "Tables Rondes",
+    "filter_field_days": "Journées de Terrain & Démonstrations",
+    "filter_exchanges": "Échanges Transfrontaliers",
+    "filter_workshops": "Ateliers Techniques",
+    "gallery_open_lightbox": "Voir la photo et les notes de terrain",
+    "gallery_close": "Fermer la visionneuse",
+    "gallery_prev": "Photo précédente",
+    "gallery_next": "Photo suivante"
   }
 }

@@ -1456,6 +1456,18 @@
     "cta_bottom_btn_1": "Commission a Convening",
     "cta_bottom_btn_2": "Stakeholder Convenings Practice",
     "title": "Events & Convenings",
-    "subtitle": "High-stakes policy roundtables, technical workshops, and cross-border learning exchanges that align African regulators, breeders, and commercial enterprises to transform seed systems."
+    "subtitle": "High-stakes policy roundtables, technical workshops, and cross-border learning exchanges that align African regulators, breeders, and commercial enterprises to transform seed systems.",
+    "gallery_section_kicker": "Photo Galleries",
+    "gallery_title": "Events & Field Moments in Action",
+    "gallery_desc": "Visual snapshots from our policy roundtables, cross-border study visits, agrodealer field days, and seed enterprise workshops across sub-Saharan Africa.",
+    "filter_all_photos": "All Moments",
+    "filter_roundtables": "Policy Roundtables",
+    "filter_field_days": "Field Days & Demos",
+    "filter_exchanges": "Cross-Border Exchanges",
+    "filter_workshops": "Technical Workshops",
+    "gallery_open_lightbox": "View photo & field notes",
+    "gallery_close": "Close photo viewer",
+    "gallery_prev": "Previous photo",
+    "gallery_next": "Next photo"
   }
 }

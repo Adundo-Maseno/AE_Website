@@ -44,3 +44,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'An unexpected server error occurred' }, { status: 500 })
   }
 }
+

@@ -92,3 +92,4 @@ export async function getCurrentAdmin(): Promise<AdminUser | null> {
   if (!token) return null
   return verifySessionToken(token)
 }
+

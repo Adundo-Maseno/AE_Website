@@ -261,3 +261,4 @@ export function getAllPageSections(pageKey: string): { en: any; fr: any } {
     fr: getPageSectionData(pageKey, 'main', 'fr'),
   }
 }
+

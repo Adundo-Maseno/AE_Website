@@ -137,7 +137,7 @@ export default function StakeholderConveningsPage() {
 
   return (
     <>
-      <main className="bg-white min-h-[100dvh]">
+      <main className="bg-white min-h-[100dvh]" suppressHydrationWarning>
         {/* ===== HERO ===== */}
         <section className="relative w-full pt-16 lg:pt-28 pb-20 overflow-hidden">
           {/* Decorative background — connected dots pattern */}

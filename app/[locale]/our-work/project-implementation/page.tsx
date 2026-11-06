@@ -163,7 +163,7 @@ export default function ProjectImplementationPage() {
 
   return (
     <>
-      <main className="bg-white min-h-[100dvh]">
+      <main className="bg-white min-h-[100dvh]" suppressHydrationWarning>
         {/* ─── Hero ─── */}
         <section className="relative w-full pt-16 lg:pt-28 pb-20 overflow-hidden">
           {/* Background blobs */}

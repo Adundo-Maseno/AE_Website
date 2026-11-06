@@ -112,7 +112,7 @@ export default function ClientAdvisoryPage() {
           )
         }
       })
-      .catch(() => {})
+      .catch(() => { })
 
     return () => {
       isMounted = false
@@ -121,7 +121,7 @@ export default function ClientAdvisoryPage() {
 
   return (
     <>
-      <main className="bg-white min-h-[100dvh]">
+      <main className="bg-white min-h-[100dvh]" suppressHydrationWarning>
         {/* ─── Hero ─── */}
         <section className="relative w-full pt-16 lg:pt-28 pb-20 overflow-hidden">
           {/* Luxury background accents */}
@@ -215,9 +215,8 @@ export default function ClientAdvisoryPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className={`rounded-[32px] border border-mist hover:border-[#435826]/30 hover:bg-white hover:shadow-xl transition-[background-color,border-color,box-shadow] duration-200 p-6 sm:p-8 lg:p-10 group relative overflow-hidden ${
-                    idx % 2 === 0 ? 'bg-mist' : 'bg-[#F4F7EE]/40'
-                  }`}
+                  className={`rounded-[32px] border border-mist hover:border-[#435826]/30 hover:bg-white hover:shadow-xl transition-[background-color,border-color,box-shadow] duration-200 p-6 sm:p-8 lg:p-10 group relative overflow-hidden ${idx % 2 === 0 ? 'bg-mist' : 'bg-[#F4F7EE]/40'
+                    }`}
                 >
                   {/* Subtle olive corner accent */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-[#435826]/[0.04] rounded-bl-[80px] pointer-events-none group-hover:bg-[#435826]/[0.08] transition duration-300" />

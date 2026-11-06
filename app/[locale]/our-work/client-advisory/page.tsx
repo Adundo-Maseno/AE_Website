@@ -2,12 +2,15 @@
 import { RollingText } from '@/components/ui/rolling-text';
 
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ExternalLink } from 'lucide-react'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 export default function ClientAdvisoryPage() {
   const t = useTranslations('ClientAdvisory')
+  const locale = useLocale()
 
   const advisoryServices = [
     {
@@ -62,6 +65,60 @@ export default function ClientAdvisoryPage() {
     },
   ]
 
+  const defaultProjects = [
+    {
+      title: 'National Seed Policy & Regulatory Reform Advisory',
+      tag: 'Policy Advisory',
+      description: 'Guiding ministries of agriculture, donors, and regulatory authorities on seed law revisions, private inspection accreditation, and variety release protocols.',
+      image: '/platforms/seed-sector-platform-kenya.png',
+      imageType: 'screenshot' as const,
+      link: '/contact',
+    },
+    {
+      title: 'Early Generation Seed (EGS) Commercial Financing Models',
+      tag: 'Financial Modeling',
+      description: 'Advising institutional partners and research institutes on pricing structures, licensing royalties, and revolving fund mechanisms.',
+      image: '/team/denis2.jpg',
+      imageType: 'photo' as const,
+      link: '/contact',
+    },
+    {
+      title: 'Public-Private Commercial Licensing Frameworks',
+      tag: 'Commercial Strategy',
+      description: 'Structuring commercial licensing agreements between international CGIAR breeders and domestic African seed companies.',
+      image: '/team/aline.png',
+      imageType: 'photo' as const,
+      link: '/contact',
+    },
+  ]
+
+  const [projectList, setProjectList] = useState(defaultProjects)
+
+  useEffect(() => {
+    let isMounted = true
+    fetch(`/api/practice-projects?slug=client-advisory&locale=${locale}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (isMounted && data?.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+          setProjectList(
+            data.projects.map((p: any) => ({
+              title: p.title,
+              tag: p.tag || 'Advisory Mandate',
+              description: p.description,
+              image: p.image || '/platforms/seed-sector-platform-kenya.png',
+              imageType: (p.imageType || 'screenshot') as any,
+              link: p.link || '/contact',
+            }))
+          )
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      isMounted = false
+    }
+  }, [locale])
+
   return (
     <>
       <main className="bg-white min-h-[100dvh]">
@@ -112,19 +169,19 @@ export default function ClientAdvisoryPage() {
                       href="/contact"
                       className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-[#435826] text-white rounded-full font-semibold text-sm hover:bg-[#34441B] transition-colors shadow-sm shadow-[#435826]/20"
                     >
-<RollingText className="gap-2">
-                      {t('req_advisory')}
-                      <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                    </RollingText>
-</Link>
+                      <RollingText className="gap-2">
+                        {t('req_advisory')}
+                        <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                      </RollingText>
+                    </Link>
                     <Link
                       href="/our-work"
                       className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-[#435826]/30 text-[#435826] rounded-full font-semibold text-sm hover:bg-[#F4F7EE] transition-colors"
                     >
-<RollingText className="gap-2">
-                      {t('our_work')}
-                    </RollingText>
-</Link>
+                      <RollingText className="gap-2">
+                        {t('our_work')}
+                      </RollingText>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
@@ -289,6 +346,78 @@ export default function ClientAdvisoryPage() {
           </div>
         </section>
 
+        {/* ─── Featured Advisory Projects & Engagements (Dynamic CMS) ─── */}
+        <section className="w-full py-20 bg-white">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mb-12"
+            >
+              <div className="inline-block px-3 py-1 bg-[#435826]/10 text-[#435826] text-xs font-semibold rounded-full uppercase tracking-wider mb-3">
+                Strategic Engagements
+              </div>
+              <h2
+                className="font-serif font-bold text-deep-forest tracking-tight"
+                style={{ fontSize: 'clamp(1.75rem, 1.3rem + 2vw, 3rem)' }}
+              >
+                Featured Advisory Mandates
+              </h2>
+              <p className="text-charcoal/70 max-w-2xl mt-2 text-base">
+                Discover our recent high-level advisory assignments with governments, development partners, and commercial seed stakeholders.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projectList.map((proj, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group flex flex-col bg-[#FAF9F5] rounded-3xl border border-black/[0.06] overflow-hidden hover:border-[#435826]/40 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative h-52 w-full bg-slate-100 overflow-hidden">
+                    <Image
+                      src={proj.image}
+                      alt={proj.title}
+                      fill
+                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-[#435826] shadow-sm">
+                      {proj.tag}
+                    </div>
+                  </div>
+
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-serif font-bold text-lg text-deep-forest mb-2 group-hover:text-[#435826] transition-colors">
+                        {proj.title}
+                      </h3>
+                      <p className="text-sm text-charcoal/75 leading-relaxed">
+                        {proj.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-6 mt-4 border-t border-black/[0.05]">
+                      <Link
+                        href={proj.link}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#435826] hover:text-[#34441B] transition-colors"
+                      >
+                        <span>Learn More</span>
+                        <ArrowRight size={14} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-200" />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ─── CTA Section ─── */}
         <section className="w-full">
           <div className="w-full bg-deep-forest overflow-hidden relative">
@@ -332,19 +461,19 @@ export default function ClientAdvisoryPage() {
                     href="/contact"
                     className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-[#435826] text-white rounded-full font-semibold hover:bg-[#34441B] hover:scale-[1.02] hover:shadow-xl hover:shadow-[#435826]/20 transition-all"
                   >
-<RollingText className="gap-2">
-                    {t('cta_btn1')}
-                    <ArrowRight size={18} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('cta_btn1')}
+                      <ArrowRight size={18} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                    </RollingText>
+                  </Link>
                   <Link
                     href="/our-work"
                     className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-transparent border border-white/20 text-white rounded-full font-semibold hover:bg-white/5 transition-all"
                   >
-<RollingText className="gap-2">
-                    {t('cta_btn2')}
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('cta_btn2')}
+                    </RollingText>
+                  </Link>
                 </div>
               </motion.div>
             </div>

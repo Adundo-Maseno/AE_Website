@@ -15,10 +15,13 @@ import {
   Shield,
 } from 'lucide-react'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 export default function ProjectImplementationPage() {
   const t = useTranslations('ProjectImplementation')
+  const locale = useLocale()
 
   const implementationAreas = [
     {
@@ -102,26 +105,74 @@ export default function ProjectImplementationPage() {
       description: t('processSteps.3.description'),
       icon: ClipboardList,
     },
+  ]
+
+  const defaultProjects = [
     {
-      step: '05',
-      title: t('processSteps.4.title'),
-      description: t('processSteps.4.description'),
-      icon: CheckCircle2,
+      title: 'The African Seed Access Index (TASAI) Rollout',
+      tag: 'Multi-Country Implementation',
+      description: 'Designed and implemented pilot field methodologies measuring seed industry vibrancy and regulatory efficiency across target African countries.',
+      image: '/platforms/africa-crop-variety-catalogue.png',
+      imageType: 'screenshot' as const,
+      link: '/our-work/project-implementation',
+    },
+    {
+      title: 'National Scratch-Off Seed Labeling Implementation',
+      tag: 'Regulatory Field Ops',
+      description: 'Field-level technical implementation of tamper-proof security labels in Kenya, establishing an operational verification pipeline.',
+      image: '/m3-logo.svg',
+      imageType: 'logo' as const,
+      link: '/resources/Case-Study-Scratch-Off-Labels-for-Certified-Seed-in-Kenya.pdf',
+    },
+    {
+      title: 'Crop Variety Performance Trials & Field Days',
+      tag: 'Field Demonstrations',
+      description: 'Multi-location farmer demonstration plots comparing newly released climate-smart hybrids against legacy cultivars.',
+      image: '/platforms/tanzania-agri-inputs-platform.png',
+      imageType: 'screenshot' as const,
+      link: '/our-work/project-implementation',
     },
   ]
+
+  const [projectList, setProjectList] = useState(defaultProjects)
+
+  useEffect(() => {
+    let isMounted = true
+    fetch(`/api/practice-projects?slug=project-implementation&locale=${locale}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (isMounted && data?.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+          setProjectList(
+            data.projects.map((p: any) => ({
+              title: p.title,
+              tag: p.tag || 'Field Implementation',
+              description: p.description,
+              image: p.image || '/platforms/africa-crop-variety-catalogue.png',
+              imageType: (p.imageType || 'screenshot') as any,
+              link: p.link || '/contact',
+            }))
+          )
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      isMounted = false
+    }
+  }, [locale])
 
   return (
     <>
       <main className="bg-white min-h-[100dvh]">
         {/* ─── Hero ─── */}
         <section className="relative w-full pt-16 lg:pt-28 pb-20 overflow-hidden">
-          {/* Background accents */}
-          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-deep-forest/[0.04] rounded-full blur-[120px] -translate-y-1/3 translate-x-1/4 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-green/[0.03] rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 pointer-events-none" />
+          {/* Background blobs */}
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-green/5 rounded-full blur-[120px] -translate-y-1/3 translate-x-1/4 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary-green/3 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 pointer-events-none" />
 
           <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
             <div className="flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-16">
-              {/* Left */}
+              {/* Left: Title */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -133,73 +184,67 @@ export default function ProjectImplementationPage() {
                   style={{ fontSize: 'clamp(1.875rem, 1.4rem + 2.4vw, 4.5rem)' }}
                   dangerouslySetInnerHTML={{ __html: t('hero_title') }}
                 />
-                <p className="text-deep-forest font-semibold text-base sm:text-lg tracking-wide">
+                <p className="text-primary-green font-semibold text-base sm:text-lg tracking-wide">
                   {t('hero_subtitle')}
                 </p>
               </motion.div>
 
-              {/* Right */}
+              {/* Right: Description */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="flex-1 lg:pt-16 relative"
               >
-                <div className="hidden lg:block absolute left-0 top-16 bottom-0 w-px bg-deep-forest/10" />
-                <div className="lg:pl-10 space-y-4">
-                  <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal">
-                    {t('hero_desc1')}
-                  </p>
-                  <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal">
-                    {t('hero_desc2')}
-                  </p>
-                  <div className="mt-8 flex flex-wrap gap-4">
-                    <Link
-                      href="/contact"
-                      className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-deep-forest text-white rounded-full font-semibold text-sm hover:opacity-90 transition-opacity"
-                    >
-                      <RollingText className="gap-2">
-                        {t('req_partnership')}
-                        <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                      </RollingText>
-                    </Link>
-                    <Link
-                      href="/our-work"
-                      className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-deep-forest/20 text-deep-forest rounded-full font-semibold text-sm hover:bg-deep-forest/5 transition-colors"
-                    >
-                      <RollingText className="gap-2">
-                        {t('our_work')}
-                      </RollingText>
-                    </Link>
-                  </div>
+                <div className="hidden lg:block absolute left-0 top-16 bottom-0 w-px bg-primary-green/20" />
+                <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal lg:pl-10">
+                  {t('hero_desc')}
+                </p>
+                <div className="lg:pl-10 mt-8 flex flex-wrap gap-4">
+                  <Link
+                    href="/contact"
+                    className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-primary-green text-white rounded-full font-semibold text-sm hover:opacity-90 transition-opacity"
+                  >
+                    <RollingText className="gap-2">
+                      {t('req_impl')}
+                      <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                    </RollingText>
+                  </Link>
+                  <Link
+                    href="/our-work"
+                    className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-charcoal/20 text-deep-forest rounded-full font-semibold text-sm hover:bg-mist transition-colors"
+                  >
+                    <RollingText className="gap-2">
+                      {t('our_work')}
+                    </RollingText>
+                  </Link>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-
-        {/* ─── Key Implementation Areas ─── */}
+        {/* ─── Implementation Areas Grid ─── */}
         <section className="w-full pb-16">
           <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.8 }}
               className="max-w-2xl mb-12 lg:mb-16"
             >
               <h2
                 className="font-serif font-bold text-deep-forest tracking-tight pb-2"
                 style={{ fontSize: 'clamp(1.75rem, 1.3rem + 2vw, 3rem)' }}
               >
-                {t('ia_title')}
+                {t('areas_title')}
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {implementationAreas.map((area, idx) => {
-                const Icon = area.icon
+                const IconComponent = area.icon
                 return (
                   <motion.div
                     key={idx}
@@ -207,26 +252,25 @@ export default function ProjectImplementationPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className="group rounded-[32px] bg-mist border border-mist hover:border-primary-green/20 hover:bg-white hover:shadow-xl transition-[background-color,border-color,box-shadow] duration-200 p-8 lg:p-10 flex flex-col relative overflow-hidden"
+                    className="group bg-mist rounded-[28px] border border-transparent hover:border-primary-green/20 p-8 flex flex-col justify-between hover:bg-white hover:shadow-xl transition-[background-color,border-color,box-shadow] duration-200"
                   >
-                    {/* Icon */}
-                    <div className="w-14 h-14 rounded-2xl bg-primary-green/10 flex items-center justify-center text-primary-green mb-6 group-hover:bg-primary-green group-hover:text-white transition duration-200">
-                      <Icon size={26} />
+                    <div>
+                      <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-primary-green mb-6 group-hover:bg-primary-green group-hover:text-white transition-colors duration-200">
+                        <IconComponent size={24} />
+                      </div>
+                      <h3 className="text-xl font-serif font-bold text-deep-forest mb-4">
+                        {area.title}
+                      </h3>
                     </div>
-
-                    <h3 className="text-xl font-serif font-bold text-deep-forest mb-4 tracking-tight pb-2">
-                      {area.title}
-                    </h3>
-
-                    <ul className="space-y-3 flex-1">
-                      {area.points.map((point, i) => (
+                    <ul className="space-y-2 border-t border-charcoal/5 pt-4">
+                      {area.points.map((point, pIdx) => (
                         <li
-                          key={i}
-                          className="flex items-start gap-3 text-charcoal/80 font-light leading-relaxed text-[14.5px] min-[1440px]:text-base"
+                          key={pIdx}
+                          className="flex items-start gap-2 text-charcoal/70 text-sm font-light"
                         >
                           <CheckCircle2
-                            size={16}
-                            className="text-primary-green mt-0.5 shrink-0"
+                            size={14}
+                            className="text-primary-green mt-1 shrink-0"
                           />
                           <span>{point}</span>
                         </li>
@@ -275,6 +319,78 @@ export default function ProjectImplementationPage() {
                 </Link>
               </div>
             </motion.div>
+          </div>
+        </section>
+
+        {/* ─── Featured Field Projects & Operations (Dynamic CMS) ─── */}
+        <section className="w-full py-20 bg-white">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mb-12"
+            >
+              <div className="inline-block px-3 py-1 bg-primary-green/10 text-primary-green text-xs font-semibold rounded-full uppercase tracking-wider mb-3">
+                Execution & Operations
+              </div>
+              <h2
+                className="font-serif font-bold text-deep-forest tracking-tight"
+                style={{ fontSize: 'clamp(1.75rem, 1.3rem + 2vw, 3rem)' }}
+              >
+                Featured Implementation Projects
+              </h2>
+              <p className="text-charcoal/70 max-w-2xl mt-2 text-base">
+                Operational rollouts, multi-country seed index surveys, and verified traceability pilots executed directly in the field.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projectList.map((proj, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group flex flex-col bg-[#FAF9F5] rounded-3xl border border-black/[0.06] overflow-hidden hover:border-primary-green/40 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative h-52 w-full bg-slate-100 overflow-hidden">
+                    <Image
+                      src={proj.image}
+                      alt={proj.title}
+                      fill
+                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-primary-green shadow-sm">
+                      {proj.tag}
+                    </div>
+                  </div>
+
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-serif font-bold text-lg text-deep-forest mb-2 group-hover:text-primary-green transition-colors">
+                        {proj.title}
+                      </h3>
+                      <p className="text-sm text-charcoal/75 leading-relaxed">
+                        {proj.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-6 mt-4 border-t border-black/[0.05]">
+                      <Link
+                        href={proj.link}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-green hover:text-deep-forest transition-colors"
+                      >
+                        <span>View Engagement</span>
+                        <ArrowRight size={14} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-200" />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 

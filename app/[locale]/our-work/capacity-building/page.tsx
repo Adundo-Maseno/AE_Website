@@ -14,10 +14,12 @@ import {
   Download,
 } from 'lucide-react'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { useState, useEffect } from 'react'
 
 export default function CapacityBuildingPage() {
   const t = useTranslations('CapacityBuilding')
+  const locale = useLocale()
 
   const trainingPrograms = [
     {
@@ -57,6 +59,60 @@ export default function CapacityBuildingPage() {
       icon: Radio,
     },
   ]
+
+  const defaultProjects = [
+    {
+      title: 'Seed Business Management Training (WACCI Partnership)',
+      tag: 'Executive Education',
+      description: 'Executive coaching for plant breeding postgraduate students and seed enterprise managers on demand forecasting, inventory, and operations.',
+      image: '/team/mulemia2.jpg',
+      imageType: 'photo' as const,
+      link: '/contact',
+    },
+    {
+      title: 'The African Seed Company Toolbox (52 Tools)',
+      tag: 'Standard Reference',
+      description: "Authored by Aline O'Connor, this standard management curriculum equips seed executives across 20+ African nations with practical business frameworks.",
+      image: '/team/aline.png',
+      imageType: 'photo' as const,
+      link: '/resources/The-African-Seed-Company-Toolbox-52-Tools-Every-Seed-Company-Manager-Should-Know-How-to-Use-ENGLISH.pdf',
+    },
+    {
+      title: 'Agrodealer Technical & Business Capability Program',
+      tag: 'Last-Mile Training',
+      description: 'Hands-on training modules for agro-input stockists on seed storage integrity, seed germination stewardship, and farmer advisory.',
+      image: '/team/ronald2.jpg',
+      imageType: 'photo' as const,
+      link: '/contact',
+    },
+  ]
+
+  const [projectList, setProjectList] = useState(defaultProjects)
+
+  useEffect(() => {
+    let isMounted = true
+    fetch(`/api/practice-projects?slug=capacity-building&locale=${locale}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (isMounted && data?.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+          setProjectList(
+            data.projects.map((p: any) => ({
+              title: p.title,
+              tag: p.tag || 'Capacity Initiative',
+              description: p.description,
+              image: p.image || '/team/mulemia2.jpg',
+              imageType: (p.imageType || 'photo') as any,
+              link: p.link || '/contact',
+            }))
+          )
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      isMounted = false
+    }
+  }, [locale])
 
   return (
     <>
@@ -117,66 +173,46 @@ export default function CapacityBuildingPage() {
                     href="/contact"
                     className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-[#9A3412] text-white rounded-full font-semibold text-sm hover:bg-[#7C2D12] transition-colors shadow-sm shadow-[#9A3412]/20"
                   >
-<RollingText className="gap-2">
-                    {t('start_conversation')}
-                    <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('req_training')}
+                      <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                    </RollingText>
+                  </Link>
                   <Link
                     href="/our-work"
-                    className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-[#9A3412]/30 text-[#9A3412] rounded-full font-semibold text-sm hover:bg-[#FAF0E9] transition-colors"
+                    className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-[#9A3412]/30 text-[#9A3412] rounded-full font-semibold text-sm hover:bg-[#FDF8F6] transition-colors"
                   >
-<RollingText className="gap-2">
-                    {t('our_work')}
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('our_work')}
+                    </RollingText>
+                  </Link>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* ===== INTRO / OVERVIEW ===== */}
-        <section className="w-full py-20 bg-mist/50">
+        {/* ===== TRAINING PROGRAMS ===== */}
+        <section className="w-full pb-16">
           <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="max-w-4xl"
+              transition={{ duration: 0.8 }}
+              className="max-w-2xl mb-12 lg:mb-16"
             >
-              <h2 className="text-3xl lg:text-5xl font-serif font-bold text-deep-forest tracking-tight pb-2 mb-8">
-                {t('phil_title')}
-              </h2>
-              <p className="text-base sm:text-lg lg:text-[14.5px] min-[1440px]:text-lg text-charcoal/80 font-light leading-relaxed">
-                {t('phil_desc')}
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ===== TRAINING PROGRAMS GRID ===== */}
-        <section className="w-full py-16">
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-3xl lg:text-5xl font-serif font-bold text-deep-forest tracking-tight pb-2 mb-6">
+              <h2
+                className="font-serif font-bold text-deep-forest tracking-tight pb-2"
+                style={{ fontSize: 'clamp(1.75rem, 1.3rem + 2vw, 3rem)' }}
+              >
                 {t('tp_title')}
               </h2>
-              <p className="text-base sm:text-lg lg:text-[14.5px] min-[1440px]:text-lg text-charcoal/70 font-light max-w-2xl mx-auto">
-                {t('tp_desc')}
-              </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {trainingPrograms.map((program, idx) => {
-                const Icon = program.icon
+                const IconComponent = program.icon
                 return (
                   <motion.div
                     key={idx}
@@ -184,19 +220,12 @@ export default function CapacityBuildingPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className="group rounded-[32px] bg-mist border border-mist hover:border-[#9A3412]/30 hover:bg-white hover:shadow-xl transition-[background-color,border-color,box-shadow] duration-200 p-6 sm:p-8 lg:p-10 flex flex-col"
+                    className="group bg-mist rounded-[28px] border border-transparent hover:border-[#9A3412]/20 p-8 flex flex-col justify-between hover:bg-white hover:shadow-xl transition-[background-color,border-color,box-shadow] duration-200"
                   >
-                    {/* Icon with number badge */}
-                    <div className="flex items-start justify-between mb-8">
-                      <div className="w-14 h-14 rounded-2xl bg-[#9A3412]/10 border border-[#9A3412]/20 flex items-center justify-center text-[#9A3412] group-hover:bg-[#9A3412] group-hover:text-white transition duration-200">
-                        <Icon size={24} />
-                      </div>
-                      <span className="font-data text-4xl text-[#9A3412]/15 group-hover:text-[#9A3412]/25 transition-colors leading-none">
-                        {String(idx + 1).padStart(2, '0')}
-                      </span>
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-[#9A3412] mb-6 group-hover:bg-[#9A3412] group-hover:text-white transition-colors duration-200">
+                      <IconComponent size={24} />
                     </div>
-
-                    <h3 className="text-xl font-serif font-bold text-deep-forest mb-3 tracking-tight pb-2">
+                    <h3 className="text-xl font-serif font-bold text-deep-forest mb-3">
                       {program.title}
                     </h3>
                     <p className="text-charcoal/70 font-light leading-relaxed text-[14.5px] min-[1440px]:text-base mb-4 flex-1">
@@ -295,6 +324,77 @@ export default function CapacityBuildingPage() {
           </div>
         </section>
 
+        {/* ===== FEATURED CAPACITY INITIATIVES (Dynamic CMS) ===== */}
+        <section className="w-full py-20 bg-white">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mb-12"
+            >
+              <div className="inline-block px-3 py-1 bg-[#9A3412]/10 text-[#9A3412] text-xs font-semibold rounded-full uppercase tracking-wider mb-3">
+                Knowledge Transfer
+              </div>
+              <h2
+                className="font-serif font-bold text-deep-forest tracking-tight"
+                style={{ fontSize: 'clamp(1.75rem, 1.3rem + 2vw, 3rem)' }}
+              >
+                Featured Training & Capability Programs
+              </h2>
+              <p className="text-charcoal/70 max-w-2xl mt-2 text-base">
+                Discover our tailored capability development programs for seed leaders, scientists, and agricultural entrepreneurs across the continent.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projectList.map((proj, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group flex flex-col bg-[#FAF9F5] rounded-3xl border border-black/[0.06] overflow-hidden hover:border-[#9A3412]/40 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative h-52 w-full bg-slate-100 overflow-hidden">
+                    <Image
+                      src={proj.image}
+                      alt={proj.title}
+                      fill
+                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-[#9A3412] shadow-sm">
+                      {proj.tag}
+                    </div>
+                  </div>
+
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-serif font-bold text-lg text-deep-forest mb-2 group-hover:text-[#9A3412] transition-colors">
+                        {proj.title}
+                      </h3>
+                      <p className="text-sm text-charcoal/75 leading-relaxed">
+                        {proj.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-6 mt-4 border-t border-black/[0.05]">
+                      <Link
+                        href={proj.link}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#9A3412] hover:text-[#7C2D12] transition-colors"
+                      >
+                        <span>Explore Program</span>
+                        <ArrowRight size={14} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-200" />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* ===== CTA ===== */}
         <section className="w-full relative overflow-hidden">
@@ -337,19 +437,19 @@ export default function CapacityBuildingPage() {
                     href="/contact"
                     className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-[#9A3412] text-white rounded-full font-semibold text-sm hover:bg-[#7C2D12] transition-colors shadow-lg shadow-[#9A3412]/20"
                   >
-<RollingText className="gap-2">
-                    {t('cta_btn1')}
-                    <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('cta_btn1')}
+                      <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                    </RollingText>
+                  </Link>
                   <Link
                     href="/our-work"
                     className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-white/20 text-white rounded-full font-semibold text-sm hover:bg-white/10 transition-colors"
                   >
-<RollingText className="gap-2">
-                    {t('cta_btn2')}
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('cta_btn2')}
+                    </RollingText>
+                  </Link>
                 </div>
               </motion.div>
             </div>

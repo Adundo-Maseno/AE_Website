@@ -13,10 +13,13 @@ import {
   Award,
 } from 'lucide-react'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 export default function StakeholderConveningsPage() {
   const t = useTranslations('StakeholderConvenings')
+  const locale = useLocale()
 
   const conveningTypes = [
     {
@@ -78,12 +81,59 @@ export default function StakeholderConveningsPage() {
     },
   ]
 
-  const regions = [
-    { name: t('regions.0.name'), countries: t('regions.0.countries') },
-    { name: t('regions.1.name'), countries: t('regions.1.countries') },
-    { name: t('regions.2.name'), countries: t('regions.2.countries') },
-    { name: t('regions.3.name'), countries: t('regions.3.countries') },
+  const defaultProjects = [
+    {
+      title: 'Regional Seed Regulatory Harmonization Roundtables',
+      tag: 'Regional Dialogue',
+      description: 'Facilitating high-level diplomatic and technical convenings to align seed certification, variety cataloguing, and cross-border trade standards.',
+      image: '/team/moses2.jpg',
+      imageType: 'photo' as const,
+      link: '/our-work/stakeholder-convenings',
+    },
+    {
+      title: 'International Seed Industry Learning Trips & Study Tours',
+      tag: 'Immersive Study Tours',
+      description: 'Designing experiential benchmarking missions for African regulators and executives to leading global seed hubs in the Netherlands, South Africa, and Kenya.',
+      image: '/team/mulemia2.jpg',
+      imageType: 'photo' as const,
+      link: '/our-work/stakeholder-convenings',
+    },
+    {
+      title: 'National Seed Trade Association Strategic Assemblies',
+      tag: 'Industry Leadership',
+      description: 'Convening private seed companies, breeders, and policymakers to establish shared investment priorities and advocacy agendas.',
+      image: '/team/claire2.jpg',
+      imageType: 'photo' as const,
+      link: '/our-work/stakeholder-convenings',
+    },
   ]
+
+  const [projectList, setProjectList] = useState(defaultProjects)
+
+  useEffect(() => {
+    let isMounted = true
+    fetch(`/api/practice-projects?slug=stakeholder-convenings&locale=${locale}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (isMounted && data?.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+          setProjectList(
+            data.projects.map((p: any) => ({
+              title: p.title,
+              tag: p.tag || 'High-Impact Convening',
+              description: p.description,
+              image: p.image || '/team/moses2.jpg',
+              imageType: (p.imageType || 'photo') as any,
+              link: p.link || '/contact',
+            }))
+          )
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      isMounted = false
+    }
+  }, [locale])
 
   return (
     <>
@@ -98,19 +148,21 @@ export default function StakeholderConveningsPage() {
           <div className="absolute top-32 right-20 pointer-events-none opacity-[0.06] hidden lg:block">
             <svg width="300" height="300" viewBox="0 0 300 300">
               <circle cx="50" cy="50" r="4" fill="#05632a" />
-              <circle cx="150" cy="30" r="4" fill="#05632a" />
-              <circle cx="250" cy="80" r="4" fill="#05632a" />
-              <circle cx="100" cy="150" r="4" fill="#05632a" />
-              <circle cx="200" cy="180" r="4" fill="#05632a" />
-              <circle cx="50" cy="250" r="4" fill="#05632a" />
-              <circle cx="250" cy="250" r="4" fill="#05632a" />
-              <line x1="50" y1="50" x2="150" y2="30" stroke="#05632a" strokeWidth="1" />
-              <line x1="150" y1="30" x2="250" y2="80" stroke="#05632a" strokeWidth="1" />
-              <line x1="50" y1="50" x2="100" y2="150" stroke="#05632a" strokeWidth="1" />
-              <line x1="100" y1="150" x2="200" y2="180" stroke="#05632a" strokeWidth="1" />
-              <line x1="200" y1="180" x2="250" y2="250" stroke="#05632a" strokeWidth="1" />
-              <line x1="50" y1="250" x2="100" y2="150" stroke="#05632a" strokeWidth="1" />
-              <line x1="150" y1="30" x2="200" y2="180" stroke="#05632a" strokeWidth="1" />
+              <circle cx="120" cy="80" r="3" fill="#05632a" />
+              <circle cx="200" cy="40" r="5" fill="#05632a" />
+              <circle cx="80" cy="180" r="3" fill="#05632a" />
+              <circle cx="170" cy="150" r="4" fill="#05632a" />
+              <circle cx="250" cy="120" r="3" fill="#05632a" />
+              <circle cx="130" cy="240" r="4" fill="#05632a" />
+              <circle cx="220" cy="220" r="5" fill="#05632a" />
+              <line x1="50" y1="50" x2="120" y2="80" stroke="#05632a" strokeWidth="1" />
+              <line x1="120" y1="80" x2="200" y2="40" stroke="#05632a" strokeWidth="1" />
+              <line x1="120" y1="80" x2="170" y2="150" stroke="#05632a" strokeWidth="1" />
+              <line x1="50" y1="50" x2="80" y2="180" stroke="#05632a" strokeWidth="1" />
+              <line x1="170" y1="150" x2="250" y2="120" stroke="#05632a" strokeWidth="1" />
+              <line x1="80" y1="180" x2="130" y2="240" stroke="#05632a" strokeWidth="1" />
+              <line x1="170" y1="150" x2="220" y2="220" stroke="#05632a" strokeWidth="1" />
+              <line x1="130" y1="240" x2="220" y2="220" stroke="#05632a" strokeWidth="1" />
             </svg>
           </div>
 
@@ -126,12 +178,9 @@ export default function StakeholderConveningsPage() {
                 <h1
                   className="font-serif text-deep-forest font-bold leading-tight tracking-tight pb-2"
                   style={{ fontSize: 'clamp(1.875rem, 1.4rem + 2.4vw, 4.5rem)' }}
-                >
-                  {t('hero_title1')},
-                  <br />
-                  <span className="text-teal-800/80">{t('hero_title2')}.</span>
-                </h1>
-                <p className="text-teal-800 font-semibold text-base sm:text-lg tracking-wide">
+                  dangerouslySetInnerHTML={{ __html: t('hero_title') }}
+                />
+                <p className="text-lighter-dark-green font-semibold text-base sm:text-lg tracking-wide">
                   {t('hero_subtitle')}
                 </p>
               </motion.div>
@@ -143,58 +192,55 @@ export default function StakeholderConveningsPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="flex-1 lg:pt-16 relative"
               >
-                <div className="hidden lg:block absolute left-0 top-16 bottom-0 w-px bg-teal-800/20" />
-                <div className="lg:pl-10 space-y-4">
-                  <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal">
-                    {t('hero_desc1')}
-                  </p>
-                  <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal">
-                    {t('hero_desc2')}
-                  </p>
-                  <div className="mt-8 flex flex-wrap gap-4">
-                    <Link
-                      href="/contact"
-                      className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-teal-700 text-white rounded-full font-semibold text-sm hover:bg-teal-800 transition-colors shadow-sm shadow-teal-700/20"
-                    >
-                      <RollingText className="gap-2">
-                        {t('req_convening')}
-                        <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                      </RollingText>
-                    </Link>
-                    <Link
-                      href="/our-work"
-                      className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-teal-700/30 text-teal-800 rounded-full font-semibold text-sm hover:bg-teal-50 transition-colors"
-                    >
-                      <RollingText className="gap-2">
-                        {t('our_work')}
-                      </RollingText>
-                    </Link>
-                  </div>
+                <div className="hidden lg:block absolute left-0 top-16 bottom-0 w-px bg-lighter-dark-green/20" />
+                <p className="text-base sm:text-lg lg:text-lg xl:text-xl text-charcoal/85 leading-relaxed font-normal lg:pl-10">
+                  {t('hero_desc')}
+                </p>
+                <div className="lg:pl-10 mt-8 flex flex-wrap gap-4">
+                  <Link
+                    href="/contact"
+                    className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-lighter-dark-green text-white rounded-full font-semibold text-sm hover:opacity-90 transition-opacity"
+                  >
+                    <RollingText className="gap-2">
+                      {t('convene_with_us')}
+                      <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                    </RollingText>
+                  </Link>
+                  <Link
+                    href="/our-work"
+                    className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-lighter-dark-green/20 text-lighter-dark-green rounded-full font-semibold text-sm hover:bg-mist transition-colors"
+                  >
+                    <RollingText className="gap-2">
+                      {t('our_work')}
+                    </RollingText>
+                  </Link>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-
-        {/* ===== CONVENING TYPES GRID ===== */}
-        <section className="w-full py-16">
-          <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        {/* ===== CONVENING TYPES ===== */}
+        <section className="w-full pb-16">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="text-center mb-16"
+              transition={{ duration: 0.8 }}
+              className="max-w-2xl mb-12 lg:mb-16"
             >
-              <h2 className="text-3xl lg:text-5xl font-serif font-bold text-deep-forest tracking-tight pb-2 mb-6">
+              <h2
+                className="font-serif font-bold text-deep-forest tracking-tight pb-2"
+                style={{ fontSize: 'clamp(1.75rem, 1.3rem + 2vw, 3rem)' }}
+              >
                 {t('ct_title')}
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {conveningTypes.map((type, idx) => {
-                const Icon = type.icon
+                const IconComponent = type.icon
                 return (
                   <motion.div
                     key={idx}
@@ -202,31 +248,20 @@ export default function StakeholderConveningsPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className="group rounded-[32px] bg-mist border border-mist hover:border-lighter-dark-green/20 hover:bg-white hover:shadow-xl transition-[background-color,border-color,box-shadow] duration-200 p-8 lg:p-10 flex flex-col relative overflow-hidden"
+                    className="group bg-mist rounded-[28px] border border-transparent hover:border-lighter-dark-green/20 p-8 flex flex-col justify-between hover:bg-white hover:shadow-xl transition-[background-color,border-color,box-shadow] duration-200"
                   >
-                    {/* Subtle gradient accent on hover */}
-                    <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-lighter-dark-green/[0.04] to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                    <div className="relative z-10">
-                      {/* Icon row */}
-                      <div className="flex items-start justify-between mb-8">
-                        <div className="w-14 h-14 rounded-full bg-lighter-dark-green/[0.07] border border-lighter-dark-green/10 flex items-center justify-center text-lighter-dark-green group-hover:bg-lighter-dark-green group-hover:text-white transition duration-200">
-                          <Icon size={24} />
-                        </div>
-                        <div className="w-10 h-10 rounded-full bg-lighter-dark-green/[0.04] flex items-center justify-center">
-                          <ArrowRight
-                            size={16}
-                            className="text-lighter-dark-green/30 group-hover:text-lighter-dark-green transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out"
-                          />
-                        </div>
+                    <div>
+                      <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-lighter-dark-green mb-6 group-hover:bg-lighter-dark-green group-hover:text-white transition-colors duration-200">
+                        <IconComponent size={24} />
                       </div>
-
-                      <h3 className="text-xl font-serif font-bold text-deep-forest mb-3 tracking-tight pb-2">
+                      <h3 className="text-xl font-serif font-bold text-deep-forest mb-3">
                         {type.title}
                       </h3>
-                      <p className="text-charcoal/75 font-light leading-relaxed text-[14.5px] min-[1440px]:text-base mb-4 flex-1">
+                      <p className="text-charcoal/70 font-light leading-relaxed text-[14.5px] min-[1440px]:text-base mb-4">
                         {type.description}
                       </p>
+                    </div>
+                    <div>
                       <p className="text-lighter-dark-green/60 text-sm font-light italic border-t border-lighter-dark-green/[0.08] pt-4">
                         {type.detail}
                       </p>
@@ -237,9 +272,6 @@ export default function StakeholderConveningsPage() {
             </div>
           </div>
         </section>
-
-
-
 
         {/* ===== FLAGSHIP EVENT ===== */}
         <section className="w-full py-20 bg-mist">
@@ -273,6 +305,78 @@ export default function StakeholderConveningsPage() {
                 </p>
               </div>
             </motion.div>
+          </div>
+        </section>
+
+        {/* ===== FEATURED CONVENINGS & TOURS (Dynamic CMS) ===== */}
+        <section className="w-full py-20 bg-white">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mb-12"
+            >
+              <div className="inline-block px-3 py-1 bg-lighter-dark-green/10 text-lighter-dark-green text-xs font-semibold rounded-full uppercase tracking-wider mb-3">
+                Convening Portfolio
+              </div>
+              <h2
+                className="font-serif font-bold text-deep-forest tracking-tight"
+                style={{ fontSize: 'clamp(1.75rem, 1.3rem + 2vw, 3rem)' }}
+              >
+                Featured Convenings & Learning Delegations
+              </h2>
+              <p className="text-charcoal/70 max-w-2xl mt-2 text-base">
+                Explore our high-level multilateral forums, international benchmarking study missions, and private-public dialogues.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projectList.map((proj, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group flex flex-col bg-[#FAF9F5] rounded-3xl border border-black/[0.06] overflow-hidden hover:border-lighter-dark-green/40 hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative h-52 w-full bg-slate-100 overflow-hidden">
+                    <Image
+                      src={proj.image}
+                      alt={proj.title}
+                      fill
+                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-lighter-dark-green shadow-sm">
+                      {proj.tag}
+                    </div>
+                  </div>
+
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-serif font-bold text-lg text-deep-forest mb-2 group-hover:text-lighter-dark-green transition-colors">
+                        {proj.title}
+                      </h3>
+                      <p className="text-sm text-charcoal/75 leading-relaxed">
+                        {proj.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-6 mt-4 border-t border-black/[0.05]">
+                      <Link
+                        href={proj.link}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-lighter-dark-green hover:text-deep-forest transition-colors"
+                      >
+                        <span>View Convening Details</span>
+                        <ArrowRight size={14} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-200" />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 

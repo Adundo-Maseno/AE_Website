@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/our-work/stakeholder-convenings', priority: 0.85, changeFrequency: 'monthly' },
     { path: '/our-impact', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/our-team', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/events', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/resources', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/insights', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/gallery', priority: 0.75, changeFrequency: 'monthly' },

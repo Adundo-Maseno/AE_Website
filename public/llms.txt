@@ -11,6 +11,7 @@ Agri Experience operates across East, West, Central, and Southern Africa. Core s
 - [Our Impact](https://agri-experience.com/en/our-impact): Impact areas, SDG alignment, impact stories, and verified metrics across African seed systems.
 - [Interactive Map](https://agri-experience.com/en/map): A detailed interactive map showcasing our projects and impact across 21 African countries.
 - [Our Team](https://agri-experience.com/en/our-team): Profiles of our leadership team, senior agronomists, and staff.
+- [Events & Stakeholder Convenings](https://agri-experience.com/en/events): 2026 convening schedule, policy roundtables, cross-border seed sector learning trips, and pan-African event archive.
 - [Contact](https://agri-experience.com/en/contact): Contact form, inquiry information, and regional office locations.
 - [Newsletter](https://agri-experience.com/en/newsletter): Newsletter subscription for industry updates, publications, and seed sector analysis.
 

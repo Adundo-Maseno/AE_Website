@@ -167,6 +167,7 @@ export default function Footer() {
                 <p style={{ color: '#ffffff', fontWeight: 700, fontSize: '14px', marginBottom: '16px' }}>{t('resources')}</p>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '11px' }}>
                   {[
+                    { key: 'events', href: '/events' },
                     { key: 'resources', href: '/resources' },
                     { key: 'insights', href: '/insights' },
                     { key: 'newsletter', href: '/newsletter' },
@@ -334,6 +335,7 @@ export default function Footer() {
                 {
                   titleKey: 'resources',
                   links: [
+                    { key: 'events', href: '/events' },
                     { key: 'resources', href: '/resources' },
                     { key: 'insights', href: '/insights' },
                     { key: 'newsletter', href: '/newsletter' },

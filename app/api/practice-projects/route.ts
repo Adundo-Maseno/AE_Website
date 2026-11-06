@@ -29,3 +29,4 @@ export async function GET(req: Request) {
     return NextResponse.json({ projects: [], error: err.message })
   }
 }
+

@@ -1,10 +1,22 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { DynamicCustomSections } from '@/components/cms/dynamic-custom-sections'
+
+interface PracticeCard {
+  title: string
+  description: string
+  mobileDescription: string
+  link: string
+}
 
 export default function OurWorkPage() {
   const t = useTranslations('OurWork')
-  const cards = [
+  const locale = useLocale()
+  const defaultCards: PracticeCard[] = [
     {
       title: t('c1_title'),
       description: t('c1_desc'),
@@ -42,6 +54,33 @@ export default function OurWorkPage() {
       link: '/our-work/stakeholder-convenings',
     },
   ]
+
+  const [cards, setCards] = useState<PracticeCard[]>(defaultCards)
+
+  useEffect(() => {
+    setCards(defaultCards)
+    fetch(`/api/practice-areas?locale=${locale}`)
+      .then((res) => {
+        if (!res.ok) return null
+        return res.json()
+      })
+      .then((data) => {
+        const list = data?.areas || (Array.isArray(data) ? data : null)
+        if (Array.isArray(list) && list.length > 0) {
+          setCards(
+            list.map((item: any) => ({
+              title: item.title,
+              description: item.description,
+              mobileDescription: item.mobileDescription || item.mobile_description || item.description,
+              link: item.link || item.link_url || `/our-work/${item.slug}`,
+            }))
+          )
+        }
+      })
+      .catch(() => {
+        // Safe fallback
+      })
+  }, [locale, t])
 
   return (
     <main className="bg-[#F8F6F0] min-h-[100dvh]">
@@ -122,6 +161,9 @@ export default function OurWorkPage() {
           </div>
         </div>
       </section>
+
+      {/* Dynamic CMS Sections for Our Work */}
+      <DynamicCustomSections page="ourwork" locale={locale} />
     </main>
   )
 }

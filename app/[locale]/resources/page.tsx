@@ -6,8 +6,9 @@ import { publicDownloads } from '@/lib/public-downloads'
 import { Link } from '@/i18n/routing'
 import { ArrowRight, FileText } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { RollingText } from '@/components/ui/rolling-text'
+import { DynamicCustomSections } from '@/components/cms/dynamic-custom-sections'
 
 // Dynamically import PdfPreview with SSR disabled to fix "DOMMatrix is not defined" error
 const PdfPreview = dynamic(() => import('@/components/pdf-preview'), {
@@ -25,8 +26,35 @@ const categories = ['All', 'Reports & Analysis', 'Case Studies', 'Scoping Studie
 
 function ResourcesContent() {
   const t = useTranslations('Resources')
+  const locale = useLocale()
   const searchParams = useSearchParams()
   const [activeCategory, setActiveCategory] = useState('All')
+  const [downloads, setDownloads] = useState(publicDownloads)
+
+  useEffect(() => {
+    fetch(`/api/publications?locale=${locale}`)
+      .then((res) => {
+        if (!res.ok) return null
+        return res.json()
+      })
+      .then((data) => {
+        const list = data?.publications || (Array.isArray(data) ? data : null)
+        if (Array.isArray(list) && list.length > 0) {
+          setDownloads(
+            list.map((p: any) => ({
+              title: p.title,
+              link: p.link || p.file_path,
+              client: p.client || 'Agri Experience',
+              citation: p.citation || '',
+              category: p.category,
+            }))
+          )
+        }
+      })
+      .catch(() => {
+        // Safe fallback to publicDownloads
+      })
+  }, [locale])
 
   useEffect(() => {
     const rawParam = searchParams?.get('tab') || searchParams?.get('category')
@@ -60,7 +88,7 @@ function ResourcesContent() {
     }
   }
 
-  const filteredDownloads = publicDownloads.filter((download) =>
+  const filteredDownloads = downloads.filter((download) =>
     activeCategory === 'All' ? true : download.category === activeCategory
   )
 
@@ -165,6 +193,9 @@ function ResourcesContent() {
           </div>
         </div>
       </section>
+
+      {/* Dynamic CMS Sections for Resources */}
+      <DynamicCustomSections page="resources" locale={locale} />
 
       {/* Executive CTA */}
       <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#0F1F15] text-white border-t border-[#2A4735]">

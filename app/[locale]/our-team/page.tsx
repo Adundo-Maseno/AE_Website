@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import Image from 'next/image'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { DynamicCustomSections } from '@/components/cms/dynamic-custom-sections'
 
 interface TeamMember {
   name: string
@@ -19,6 +20,7 @@ interface TeamMember {
 
 export default function OurTeamPage() {
   const t = useTranslations('OurTeam')
+  const locale = useLocale()
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null)
 
   const fullTeam: TeamMember[] = [
@@ -102,6 +104,43 @@ export default function OurTeamPage() {
     },
   ]
 
+  const [teamList, setTeamList] = useState<TeamMember[]>(fullTeam)
+
+  useEffect(() => {
+    // Keep in sync with static fullTeam when translations change
+    setTeamList(fullTeam)
+    // Attempt dynamic fetch from SQLite CMS
+    fetch(`/api/team?locale=${locale}`)
+      .then((res) => {
+        if (!res.ok) return null
+        return res.json()
+      })
+      .then((data) => {
+        const list = data?.members || (Array.isArray(data) ? data : null)
+        if (Array.isArray(list) && list.length > 0) {
+          setTeamList(
+            list.map((m: any) => ({
+              name: m.name,
+              role: m.role,
+              bio: m.bio,
+              image: m.image || '/team/placeholder.jpg',
+              hoverImage: m.hoverImage || m.hover_image || undefined,
+              imagePosition: m.imagePosition || m.image_position || '50% 30%',
+              hoverImagePosition: m.hoverImagePosition || m.hover_image_position || '50% 30%',
+              projects: Array.isArray(m.projects)
+                ? m.projects
+                : m.projects
+                ? m.projects.split(',').map((p: string) => p.trim())
+                : [],
+            }))
+          )
+        }
+      })
+      .catch(() => {
+        // Safe fallback to fullTeam
+      })
+  }, [locale, t])
+
   return (
     <main className="bg-[#F8F6F0] min-h-[100dvh]">
       {/* Masthead */}
@@ -129,7 +168,7 @@ export default function OurTeamPage() {
       {/* Grid Layout */}
       <section className="w-full max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 pt-8 lg:pt-[min(2.75rem,4vh)] pb-16 lg:pb-16 snap-start scroll-mt-20">
         <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-12 lg:gap-x-3 lg:gap-y-[min(4rem,6vh)]">
-          {fullTeam.map((member, idx) => (
+          {teamList.map((member, idx) => (
             <div
               key={idx}
               className="group cursor-pointer flex flex-col"
@@ -283,7 +322,8 @@ export default function OurTeamPage() {
         )}
       </AnimatePresence>
 
-
+      {/* Dynamic CMS Sections for Our Team */}
+      <DynamicCustomSections page="ourteam" locale={locale} />
     </main>
   )
 }

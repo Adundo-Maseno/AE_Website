@@ -5,12 +5,14 @@ import ClientLogos from '@/components/client-logos'
 import { ArrowRight } from 'lucide-react'
 import { Link } from '@/i18n/routing'
 import WhyAgriExperience from '@/components/motion/why-agri-experience'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { RollingText } from '@/components/ui/rolling-text'
+import { DynamicCustomSections } from '@/components/cms/dynamic-custom-sections'
 
 export default function Home() {
   const t = useTranslations('Home')
   const tAgri = useTranslations('WhyAgriExperience')
+  const locale = useLocale()
 
   const heroRef = useRef<HTMLElement>(null)
   const heroBgRef = useRef<HTMLDivElement>(null)
@@ -452,6 +454,9 @@ export default function Home() {
             <ClientLogos />
           </div>
         </section>
+
+        {/* Dynamic CMS Sections for Home */}
+        <DynamicCustomSections page="home" locale={locale} />
 
         {/* Executive Advisory CTA Section */}
         <section className="relative w-full py-16 sm:py-20 lg:py-28 bg-[#0F1F15] text-white overflow-hidden z-20 border-t border-[#2A4735]">

@@ -7,10 +7,12 @@ import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import { ScrollAccordion } from '@/components/motion/scroll-accordion'
 import ServicesBentoGrid from '@/components/motion/services-bento-grid'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { DynamicCustomSections } from '@/components/cms/dynamic-custom-sections'
 
 export default function AboutPage() {
   const t = useTranslations('About')
+  const locale = useLocale()
   return (
     <main className="bg-white min-h-[100dvh]">
       {/* Masthead */}
@@ -93,6 +95,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Dynamic CMS Sections for About */}
+      <DynamicCustomSections page="about" locale={locale} />
 
       {/* Executive CTA */}
       <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#0F1F15] text-white border-t border-[#2A4735]">

@@ -3,8 +3,9 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { RollingText } from '@/components/ui/rolling-text'
+import { DynamicCustomSections } from '@/components/cms/dynamic-custom-sections'
 import {
   ArrowRight,
   Users,
@@ -72,6 +73,7 @@ interface GalleryPhotoItem {
 
 export default function EventsPage() {
   const t = useTranslations('Events')
+  const locale = useLocale()
 
   const [expandedUpcomingId, setExpandedUpcomingId] = useState<string>('up-1')
   const [activeFormat, setActiveFormat] = useState<FormatFilter>('all')
@@ -1218,6 +1220,9 @@ export default function EventsPage() {
           </div>
         </div>
       </section>
+
+      {/* Dynamic CMS Sections for Events */}
+      <DynamicCustomSections page="events" locale={locale} />
 
       {/* ===== 7. SITE-WIDE EXECUTIVE CTA ===== */}
       <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#0F1F15] text-white border-t border-[#2A4735]">

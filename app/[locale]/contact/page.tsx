@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2 } from 'lu
 import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { RollingText } from '@/components/ui/rolling-text'
+import { DynamicCustomSections } from '@/components/cms/dynamic-custom-sections'
 
 export default function ContactPage() {
   const t = useTranslations('Contact')
@@ -313,6 +314,9 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      {/* Dynamic CMS Sections for Contact */}
+      <DynamicCustomSections page="contact" locale={locale} />
     </main>
   )
 }

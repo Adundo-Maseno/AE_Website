@@ -26,8 +26,8 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${playfairDisplay.variable} ${dmSans.variable}`}>
-      <body className="font-dm-sans min-h-screen bg-[#F8F6F0] text-[#0F1F15] antialiased">
+    <html lang="en" suppressHydrationWarning className={`${playfairDisplay.variable} ${dmSans.variable}`}>
+      <body suppressHydrationWarning className="font-dm-sans min-h-screen bg-[#F8F6F0] text-[#0F1F15] antialiased">
         {children}
       </body>
     </html>

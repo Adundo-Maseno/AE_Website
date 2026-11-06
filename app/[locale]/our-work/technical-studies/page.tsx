@@ -58,7 +58,7 @@ export default function TechnicalStudiesPage() {
           )
         }
       })
-      .catch(() => {})
+      .catch(() => { })
   }, [locale, t])
 
   return (
@@ -105,19 +105,19 @@ export default function TechnicalStudiesPage() {
                     href="/contact"
                     className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 bg-primary-blue text-white rounded-full font-semibold text-sm hover:opacity-90 transition-opacity"
                   >
-<RollingText className="gap-2">
-                    {t('req_study')}
-                    <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('req_study')}
+                      <ArrowRight size={16} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                    </RollingText>
+                  </Link>
                   <Link
                     href="/our-work"
                     className="overflow-hidden relative group inline-flex items-center gap-2 px-8 py-4 border border-primary-blue/20 text-primary-blue rounded-full font-semibold text-sm hover:bg-primary-blue/5 transition-colors"
                   >
-<RollingText className="gap-2">
-                    {t('our_work')}
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('our_work')}
+                    </RollingText>
+                  </Link>
                 </div>
               </motion.div>
             </div>
@@ -314,20 +314,20 @@ export default function TechnicalStudiesPage() {
                     href="/contact"
                     className="overflow-hidden relative group inline-flex items-center gap-2 bg-primary-blue hover:bg-primary-blue/90 text-white font-bold px-8 py-4 rounded-full transition duration-200"
                   >
-<RollingText className="gap-2">
-                    {t('cta_btn1')}
-                    <ArrowRight size={18} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('cta_btn1')}
+                      <ArrowRight size={18} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                    </RollingText>
+                  </Link>
                   <Link
                     href="/our-work"
                     className="overflow-hidden relative group inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-full border border-white/20 transition duration-200"
                   >
-<RollingText className="gap-2">
-                    {t('cta_btn2')}
-                    <ArrowRight size={18} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
-                  </RollingText>
-</Link>
+                    <RollingText className="gap-2">
+                      {t('cta_btn2')}
+                      <ArrowRight size={18} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-out shrink-0" />
+                    </RollingText>
+                  </Link>
                 </div>
               </motion.div>
             </div>

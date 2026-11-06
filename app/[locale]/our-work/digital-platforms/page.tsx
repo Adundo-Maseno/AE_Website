@@ -3,14 +3,16 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, ExternalLink } from 'lucide-react'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { useState, useEffect } from 'react'
 import { RollingText } from '@/components/ui/rolling-text'
 import Image from 'next/image'
 
 export default function DigitalPlatformsPage() {
   const t = useTranslations('DigitalPlatforms')
+  const locale = useLocale()
 
-  const platforms = [
+  const defaultPlatforms = [
     {
       title: t('platforms.3.title'),
       description: `${t('platforms.3.description')} ${t('sp_desc')}`,
@@ -65,6 +67,29 @@ export default function DigitalPlatformsPage() {
       tag: t('platforms.6.tag'),
     },
   ]
+
+  const [platformList, setPlatformList] = useState(defaultPlatforms)
+
+  useEffect(() => {
+    setPlatformList(defaultPlatforms)
+    fetch(`/api/practice-projects?slug=digital-platforms&locale=${locale}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+          setPlatformList(
+            data.projects.map((p: any) => ({
+              title: p.title,
+              description: p.description,
+              image: p.image,
+              imageType: p.imageType || 'screenshot',
+              tag: p.tag,
+              link: p.link || undefined,
+            }))
+          )
+        }
+      })
+      .catch(() => {})
+  }, [locale, t])
 
   return (
     <>
@@ -145,7 +170,7 @@ export default function DigitalPlatformsPage() {
 
             {/* Bento-style grid: first card (MbeguChoice) spans 2 cols */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {platforms.map((platform, idx) => {
+              {platformList.map((platform, idx) => {
                 const Icon = ('icon' in platform ? (platform.icon as React.ComponentType<{ size?: number }>) : null)
                 const isScreenshot = platform.imageType === 'screenshot' && platform.image
                 const isLogo = platform.imageType === 'logo' && platform.image

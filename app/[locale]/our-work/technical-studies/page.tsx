@@ -5,12 +5,14 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Download } from 'lucide-react'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { useState, useEffect } from 'react'
 
 export default function TechnicalStudiesPage() {
   const t = useTranslations('TechnicalStudies')
+  const locale = useLocale()
 
-  const kcdmsStudies = [
+  const defaultStudies = [
     {
       title: t('cs_study1_title'),
       citation: t('cs_study1_citation'),
@@ -37,6 +39,27 @@ export default function TechnicalStudiesPage() {
       preview: '/resources/previews/preview-agrodealer-associations.jpg',
     },
   ]
+
+  const [studiesList, setStudiesList] = useState(defaultStudies)
+
+  useEffect(() => {
+    setStudiesList(defaultStudies)
+    fetch(`/api/practice-projects?slug=technical-studies&locale=${locale}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+          setStudiesList(
+            data.projects.map((p: any) => ({
+              title: p.title,
+              citation: p.description,
+              file: p.link || '/resources/Scoping-Study-Pasture-and-Fodder-Planting-Materials-in-Kenya.pdf',
+              preview: p.image || '/resources/previews/preview-pasture-fodder.jpg',
+            }))
+          )
+        }
+      })
+      .catch(() => {})
+  }, [locale, t])
 
   return (
     <>
@@ -164,7 +187,7 @@ export default function TechnicalStudiesPage() {
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 lg:gap-4 xl:gap-5">
-                {kcdmsStudies.map((study, idx) => (
+                {studiesList.map((study, idx) => (
                   <div
                     key={idx}
                     className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-black/[0.06] hover:border-primary-green/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"

@@ -46,11 +46,16 @@ export default function AdminDashboardPage() {
   // CRUD Collections state
   const [teamMembers, setTeamMembers] = useState<any[]>([])
   const [practiceAreas, setPracticeAreas] = useState<any[]>([])
+  const [practiceProjects, setPracticeProjects] = useState<any[]>([])
   const [publications, setPublications] = useState<any[]>([])
   const [customSections, setCustomSections] = useState<any[]>([])
 
+  // Our Work Sub-navigation & filter
+  const [ourWorkTab, setOurWorkTab] = useState<'overview' | 'projects'>('overview')
+  const [activeProjectPracticeFilter, setActiveProjectPracticeFilter] = useState<string>('all')
+
   // Modal / Editing Drawer State
-  const [editingItemType, setEditingItemType] = useState<'team' | 'practice' | 'pub' | 'section' | null>(null)
+  const [editingItemType, setEditingItemType] = useState<'team' | 'practice' | 'pub' | 'section' | 'project' | null>(null)
   const [editingItemData, setEditingItemData] = useState<any>(null)
 
   // Upload state
@@ -58,6 +63,7 @@ export default function AdminDashboardPage() {
   const [uploadedUrl, setUploadedUrl] = useState('')
   const [uploadingStaffPhoto, setUploadingStaffPhoto] = useState<'primary' | 'hover' | null>(null)
   const [uploadingPubPdf, setUploadingPubPdf] = useState(false)
+  const [uploadingProjectImage, setUploadingProjectImage] = useState(false)
 
   // 1. Check Authentication on Mount
   useEffect(() => {
@@ -82,7 +88,7 @@ export default function AdminDashboardPage() {
     setLoadingData(true)
     setNotification(null)
     try {
-      if (['home', 'about', 'contact', 'global', 'events'].includes(activePage)) {
+      if (['home', 'about', 'contact', 'global', 'events', 'ourwork'].includes(activePage)) {
         const res = await fetch(`/api/admin/content?page=${activePage}`)
         const data = await res.json()
         if (res.ok && data.sections) {
@@ -101,6 +107,10 @@ export default function AdminDashboardPage() {
         const res = await fetch('/api/admin/crud/practice-areas')
         const data = await res.json()
         if (res.ok && data.areas) setPracticeAreas(data.areas)
+
+        const projRes = await fetch('/api/admin/crud/practice-projects')
+        const projData = await projRes.json()
+        if (projRes.ok && projData.projects) setPracticeProjects(projData.projects)
       } else if (activePage === 'resources') {
         const res = await fetch('/api/admin/crud/publications')
         const data = await res.json()
@@ -233,6 +243,66 @@ export default function AdminDashboardPage() {
       }
     } catch {
       alert('Delete failed')
+    }
+  }
+
+  // 5b. Practice Project CRUD Handlers
+  const handleSavePracticeProject = async (project: any) => {
+    setSaving(true)
+    try {
+      const res = await fetch('/api/admin/crud/practice-projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(project),
+      })
+      if (res.ok) {
+        setNotification({ type: 'success', message: 'Practice project/case study saved successfully!' })
+        setEditingItemType(null)
+        setEditingItemData(null)
+        fetchAllData()
+      } else {
+        const err = await res.json()
+        alert(err.error || 'Failed to save project')
+      }
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleDeletePracticeProject = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to remove project "${title}"?`)) return
+    try {
+      const res = await fetch(`/api/admin/crud/practice-projects?id=${encodeURIComponent(id)}`, { method: 'DELETE' })
+      if (res.ok) {
+        setNotification({ type: 'success', message: `Project deleted.` })
+        fetchAllData()
+      }
+    } catch {
+      alert('Delete failed')
+    }
+  }
+
+  const handleProjectImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingProjectImage(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setEditingItemData((prev: any) => ({ ...prev, image: data.url }))
+      } else {
+        alert(data.error || 'Failed to upload project image')
+      }
+    } catch {
+      alert('Failed to upload project image')
+    } finally {
+      setUploadingProjectImage(false)
     }
   }
 
@@ -1004,89 +1074,329 @@ export default function AdminDashboardPage() {
               )}
 
               {/* ========================================================================= */}
-              {/* 2. OUR WORK (PRACTICE AREAS) CRUD MODULE */}
+              {/* 2. OUR WORK (PRACTICE AREAS & INNER PROJECTS) CRUD MODULE */}
               {/* ========================================================================= */}
               {activePage === 'ourwork' && (
                 <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-xl font-serif font-bold text-[#0F1F15]">
-                        Practice Areas Management
-                      </h3>
-                      <p className="text-xs text-[#46584D]">
-                        Add, edit, or remove practice area advisory services.
-                      </p>
+                  {/* Our Work Sub-Navigation Tabs */}
+                  <div className="flex flex-wrap items-center justify-between gap-4 p-2 bg-stone-100/80 rounded-2xl border border-stone-200">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setOurWorkTab('overview')}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          ourWorkTab === 'overview'
+                            ? 'bg-white text-[#0F1F15] shadow-xs'
+                            : 'text-[#46584D] hover:text-[#0F1F15]'
+                        }`}
+                      >
+                        Overview &amp; Practice Areas ({practiceAreas.length})
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setOurWorkTab('projects')}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          ourWorkTab === 'projects'
+                            ? 'bg-white text-[#0F1F15] shadow-xs'
+                            : 'text-[#46584D] hover:text-[#0F1F15]'
+                        }`}
+                      >
+                        Inner Practice Projects &amp; Case Studies ({practiceProjects.length})
+                      </button>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditingItemType('practice')
-                        setEditingItemData({
-                          id: '',
-                          title_en: '',
-                          title_fr: '',
-                          description_en: '',
-                          description_fr: '',
-                          mobile_description_en: '',
-                          mobile_description_fr: '',
-                          link: '/our-work/',
-                          sort_order: practiceAreas.length,
-                          is_published: 1,
-                        })
-                      }}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] transition-colors cursor-pointer"
-                    >
-                      <Plus size={15} />
-                      <span>Add Practice Area</span>
-                    </button>
+                    {ourWorkTab === 'overview' ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingItemType('practice')
+                          setEditingItemData({
+                            id: '',
+                            title_en: '',
+                            title_fr: '',
+                            description_en: '',
+                            description_fr: '',
+                            mobile_description_en: '',
+                            mobile_description_fr: '',
+                            link: '/our-work/',
+                            sort_order: practiceAreas.length,
+                            is_published: 1,
+                          })
+                        }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] transition-colors cursor-pointer"
+                      >
+                        <Plus size={15} />
+                        <span>Add Practice Area</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingItemType('project')
+                          setEditingItemData({
+                            id: '',
+                            practice_area_slug: activeProjectPracticeFilter === 'all' ? 'digital-platforms' : activeProjectPracticeFilter,
+                            title_en: '',
+                            title_fr: '',
+                            tag_en: '',
+                            tag_fr: '',
+                            description_en: '',
+                            description_fr: '',
+                            image: '/platforms/mbeguchoice.png',
+                            image_type: 'screenshot',
+                            link_url: '',
+                            sort_order: practiceProjects.length + 1,
+                            is_published: 1,
+                          })
+                        }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] transition-colors cursor-pointer"
+                      >
+                        <Plus size={15} />
+                        <span>Add Project / Case Study</span>
+                      </button>
+                    )}
                   </div>
 
-                  {/* Practice Areas List */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {practiceAreas.map((area, idx) => (
-                      <div
-                        key={area.id}
-                        className="consultancy-card p-5 bg-white rounded-xl border border-stone-200/90 flex flex-col justify-between"
-                      >
-                        <div>
-                          <div className="flex items-center justify-between text-xs text-[#1A4D2E] font-semibold mb-1">
-                            <span>Service 0{idx + 1}</span>
-                            <span className="font-mono text-stone-400">{area.link}</span>
+                  {/* SUB-VIEW 1: OVERVIEW & PRACTICE AREAS */}
+                  {ourWorkTab === 'overview' && (
+                    <div className="space-y-6">
+                      {/* Tagline & Masthead Editor Card */}
+                      <div className="consultancy-card p-6 bg-white rounded-2xl border border-stone-200/90 shadow-xs space-y-4">
+                        <div className="flex items-center justify-between pb-3 border-b border-stone-100">
+                          <div>
+                            <span className="text-xs font-bold text-[#1A4D2E] uppercase tracking-wider">
+                              Our Work Page Header &amp; Tagline
+                            </span>
+                            <p className="text-xs text-[#46584D]">
+                              Controls the main page title and institutional introductory tagline.
+                            </p>
                           </div>
-                          <h4 className="font-serif font-bold text-lg text-[#0F1F15] mb-2">
-                            {activeLocale === 'fr' ? area.title_fr || area.title_en : area.title_en}
-                          </h4>
-                          <p className="text-xs text-[#46584D] leading-relaxed line-clamp-3">
-                            {activeLocale === 'fr' ? area.description_fr || area.description_en : area.description_en}
-                          </p>
+                          <button
+                            type="button"
+                            onClick={handleSavePageSection}
+                            disabled={saving}
+                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] transition-colors cursor-pointer"
+                          >
+                            <Save size={13} />
+                            <span>{saving ? 'Saving...' : 'Save Tagline & Masthead'}</span>
+                          </button>
                         </div>
 
-                        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-stone-100">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setEditingItemType('practice')
-                              setEditingItemData(area)
-                            }}
-                            className="inline-flex items-center gap-1 text-xs font-semibold text-[#1A4D2E] hover:underline"
-                          >
-                            <Edit2 size={12} />
-                            <span>Edit Service</span>
-                          </button>
-                          <span className="text-stone-300">·</span>
-                          <button
-                            type="button"
-                            onClick={() => handleDeletePracticeArea(area.id, area.title_en)}
-                            className="inline-flex items-center gap-1 text-xs font-semibold text-red-600 hover:underline"
-                          >
-                            <Trash2 size={12} />
-                            <span>Delete</span>
-                          </button>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-medium text-[#46584D] mb-1">
+                              Headline Title ({activeLocale.toUpperCase()})
+                            </label>
+                            <input
+                              type="text"
+                              value={currentContent.title || ''}
+                              onChange={(e) => handleFieldChange('title', e.target.value)}
+                              placeholder="Solutions that cultivate impact."
+                              className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-sm font-semibold"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-[#46584D] mb-1">
+                              Section Tag ({activeLocale.toUpperCase()})
+                            </label>
+                            <input
+                              type="text"
+                              value={currentContent.practice || ''}
+                              onChange={(e) => handleFieldChange('practice', e.target.value)}
+                              placeholder="Our Practice"
+                              className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-sm font-semibold"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-medium text-[#46584D] mb-1">
+                            Introductory Tagline / Subtitle ({activeLocale.toUpperCase()})
+                          </label>
+                          <textarea
+                            rows={3}
+                            value={currentContent.subtitle || ''}
+                            onChange={(e) => handleFieldChange('subtitle', e.target.value)}
+                            placeholder="At Agri Experience, we combine knowledge, technology, and field expertise to deliver end-to-end solutions for a smarter, more sustainable agricultural future."
+                            className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs leading-relaxed"
+                          />
                         </div>
                       </div>
-                    ))}
-                  </div>
+
+                      {/* Practice Areas Cards List */}
+                      <div className="space-y-3">
+                        <h4 className="text-sm font-bold uppercase tracking-wider text-[#1A4D2E]">
+                          Core Practice Offerings
+                        </h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {practiceAreas.map((area, idx) => (
+                            <div
+                              key={area.id}
+                              className="consultancy-card p-5 bg-white rounded-xl border border-stone-200/90 flex flex-col justify-between"
+                            >
+                              <div>
+                                <div className="flex items-center justify-between text-xs text-[#1A4D2E] font-semibold mb-1">
+                                  <span>Service 0{idx + 1}</span>
+                                  <span className="font-mono text-stone-400">{area.link}</span>
+                                </div>
+                                <h4 className="font-serif font-bold text-lg text-[#0F1F15] mb-2">
+                                  {activeLocale === 'fr' ? area.title_fr || area.title_en : area.title_en}
+                                </h4>
+                                <p className="text-xs text-[#46584D] leading-relaxed line-clamp-3">
+                                  {activeLocale === 'fr' ? area.description_fr || area.description_en : area.description_en}
+                                </p>
+                              </div>
+
+                              <div className="flex items-center gap-2 mt-4 pt-3 border-t border-stone-100">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setEditingItemType('practice')
+                                    setEditingItemData(area)
+                                  }}
+                                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#1A4D2E] hover:underline cursor-pointer"
+                                >
+                                  <Edit2 size={12} />
+                                  <span>Edit Service</span>
+                                </button>
+                                <span className="text-stone-300">·</span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeletePracticeArea(area.id, area.title_en)}
+                                  className="inline-flex items-center gap-1 text-xs font-semibold text-red-600 hover:underline cursor-pointer"
+                                >
+                                  <Trash2 size={12} />
+                                  <span>Delete</span>
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUB-VIEW 2: INNER PRACTICE PROJECTS & CASE STUDIES */}
+                  {ourWorkTab === 'projects' && (
+                    <div className="space-y-6">
+                      {/* Filter by Practice Area */}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs font-bold text-[#46584D]">Filter by Area:</span>
+                        {[
+                          { slug: 'all', label: 'All Areas' },
+                          { slug: 'digital-platforms', label: 'Digital Platforms' },
+                          { slug: 'technical-studies', label: 'Technical Studies' },
+                          { slug: 'project-implementation', label: 'Project Implementation' },
+                          { slug: 'client-advisory', label: 'Client Advisory' },
+                          { slug: 'capacity-building', label: 'Capacity Building' },
+                          { slug: 'stakeholder-convenings', label: 'Convenings' },
+                        ].map((filter) => (
+                          <button
+                            key={filter.slug}
+                            type="button"
+                            onClick={() => setActiveProjectPracticeFilter(filter.slug)}
+                            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                              activeProjectPracticeFilter === filter.slug
+                                ? 'bg-[#1A4D2E] text-white'
+                                : 'bg-white border border-stone-200 text-[#46584D] hover:bg-stone-50'
+                            }`}
+                          >
+                            {filter.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Projects Grid */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {practiceProjects
+                          .filter((proj) =>
+                            activeProjectPracticeFilter === 'all'
+                              ? true
+                              : proj.practice_area_slug === activeProjectPracticeFilter
+                          )
+                          .map((proj) => (
+                            <div
+                              key={proj.id}
+                              className="consultancy-card p-4 bg-white rounded-xl border border-stone-200/90 flex flex-col justify-between"
+                            >
+                              <div className="space-y-3">
+                                {/* Visual Media Thumbnail */}
+                                <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-stone-100 border border-stone-200">
+                                  {proj.image ? (
+                                    <Image
+                                      src={proj.image}
+                                      alt={proj.title_en}
+                                      fill
+                                      sizes="300px"
+                                      className="object-cover"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-xs text-stone-400">
+                                      No Image
+                                    </div>
+                                  )}
+                                  <span className="absolute top-2 right-2 text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-black/70 text-white backdrop-blur-xs">
+                                    {proj.image_type || 'screenshot'}
+                                  </span>
+                                </div>
+
+                                <div>
+                                  <span className="inline-block px-2 py-0.5 rounded bg-[#1A4D2E]/10 text-[#1A4D2E] text-[10px] font-bold uppercase tracking-wider mb-1">
+                                    {proj.practice_area_slug.replace('-', ' ')}
+                                  </span>
+                                  <h4 className="font-serif font-bold text-base text-[#0F1F15] line-clamp-1">
+                                    {activeLocale === 'fr' ? proj.title_fr || proj.title_en : proj.title_en}
+                                  </h4>
+                                  {(proj.tag_en || proj.tag_fr) && (
+                                    <p className="text-[11px] font-semibold text-[#1A4D2E] truncate mt-0.5">
+                                      {activeLocale === 'fr' ? proj.tag_fr || proj.tag_en : proj.tag_en}
+                                    </p>
+                                  )}
+                                  <p className="text-xs text-[#46584D] line-clamp-2 leading-relaxed mt-1.5">
+                                    {activeLocale === 'fr' ? proj.description_fr || proj.description_en : proj.description_en}
+                                  </p>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center justify-between gap-2 mt-4 pt-3 border-t border-stone-100 text-xs">
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setEditingItemType('project')
+                                      setEditingItemData(proj)
+                                    }}
+                                    className="font-semibold text-[#1A4D2E] hover:underline cursor-pointer"
+                                  >
+                                    Edit
+                                  </button>
+                                  <span className="text-stone-300">·</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeletePracticeProject(proj.id, proj.title_en)}
+                                    className="font-semibold text-red-600 hover:underline cursor-pointer"
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+
+                                {proj.link_url && (
+                                  <a
+                                    href={proj.link_url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-1 text-[11px] font-medium text-stone-500 hover:text-stone-900"
+                                  >
+                                    <span>Link</span>
+                                    <ExternalLink size={10} />
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Practice Area Modal */}
                   {editingItemType === 'practice' && editingItemData && (
@@ -1102,7 +1412,7 @@ export default function AdminDashboardPage() {
                               setEditingItemType(null)
                               setEditingItemData(null)
                             }}
-                            className="p-1 rounded-full text-stone-400 hover:text-stone-700"
+                            className="p-1 rounded-full text-stone-400 hover:text-stone-700 cursor-pointer"
                           >
                             <X size={18} />
                           </button>
@@ -1189,7 +1499,7 @@ export default function AdminDashboardPage() {
                               setEditingItemType(null)
                               setEditingItemData(null)
                             }}
-                            className="px-4 py-2 rounded-full text-xs font-semibold text-[#46584D] hover:bg-stone-100"
+                            className="px-4 py-2 rounded-full text-xs font-semibold text-[#46584D] hover:bg-stone-100 cursor-pointer"
                           >
                             Cancel
                           </button>
@@ -1197,9 +1507,269 @@ export default function AdminDashboardPage() {
                             type="button"
                             onClick={() => handleSavePracticeArea(editingItemData)}
                             disabled={saving}
-                            className="px-5 py-2 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24]"
+                            className="px-5 py-2 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] cursor-pointer"
                           >
                             Save Practice Area
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Practice Project / Case Study Modal */}
+                  {editingItemType === 'project' && editingItemData && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                      <div className="bg-white rounded-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-4 border border-stone-200 shadow-2xl">
+                        <div className="flex items-center justify-between pb-3 border-b border-stone-100">
+                          <h4 className="font-serif font-bold text-lg text-[#0F1F15]">
+                            {editingItemData.id ? 'Edit Project / Case Study' : 'Add New Project / Case Study'}
+                          </h4>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingItemType(null)
+                              setEditingItemData(null)
+                            }}
+                            className="p-1 rounded-full text-stone-400 hover:text-stone-700 cursor-pointer"
+                          >
+                            <X size={18} />
+                          </button>
+                        </div>
+
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-xs font-medium text-[#46584D] mb-1">
+                                Practice Area *
+                              </label>
+                              <select
+                                value={editingItemData.practice_area_slug || 'digital-platforms'}
+                                onChange={(e) =>
+                                  setEditingItemData({ ...editingItemData, practice_area_slug: e.target.value })
+                                }
+                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs font-semibold"
+                              >
+                                <option value="digital-platforms">Digital Platforms</option>
+                                <option value="technical-studies">Technical Studies</option>
+                                <option value="project-implementation">Project Implementation</option>
+                                <option value="client-advisory">Client Advisory</option>
+                                <option value="capacity-building">Capacity Building</option>
+                                <option value="stakeholder-convenings">Stakeholder Convenings</option>
+                              </select>
+                            </div>
+
+                            <div>
+                              <label className="block text-xs font-medium text-[#46584D] mb-1">
+                                Image Presentation Type
+                              </label>
+                              <select
+                                value={editingItemData.image_type || 'screenshot'}
+                                onChange={(e) =>
+                                  setEditingItemData({ ...editingItemData, image_type: e.target.value })
+                                }
+                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs"
+                              >
+                                <option value="screenshot">Platform Screenshot</option>
+                                <option value="preview">Document / Scoping Preview</option>
+                                <option value="photo">Field / Activity Photo</option>
+                                <option value="logo">Brand / System Logo</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-xs font-medium text-[#46584D] mb-1">
+                                Title (English) *
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                value={editingItemData.title_en || ''}
+                                onChange={(e) =>
+                                  setEditingItemData({ ...editingItemData, title_en: e.target.value })
+                                }
+                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs font-semibold"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium text-[#46584D] mb-1">
+                                Title (French)
+                              </label>
+                              <input
+                                type="text"
+                                value={editingItemData.title_fr || ''}
+                                onChange={(e) =>
+                                  setEditingItemData({ ...editingItemData, title_fr: e.target.value })
+                                }
+                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs font-semibold"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-xs font-medium text-[#46584D] mb-1">
+                                Category Tag (English)
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="e.g. Variety Information Portal"
+                                value={editingItemData.tag_en || ''}
+                                onChange={(e) =>
+                                  setEditingItemData({ ...editingItemData, tag_en: e.target.value })
+                                }
+                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium text-[#46584D] mb-1">
+                                Category Tag (French)
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="e.g. Portail d'information"
+                                value={editingItemData.tag_fr || ''}
+                                onChange={(e) =>
+                                  setEditingItemData({ ...editingItemData, tag_fr: e.target.value })
+                                }
+                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Direct Project Image Upload */}
+                          <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200/80 space-y-2.5">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-[#0F1F15] uppercase tracking-wider">
+                                Project Visual Media *
+                              </span>
+                              <span className="text-[11px] text-[#46584D]">PNG, JPG, or SVG</span>
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                              <div className="relative w-20 h-14 rounded-lg overflow-hidden bg-stone-200 shrink-0 border border-stone-300">
+                                {editingItemData.image ? (
+                                  <Image
+                                    src={editingItemData.image}
+                                    alt="Project preview"
+                                    fill
+                                    sizes="80px"
+                                    className="object-cover"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-[10px] text-stone-400">
+                                    No Image
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="flex-1 space-y-1.5">
+                                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] transition-colors cursor-pointer shadow-xs">
+                                  {uploadingProjectImage ? (
+                                    <Loader2 size={13} className="animate-spin" />
+                                  ) : (
+                                    <Upload size={13} />
+                                  )}
+                                  <span>{uploadingProjectImage ? 'Uploading...' : 'Upload Image'}</span>
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={handleProjectImageUpload}
+                                    disabled={uploadingProjectImage}
+                                  />
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="/platforms/name.png or /uploads/..."
+                                  value={editingItemData.image || ''}
+                                  onChange={(e) =>
+                                    setEditingItemData({ ...editingItemData, image: e.target.value })
+                                  }
+                                  className="w-full px-2 py-1 rounded bg-white border border-stone-200 text-[11px] font-mono"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-medium text-[#46584D] mb-1">
+                              Description (English) *
+                            </label>
+                            <textarea
+                              rows={3}
+                              value={editingItemData.description_en || ''}
+                              onChange={(e) =>
+                                setEditingItemData({ ...editingItemData, description_en: e.target.value })
+                              }
+                              className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs leading-relaxed"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-medium text-[#46584D] mb-1">
+                              Description (French)
+                            </label>
+                            <textarea
+                              rows={3}
+                              value={editingItemData.description_fr || ''}
+                              onChange={(e) =>
+                                setEditingItemData({ ...editingItemData, description_fr: e.target.value })
+                              }
+                              className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs leading-relaxed"
+                            />
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-xs font-medium text-[#46584D] mb-1">
+                                External Link / Document URL
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="https://... or /resources/..."
+                                value={editingItemData.link_url || ''}
+                                onChange={(e) =>
+                                  setEditingItemData({ ...editingItemData, link_url: e.target.value })
+                                }
+                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs font-mono"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium text-[#46584D] mb-1">
+                                Sort Order
+                              </label>
+                              <input
+                                type="number"
+                                value={editingItemData.sort_order ?? 0}
+                                onChange={(e) =>
+                                  setEditingItemData({ ...editingItemData, sort_order: parseInt(e.target.value, 10) || 0 })
+                                }
+                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-3 pt-3 border-t border-stone-100">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingItemType(null)
+                              setEditingItemData(null)
+                            }}
+                            className="px-4 py-2 rounded-full text-xs font-semibold text-[#46584D] hover:bg-stone-100 cursor-pointer"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleSavePracticeProject(editingItemData)}
+                            disabled={saving}
+                            className="px-5 py-2 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] cursor-pointer"
+                          >
+                            Save Project
                           </button>
                         </div>
                       </div>

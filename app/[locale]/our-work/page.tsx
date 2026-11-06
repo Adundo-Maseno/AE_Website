@@ -56,9 +56,23 @@ export default function OurWorkPage() {
   ]
 
   const [cards, setCards] = useState<PracticeCard[]>(defaultCards)
+  const [heroTitle, setHeroTitle] = useState(t('title'))
+  const [heroSubtitle, setHeroSubtitle] = useState(t('subtitle'))
 
   useEffect(() => {
     setCards(defaultCards)
+    setHeroTitle(t('title'))
+    setHeroSubtitle(t('subtitle'))
+
+    fetch(`/api/admin/content?page=ourwork`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        const sec = data?.sections?.[locale]
+        if (sec?.title) setHeroTitle(sec.title)
+        if (sec?.subtitle) setHeroSubtitle(sec.subtitle)
+      })
+      .catch(() => {})
+
     fetch(`/api/practice-areas?locale=${locale}`)
       .then((res) => {
         if (!res.ok) return null
@@ -93,14 +107,14 @@ export default function OurWorkPage() {
                 className="font-serif text-[#0F1F15] font-bold leading-[1.1] tracking-tight"
                 style={{ fontSize: 'clamp(2.125rem, 1.5rem + 2.5vw, 4.25rem)' }}
               >
-                {t('title')}
+                {heroTitle}
               </h1>
             </div>
 
             <div className="flex-1 relative">
               <div className="hidden lg:block absolute left-0 top-1 bottom-1 w-px bg-stone-200" />
               <p className="text-base sm:text-lg lg:text-xl text-[#2A3830] leading-[1.6] font-normal lg:pl-10">
-                {t('subtitle')}
+                {heroSubtitle}
               </p>
             </div>
           </div>

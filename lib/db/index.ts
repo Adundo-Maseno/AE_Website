@@ -158,6 +158,26 @@ function initSchema(db: Database.Database) {
     );
   `)
 
+  // 8. Practice Area Inner Projects & Case Studies Table (CRUD)
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS practice_projects (
+      id TEXT PRIMARY KEY,
+      practice_area_slug TEXT NOT NULL,
+      title_en TEXT NOT NULL,
+      title_fr TEXT NOT NULL,
+      tag_en TEXT,
+      tag_fr TEXT,
+      description_en TEXT NOT NULL,
+      description_fr TEXT NOT NULL,
+      image TEXT NOT NULL,
+      image_type TEXT DEFAULT 'screenshot',
+      link_url TEXT,
+      sort_order INTEGER DEFAULT 0,
+      is_published INTEGER DEFAULT 1,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `)
+
   seedDefaultsIfNeeded(db)
 }
 
@@ -458,6 +478,375 @@ function seedDefaultsIfNeeded(db: Database.Database) {
       console.log(`[CMS] Seeded ${publicDownloads.length} publications into SQLite`)
     } catch (err) {
       console.error('[CMS] Failed to seed publications:', err)
+    }
+  }
+
+  // Check if practice_projects has records
+  const projectCount = db.prepare('SELECT COUNT(*) as count FROM practice_projects').get() as { count: number }
+  if (projectCount.count === 0) {
+    try {
+      const defaultProjects = [
+        // Digital Platforms
+        {
+          id: 'proj-dp-mbeguchoice',
+          practice_area_slug: 'digital-platforms',
+          title_en: 'MbeguChoice Platform',
+          title_fr: 'Plateforme MbeguChoice',
+          tag_en: 'Variety Information Portal',
+          tag_fr: "Portail d'information variétale",
+          description_en: 'Nationwide digital seed selection platform empowering Kenyan farmers and agrodealers to find certified crop varieties tailored to their ecological zones.',
+          description_fr: 'Plateforme nationale de sélection de semences permettant aux agriculteurs et distributeurs kényans de trouver des variétés certifiées adaptées.',
+          image: '/platforms/mbeguchoice.png',
+          image_type: 'screenshot',
+          link_url: 'https://mbeguchoice.com',
+          sort_order: 1,
+        },
+        {
+          id: 'proj-dp-africa-catalogue',
+          practice_area_slug: 'digital-platforms',
+          title_en: 'Africa Crop Variety Catalogue',
+          title_fr: "Catalogue des variétés de cultures d'Afrique",
+          tag_en: 'Regional Database',
+          tag_fr: 'Base de données régionale',
+          description_en: 'Centralized regional digital repository cataloguing commercial and release-stage crop varieties across East and Southern Africa.',
+          description_fr: 'Répertoire numérique régional centralisé répertoriant les variétés commerciales en Afrique orientale et australe.',
+          image: '/platforms/africa-crop-variety-catalogue.png',
+          image_type: 'screenshot',
+          link_url: 'https://varietycatalogues.com/about/',
+          sort_order: 2,
+        },
+        {
+          id: 'proj-dp-kenya-pvl',
+          practice_area_slug: 'digital-platforms',
+          title_en: 'Kenya Plant Variety List API',
+          title_fr: 'API de la liste des variétés végétales du Kenya',
+          tag_en: 'Official Registry & API',
+          tag_fr: 'Registre officiel et API',
+          description_en: 'Digitalized national plant variety list developed in partnership with KEPHIS for instant regulatory verification and variety lookup.',
+          description_fr: 'Liste nationale des variétés végétales développée en partenariat avec le KEPHIS pour la vérification réglementaire.',
+          image: '/platforms/kenya-plant-variety-list.png',
+          image_type: 'screenshot',
+          link_url: 'https://catalogueapi.varietycatalogues.com/',
+          sort_order: 3,
+        },
+        {
+          id: 'proj-dp-tanzania-inputs',
+          practice_area_slug: 'digital-platforms',
+          title_en: 'Tanzania Agri-Inputs Platform',
+          title_fr: 'Plateforme des intrants agricoles de Tanzanie',
+          tag_en: 'Agricultural Inputs Registry',
+          tag_fr: 'Registre des intrants agricoles',
+          description_en: 'Comprehensive portal supporting TOSCI in digitizing seed certification, agrodealer inspection, and farmer verification across Tanzania.',
+          description_fr: "Portail complet soutenant TOSCI dans la numérisation de la certification semencière et de l'inspection des distributeurs.",
+          image: '/platforms/tanzania-agri-inputs-platform.png',
+          image_type: 'screenshot',
+          link_url: 'https://tanzaniaagri-inputsplatform.com/',
+          sort_order: 4,
+        },
+        {
+          id: 'proj-dp-seed-sector-kenya',
+          practice_area_slug: 'digital-platforms',
+          title_en: 'Seed Sector Platform Kenya',
+          title_fr: 'Plateforme du secteur semencier du Kenya',
+          tag_en: 'Sector Analytics & Data',
+          tag_fr: 'Analytique du secteur',
+          description_en: 'Interactive data dashboard unifying multi-stakeholder seed statistics, trade flows, and production projections.',
+          description_fr: 'Tableau de bord de données interactif unifiant les statistiques semencières et les flux commerciaux.',
+          image: '/platforms/seed-sector-platform-kenya.png',
+          image_type: 'screenshot',
+          link_url: 'https://mbeguchoice.com',
+          sort_order: 5,
+        },
+        {
+          id: 'proj-dp-uganda-inputs',
+          practice_area_slug: 'digital-platforms',
+          title_en: 'Uganda Agri-Inputs Platform',
+          title_fr: "Plateforme des intrants agricoles d'Ouganda",
+          tag_en: 'Regional Expansion',
+          tag_fr: 'Expansion régionale',
+          description_en: 'Digital system supporting variety tracking and certified agrodealer distribution networks in Uganda.',
+          description_fr: 'Système numérique de suivi variétal et de réseaux de distributeurs certifiés en Ouganda.',
+          image: '/platforms/uganda-agri-inputs-platform.png',
+          image_type: 'screenshot',
+          link_url: 'https://varietycatalogues.com',
+          sort_order: 6,
+        },
+        {
+          id: 'proj-dp-m3-system',
+          practice_area_slug: 'digital-platforms',
+          title_en: 'Mulika Mbegu Mbovu (M3) Verification',
+          title_fr: 'Vérification Mulika Mbegu Mbovu (M3)',
+          tag_en: 'Anti-Counterfeit Protection',
+          tag_fr: 'Protection anti-contrefaçon',
+          description_en: 'Award-winning farmer reporting and SMS verification framework safeguarding smallholder producers from counterfeit seed packages.',
+          description_fr: 'Cadre de vérification par SMS et signalement protégeant les petits producteurs contre les semences contrefaites.',
+          image: '/m3-logo.svg',
+          image_type: 'logo',
+          link_url: '/resources/Empowering-Kenyan-Farmers-to-Report-Low-Quality-or-Fake-Seed-to-the-Regulator.pdf',
+          sort_order: 7,
+        },
+
+        // Technical Studies
+        {
+          id: 'proj-ts-pasture-fodder',
+          practice_area_slug: 'technical-studies',
+          title_en: 'Scoping Study: Pasture & Fodder Materials in Kenya',
+          title_fr: "Étude d'opportunité : Matériel de pâturage et fourrage au Kenya",
+          tag_en: 'Livestock Value Chain',
+          tag_fr: "Chaîne de valeur de l'élevage",
+          description_en: 'Comprehensive market diagnosis identifying certified forage seed bottlenecks, farmer demand drivers, and commercialization pathways.',
+          description_fr: "Diagnostic de marché complet identifiant les goulots d'étranglement des semences fourragères certifiées.",
+          image: '/resources/previews/preview-pasture-fodder.jpg',
+          image_type: 'preview',
+          link_url: '/resources/Scoping-Study-Pasture-and-Fodder-Planting-Materials-in-Kenya.pdf',
+          sort_order: 1,
+        },
+        {
+          id: 'proj-ts-value-chain-crops',
+          practice_area_slug: 'technical-studies',
+          title_en: 'Scoping Study: Planting Materials for Value Chain Crops',
+          title_fr: "Étude d'opportunité : Matériel végétal pour cultures à haute valeur",
+          tag_en: 'Horticulture & Crops',
+          tag_fr: 'Horticulture et cultures',
+          description_en: 'Assessment across banana, avocado, mango, pineapple, passion fruit, sweet potato, and African leafy vegetables.',
+          description_fr: "Évaluation sur la banane, l'avocat, la mangue, l'ananas, le fruit de la passion et les légumes feuilles africains.",
+          image: '/resources/previews/preview-value-chain-crops.jpg',
+          image_type: 'preview',
+          link_url: '/resources/Scoping-Study-Planting-Materials-for-Value-Chain-Crops-in-Kenya-banana-avocado-mango-pineapples-passion-fruit-sweet-potatoes-African-leafy-vegetables.pdf',
+          sort_order: 2,
+        },
+        {
+          id: 'proj-ts-horticulture-nurseries',
+          practice_area_slug: 'technical-studies',
+          title_en: 'Scoping Study: Seedling Nurseries as a Viable Business',
+          title_fr: 'Étude : Pépinières de plants comme modèle économique viable',
+          tag_en: 'Enterprise Economics',
+          tag_fr: "Économie d'entreprise",
+          description_en: 'Analysis of private seedling nurseries as commercial conduits for high-yielding fruit and vegetable clean planting materials.',
+          description_fr: 'Analyse des pépinières privées comme vecteurs commerciaux de matériel végétal sain.',
+          image: '/resources/previews/preview-horticulture-nurseries.jpg',
+          image_type: 'preview',
+          link_url: '/resources/Scoping-Study-Horticulture-Seedling-Nurseries-as-a-Viable-Business-Model-in-Kenya.pdf',
+          sort_order: 3,
+        },
+        {
+          id: 'proj-ts-agrodealer-assoc',
+          practice_area_slug: 'technical-studies',
+          title_en: 'Scoping Study: Agro-Dealer Association Development',
+          title_fr: "Étude : Développement des associations d'agro-distributeurs",
+          tag_en: 'Distribution Networks',
+          tag_fr: 'Réseaux de distribution',
+          description_en: 'Twelve-county baseline investigation evaluating last-mile input supply chains, business practices, and regulatory awareness.',
+          description_fr: "Enquête de base dans douze comtés évaluant les chaînes d'approvisionnement du dernier kilomètre.",
+          image: '/resources/previews/preview-agrodealer-associations.jpg',
+          image_type: 'preview',
+          link_url: '/resources/Scoping-Study-Agro-Dealer-Association-Development-in-Twelve-Counties-in-Kenya.pdf',
+          sort_order: 4,
+        },
+
+        // Project Implementation
+        {
+          id: 'proj-pi-tasai-pilot',
+          practice_area_slug: 'project-implementation',
+          title_en: 'The African Seed Access Index (TASAI) Rollout',
+          title_fr: "Déploiement de l'African Seed Access Index (TASAI)",
+          tag_en: 'Multi-Country Implementation',
+          tag_fr: 'Mise en œuvre multi-pays',
+          description_en: 'Designed and implemented pilot field methodologies measuring seed industry vibrancy and regulatory efficiency across target African countries.',
+          description_fr: "Conception et mise en œuvre de méthodologies pilotes mesurant la vitalité du secteur semencier en Afrique.",
+          image: '/platforms/africa-crop-variety-catalogue.png',
+          image_type: 'screenshot',
+          link_url: '/our-work/project-implementation',
+          sort_order: 1,
+        },
+        {
+          id: 'proj-pi-kephis-verification',
+          practice_area_slug: 'project-implementation',
+          title_en: 'National Scratch-Off Seed Labeling Implementation',
+          title_fr: 'Mise en œuvre des étiquettes à gratter pour semences certifiées',
+          tag_en: 'Regulatory Field Ops',
+          tag_fr: 'Opérations réglementaires',
+          description_en: 'Field-level technical implementation of tamper-proof security labels in Kenya, establishing an operational verification pipeline.',
+          description_fr: 'Mise en œuvre technique au champ des étiquettes de sécurité inviolables au Kenya.',
+          image: '/m3-logo.svg',
+          image_type: 'logo',
+          link_url: '/resources/Case-Study-Scratch-Off-Labels-for-Certified-Seed-in-Kenya.pdf',
+          sort_order: 2,
+        },
+        {
+          id: 'proj-pi-variety-demonstrations',
+          practice_area_slug: 'project-implementation',
+          title_en: 'Crop Variety Performance Trials & Field Days',
+          title_fr: 'Essais de performance variétale et journées au champ',
+          tag_en: 'Field Demonstrations',
+          tag_fr: 'Démonstrations de terrain',
+          description_en: 'Multi-location farmer demonstration plots comparing newly released climate-smart hybrids against legacy cultivars.',
+          description_fr: 'Parcelles de démonstration multi-sites comparant de nouveaux hybrides adaptés au climat.',
+          image: '/platforms/tanzania-agri-inputs-platform.png',
+          image_type: 'screenshot',
+          link_url: '/our-work/project-implementation',
+          sort_order: 3,
+        },
+
+        // Client Advisory
+        {
+          id: 'proj-ca-seed-policy',
+          practice_area_slug: 'client-advisory',
+          title_en: 'National Seed Policy & Regulatory Reform Advisory',
+          title_fr: 'Conseil en politique semencière et réformes réglementaires',
+          tag_en: 'Policy Advisory',
+          tag_fr: 'Conseil en politiques',
+          description_en: 'Guiding ministries of agriculture, donors, and regulatory authorities on seed law revisions, private inspection accreditation, and variety release protocols.',
+          description_fr: "Accompagnement des ministères de l'agriculture et autorités sur la révision des lois semencières.",
+          image: '/platforms/seed-sector-platform-kenya.png',
+          image_type: 'screenshot',
+          link_url: '/our-work/client-advisory',
+          sort_order: 1,
+        },
+        {
+          id: 'proj-ca-egs-economics',
+          practice_area_slug: 'client-advisory',
+          title_en: 'Early Generation Seed (EGS) Commercial Financing Models',
+          title_fr: 'Modèles de financement commercial des semences EGS',
+          tag_en: 'Financial Modeling',
+          tag_fr: 'Modélisation financière',
+          description_en: 'Advising institutional partners and research institutes on pricing structures, licensing royalties, and revolving fund mechanisms.',
+          description_fr: 'Conseil aux partenaires institutionnels sur les redevances de licence et mécanismes de fonds renouvelables.',
+          image: '/team/denis2.jpg',
+          image_type: 'photo',
+          link_url: '/our-work/client-advisory',
+          sort_order: 2,
+        },
+        {
+          id: 'proj-ca-variety-licensing',
+          practice_area_slug: 'client-advisory',
+          title_en: 'Public-Private Commercial Licensing Frameworks',
+          title_fr: 'Cadres de licences commerciales public-privé',
+          tag_en: 'Commercial Strategy',
+          tag_fr: 'Stratégie commerciale',
+          description_en: 'Structuring commercial licensing agreements between international CGIAR breeders and domestic African seed companies.',
+          description_fr: "Structuration d'accords de licence commerciale entre sélectionneurs CGIAR et semenciers africains.",
+          image: '/team/aline.png',
+          image_type: 'photo',
+          link_url: '/our-work/client-advisory',
+          sort_order: 3,
+        },
+
+        // Capacity Building
+        {
+          id: 'proj-cb-seed-business',
+          practice_area_slug: 'capacity-building',
+          title_en: 'Seed Business Management Training (WACCI Partnership)',
+          title_fr: "Formation en gestion d'entreprises semencières (WACCI)",
+          tag_en: 'Executive Education',
+          tag_fr: 'Formation exécutive',
+          description_en: 'Executive coaching for plant breeding postgraduate students and seed enterprise managers on demand forecasting, inventory, and operations.',
+          description_fr: 'Coaching exécutif pour étudiants en amélioration des plantes et gestionnaires semenciers.',
+          image: '/team/mulemia2.jpg',
+          image_type: 'photo',
+          link_url: '/our-work/capacity-building',
+          sort_order: 1,
+        },
+        {
+          id: 'proj-cb-toolbox-program',
+          practice_area_slug: 'capacity-building',
+          title_en: 'The African Seed Company Toolbox (52 Tools)',
+          title_fr: 'La boîte à outils des entreprises semencières africaines (52 outils)',
+          tag_en: 'Standard Reference',
+          tag_fr: 'Référence du secteur',
+          description_en: "Authored by Aline O'Connor, this standard management curriculum equips seed executives across 20+ African nations with practical business frameworks.",
+          description_fr: 'Rédigé par Aline O\'Connor, ce programme standard équipe les dirigeants semenciers dans plus de 20 pays.',
+          image: '/team/aline.png',
+          image_type: 'photo',
+          link_url: '/our-work/capacity-building',
+          sort_order: 2,
+        },
+        {
+          id: 'proj-cb-agrodealer-coaching',
+          practice_area_slug: 'capacity-building',
+          title_en: 'Agrodealer Technical & Business Capability Program',
+          title_fr: 'Programme de compétences techniques et commerciales des agro-distributeurs',
+          tag_en: 'Last-Mile Training',
+          tag_fr: 'Formation de proximité',
+          description_en: 'Hands-on training modules for agro-input stockists on seed storage integrity, seed germination stewardship, and farmer advisory.',
+          description_fr: "Modules de formation pratique pour distributeurs sur l'intégrité du stockage et le conseil aux agriculteurs.",
+          image: '/team/ronald2.jpg',
+          image_type: 'photo',
+          link_url: '/our-work/capacity-building',
+          sort_order: 3,
+        },
+
+        // Stakeholder Convenings
+        {
+          id: 'proj-sc-regulatory-roundtable',
+          practice_area_slug: 'stakeholder-convenings',
+          title_en: 'Regional Seed Regulatory Harmonization Roundtables',
+          title_fr: "Tables rondes régionales d'harmonisation réglementaire semencière",
+          tag_en: 'Regional Dialogue',
+          tag_fr: 'Dialogue régional',
+          description_en: 'Facilitating high-level diplomatic and technical convenings to align seed certification, variety cataloguing, and cross-border trade standards.',
+          description_fr: 'Facilitation de rencontres diplomatiques et techniques pour harmoniser les normes de certification semencière.',
+          image: '/team/moses2.jpg',
+          image_type: 'photo',
+          link_url: '/our-work/stakeholder-convenings',
+          sort_order: 1,
+        },
+        {
+          id: 'proj-sc-study-tours',
+          practice_area_slug: 'stakeholder-convenings',
+          title_en: 'International Seed Industry Learning Trips & Study Tours',
+          title_fr: "Voyages d'études et visites d'apprentissage internationales",
+          tag_en: 'Immersive Study Tours',
+          tag_fr: "Voyages d'études",
+          description_en: 'Designing experiential benchmarking missions for African regulators and executives to leading global seed hubs in the Netherlands, South Africa, and Kenya.',
+          description_fr: 'Missions d\'étalonnage pour régulateurs et dirigeants auprès de pôles semenciers mondiaux.',
+          image: '/team/mulemia2.jpg',
+          image_type: 'photo',
+          link_url: '/our-work/stakeholder-convenings',
+          sort_order: 2,
+        },
+        {
+          id: 'proj-sc-industry-assemblies',
+          practice_area_slug: 'stakeholder-convenings',
+          title_en: 'National Seed Trade Association Strategic Assemblies',
+          title_fr: 'Assemblées stratégiques des associations semencières nationales',
+          tag_en: 'Industry Leadership',
+          tag_fr: 'Leadership industriel',
+          description_en: 'Convening private seed companies, breeders, and policymakers to establish shared investment priorities and advocacy agendas.',
+          description_fr: "Rassemblement des semenciers privés et décideurs pour établir des priorités d'investissement communes.",
+          image: '/team/claire2.jpg',
+          image_type: 'photo',
+          link_url: '/our-work/stakeholder-convenings',
+          sort_order: 3,
+        },
+      ]
+
+      const insertProj = db.prepare(`
+        INSERT INTO practice_projects (
+          id, practice_area_slug, title_en, title_fr, tag_en, tag_fr,
+          description_en, description_fr, image, image_type, link_url, sort_order
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+      defaultProjects.forEach((proj, idx) => {
+        insertProj.run(
+          proj.id,
+          proj.practice_area_slug,
+          proj.title_en,
+          proj.title_fr,
+          proj.tag_en,
+          proj.tag_fr,
+          proj.description_en,
+          proj.description_fr,
+          proj.image,
+          proj.image_type,
+          proj.link_url,
+          proj.sort_order ?? idx
+        )
+      })
+      console.log(`[CMS] Seeded ${defaultProjects.length} practice projects into SQLite`)
+    } catch (err) {
+      console.error('[CMS] Failed to seed practice projects:', err)
     }
   }
 }
@@ -777,6 +1166,84 @@ export function deleteCustomSection(id: string): boolean {
     return true
   } catch (err) {
     console.error('[CMS] Failed to delete custom section:', err)
+    return false
+  }
+}
+
+// Practice Area Inner Projects & Case Studies CRUD Query Helpers
+export function getAllPracticeProjects(practiceAreaSlug?: string, includeUnpublished = false): any[] {
+  try {
+    const db = getDb()
+    if (practiceAreaSlug && practiceAreaSlug !== 'all') {
+      const query = includeUnpublished
+        ? 'SELECT * FROM practice_projects WHERE practice_area_slug = ? ORDER BY sort_order ASC, updated_at DESC'
+        : 'SELECT * FROM practice_projects WHERE practice_area_slug = ? AND is_published = 1 ORDER BY sort_order ASC'
+      return db.prepare(query).all(practiceAreaSlug)
+    }
+    const query = includeUnpublished
+      ? 'SELECT * FROM practice_projects ORDER BY practice_area_slug ASC, sort_order ASC, updated_at DESC'
+      : 'SELECT * FROM practice_projects WHERE is_published = 1 ORDER BY practice_area_slug ASC, sort_order ASC'
+    return db.prepare(query).all()
+  } catch (err) {
+    console.error('[CMS] Failed to get practice projects:', err)
+    return []
+  }
+}
+
+export function upsertPracticeProject(project: any): boolean {
+  try {
+    const db = getDb()
+    const id = project.id || `proj-${Date.now()}`
+    db.prepare(`
+      INSERT INTO practice_projects (
+        id, practice_area_slug, title_en, title_fr, tag_en, tag_fr,
+        description_en, description_fr, image, image_type, link_url,
+        sort_order, is_published, updated_at
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+      ON CONFLICT(id) DO UPDATE SET
+        practice_area_slug = excluded.practice_area_slug,
+        title_en = excluded.title_en,
+        title_fr = excluded.title_fr,
+        tag_en = excluded.tag_en,
+        tag_fr = excluded.tag_fr,
+        description_en = excluded.description_en,
+        description_fr = excluded.description_fr,
+        image = excluded.image,
+        image_type = excluded.image_type,
+        link_url = excluded.link_url,
+        sort_order = excluded.sort_order,
+        is_published = excluded.is_published,
+        updated_at = CURRENT_TIMESTAMP
+    `).run(
+      id,
+      project.practice_area_slug,
+      project.title_en,
+      project.title_fr || project.title_en,
+      project.tag_en || null,
+      project.tag_fr || project.tag_en || null,
+      project.description_en,
+      project.description_fr || project.description_en,
+      project.image,
+      project.image_type || 'screenshot',
+      project.link_url || null,
+      project.sort_order ?? 0,
+      project.is_published ?? 1
+    )
+    return true
+  } catch (err) {
+    console.error('[CMS] Failed to upsert practice project:', err)
+    return false
+  }
+}
+
+export function deletePracticeProject(id: string): boolean {
+  try {
+    const db = getDb()
+    db.prepare('DELETE FROM practice_projects WHERE id = ?').run(id)
+    return true
+  } catch (err) {
+    console.error('[CMS] Failed to delete practice project:', err)
     return false
   }
 }

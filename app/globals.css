@@ -87,8 +87,8 @@
 
   --font-sans: var(--font-dm-sans);
   --font-serif: var(--font-playfair);
-  --font-data: var(--font-bebas);
-  --font-mono: var(--font-space-grotesk);
+  --font-data: var(--font-dm-sans);
+  --font-mono: var(--font-dm-sans), ui-monospace, monospace;
 
   /* Custom Colors */
   --color-primary-green: var(--primary-green);

@@ -37,12 +37,10 @@ const GlassFilter: React.FC<{ id: string; displacementScale: number; aberrationI
   id,
   displacementScale,
   aberrationIntensity,
-  width,
-  height,
   mode,
   shaderMapUrl,
 }) => (
-  <svg style={{ position: "absolute", width, height }} aria-hidden="true">
+  <svg style={{ position: "absolute", width: 0, height: 0, pointerEvents: "none", overflow: "hidden" }} aria-hidden="true">
     <defs>
       <radialGradient id={`${id}-edge-mask`} cx="50%" cy="50%" r="50%">
         <stop offset="0%" stopColor="black" stopOpacity="0" />
@@ -339,6 +337,9 @@ export default function LiquidGlass({
 
   // Set up mouse tracking if no external mouse position is provided
   useEffect(() => {
+    if (elasticity === 0) {
+      return
+    }
     if (externalGlobalMousePos && externalMouseOffset) {
       // External mouse tracking is provided, don't set up internal tracking
       return
@@ -354,7 +355,7 @@ export default function LiquidGlass({
     return () => {
       container.removeEventListener("mousemove", handleMouseMove)
     }
-  }, [handleMouseMove, mouseContainer, externalGlobalMousePos, externalMouseOffset])
+  }, [elasticity, handleMouseMove, mouseContainer, externalGlobalMousePos, externalMouseOffset])
 
   // Calculate directional scaling based on mouse position
   const calculateDirectionalScale = useCallback(() => {
@@ -447,6 +448,9 @@ export default function LiquidGlass({
 
   // Update glass size whenever component mounts or window resizes
   useEffect(() => {
+    if (elasticity === 0 && mode !== "shader" && !overLight) {
+      return
+    }
     const updateGlassSize = () => {
       if (glassRef.current) {
         const rect = glassRef.current.getBoundingClientRect()
@@ -457,7 +461,7 @@ export default function LiquidGlass({
     updateGlassSize()
     window.addEventListener("resize", updateGlassSize)
     return () => window.removeEventListener("resize", updateGlassSize)
-  }, [])
+  }, [elasticity, mode, overLight])
 
   const transformStyle = `translate(${calculateElasticTranslation().x}px, ${calculateElasticTranslation().y}px) ${isActive && Boolean(onClick) ? "scale(0.96)" : calculateDirectionalScale()}`
 

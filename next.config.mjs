@@ -5,6 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000,
     qualities: [75, 85],
@@ -21,6 +22,8 @@ const nextConfig = {
       ...config.resolve.alias,
       canvas: false,
       'pdfjs-dist$': 'pdfjs-dist/build/pdf.min.mjs',
+      '../build/polyfills/polyfill-module': false,
+      'next/dist/build/polyfills/polyfill-module': false,
     };
     return config;
   },

@@ -3,7 +3,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, usePathname } from '@/i18n/routing'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
+import LiquidGlass from './liquid-glass'
+import { useTranslations } from 'next-intl'
+import { RollingText } from '@/components/ui/rolling-text'
 
 const navItems = [
   { key: 'home', href: '/' },
@@ -13,29 +15,26 @@ const navItems = [
   { key: 'our_impact', href: '/our-impact' },
   { key: 'resources', href: '/resources' },
 ]
-import LiquidGlass from './liquid-glass'
-import { useTranslations } from 'next-intl'
-import { RollingText } from '@/components/ui/rolling-text'
 
 const AnimatedHamburger = ({ isOpen }: { isOpen: boolean }) => (
   <div className="relative w-6 h-6 flex flex-col justify-center items-center">
-    <motion.span
-      animate={isOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -6 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20 }}
-      className="absolute w-5 h-[2px] bg-deep-forest rounded-full"
+    <span
+      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+        isOpen ? 'rotate-45 translate-y-0' : 'rotate-0 -translate-y-1.5'
+      }`}
     />
-    <motion.span
-      animate={isOpen ? { opacity: 0, scale: 0.8 } : { opacity: 1, scale: 1 }}
-      transition={{ duration: 0.15, ease: "easeOut" }}
-      className="absolute w-5 h-[2px] bg-deep-forest rounded-full"
+    <span
+      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-[opacity,transform] duration-150 ease-out ${
+        isOpen ? 'opacity-0 scale-75' : 'opacity-100 scale-100'
+      }`}
     />
-    <motion.span
-      animate={isOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 6 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20 }}
-      className="absolute w-5 h-[2px] bg-deep-forest rounded-full"
+    <span
+      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+        isOpen ? '-rotate-45 translate-y-0' : 'rotate-0 translate-y-1.5'
+      }`}
     />
   </div>
-);
+)
 
 export default function Header() {
   const t = useTranslations('Header')
@@ -48,7 +47,6 @@ export default function Header() {
   const buttonRefs = useRef<Map<string, HTMLAnchorElement>>(new Map())
   const containerRef = useRef<HTMLElement>(null)
 
-  // Clear the optimistic click state once Next.js has successfully navigated to the new path
   useEffect(() => {
     setClickedPath(null)
   }, [pathname])
@@ -59,33 +57,33 @@ export default function Header() {
 
   const activePath = clickedPath || pathname
 
-  // Update dimensions whenever active path changes or on mount
   useEffect(() => {
     const updateDimensions = () => {
-      const activeItem = navItems.find((item) => activePath === item.href || (activePath.startsWith(item.href) && item.href !== '/'))
+      if (window.innerWidth < 1024) return
+      const activeItem = navItems.find(
+        (item) => activePath === item.href || (activePath.startsWith(item.href) && item.href !== '/')
+      )
       if (!activeItem) return
 
       const selectedButton = buttonRefs.current.get(activeItem.href)
       const container = containerRef.current
 
       if (selectedButton && container) {
-        setDimensions({
-          width: selectedButton.offsetWidth,
-          height: selectedButton.offsetHeight,
-          left: selectedButton.offsetLeft,
-          top: selectedButton.offsetTop,
-        })
+        const w = selectedButton.offsetWidth
+        const h = selectedButton.offsetHeight
+        const l = selectedButton.offsetLeft
+        const top = selectedButton.offsetTop
+        setDimensions((prev) =>
+          prev.width === w && prev.height === h && prev.left === l && prev.top === top
+            ? prev
+            : { width: w, height: h, left: l, top }
+        )
       }
     }
 
-    // Initial update
-    requestAnimationFrame(() => {
-      updateDimensions()
-    })
-
-    // Update on resize
-    window.addEventListener("resize", updateDimensions)
-    return () => window.removeEventListener("resize", updateDimensions)
+    updateDimensions()
+    window.addEventListener('resize', updateDimensions, { passive: true })
+    return () => window.removeEventListener('resize', updateDimensions)
   }, [activePath])
 
   return (
@@ -107,14 +105,11 @@ export default function Header() {
       </div>
 
       <div className="sticky top-0 z-[80] w-full pointer-events-none">
-        <motion.div
-          animate={{
-            y: isOpen ? '-100%' : 0,
-            opacity: isOpen ? 0 : 1,
-          }}
-          transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+        <div
           style={{ pointerEvents: isOpen ? 'none' : 'auto' }}
-          className="w-full pointer-events-auto"
+          className={`w-full pointer-events-auto transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+            isOpen ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
+          }`}
         >
           <LiquidGlass
             className="flex justify-center items-center h-[var(--header-height)] w-full"
@@ -148,26 +143,13 @@ export default function Header() {
                 >
                   {/* Active Pill Highlight */}
                   {activePath && dimensions.width > 0 && (
-                    <motion.div
-                      layoutId="active-nav-pill"
-                      animate={{
+                    <div
+                      className="absolute top-0 left-0 z-0 rounded-full transition-[transform,width,height] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                      style={{
                         width: dimensions.width,
                         height: dimensions.height,
-                        x: dimensions.left,
-                        y: dimensions.top,
-                        scaleX: [1, 1.15, 1],
-                        opacity: 1,
-                      }}
-                      className="absolute top-0 left-0 z-0 rounded-full"
-                      initial={false}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30,
-                        scaleX: { duration: 0.4, ease: "easeInOut" }
-                      }}
-                      style={{
-                        backgroundColor: "rgba(255, 255, 255, 0.6)",
+                        transform: `translate3d(${dimensions.left}px, ${dimensions.top}px, 0)`,
+                        backgroundColor: 'rgba(255, 255, 255, 0.6)',
                       }}
                     />
                   )}
@@ -181,20 +163,19 @@ export default function Header() {
                         onClick={() => { setClickedPath(item.href); }}
                         onMouseEnter={() => setHoveredPath(item.href)}
                         ref={(el) => {
-                          if (el) buttonRefs.current.set(item.href, el);
-                          else buttonRefs.current.delete(item.href);
+                          if (el) buttonRefs.current.set(item.href, el)
+                          else buttonRefs.current.delete(item.href)
                         }}
-                        className={`relative px-3 py-1.5 min-[1440px]:px-4 min-[1440px]:py-2 text-[13px] min-[1440px]:text-sm font-medium rounded-full transition-colors duration-150 ${isActive
-                          ? 'text-deep-forest z-20'
-                          : 'text-charcoal/80 hover:text-deep-forest z-10'
-                          }`}
+                        className={`relative px-3 py-1.5 min-[1440px]:px-4 min-[1440px]:py-2 text-[13px] min-[1440px]:text-sm font-medium rounded-full transition-colors duration-150 ${
+                          isActive
+                            ? 'text-deep-forest z-20'
+                            : 'text-charcoal/80 hover:text-deep-forest z-10'
+                        }`}
                       >
-                        {/* Hover pill — always rendered, toggled via opacity to avoid remount flash */}
-                        <motion.div
-                          className="absolute inset-0 bg-black/5 rounded-full -z-20 pointer-events-none"
-                          animate={{ opacity: hoveredPath === item.href && !isActive ? 1 : 0 }}
-                          transition={{ duration: 0.15, ease: 'easeOut' }}
-                          initial={false}
+                        <div
+                          className={`absolute inset-0 bg-black/5 rounded-full -z-20 pointer-events-none transition-opacity duration-150 ease-out ${
+                            hoveredPath === item.href && !isActive ? 'opacity-100' : 'opacity-0'
+                          }`}
                         />
                         {t(item.key as any)}
                       </Link>
@@ -213,96 +194,73 @@ export default function Header() {
                     </RollingText>
                   </Link>
 
-                  {/* Invisible spacer so layout doesn't shift — the real button is in the sticky layer above */}
                   <div className="lg:hidden w-10 h-10" />
                 </div>
               </div>
             </header>
-
           </LiquidGlass>
-        </motion.div>
+        </div>
       </div>
 
       {/* Mobile Navigation Sidebar */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Frosted Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-deep-forest/40 backdrop-blur-sm z-[85] lg:hidden"
-            />
+      {isOpen && (
+        <>
+          <div
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-deep-forest/40 backdrop-blur-sm z-[85] lg:hidden animate-in fade-in duration-200"
+          />
 
-            {/* Sidebar */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 220 }}
-              className="fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] bg-white shadow-2xl z-[90] lg:hidden flex flex-col overflow-hidden rounded-none border-l border-white/20"
-            >
-              {/* Sidebar Header — logo only, vertically aligned to match navbar */}
-              <div className="h-[var(--header-height)] flex items-center px-6 shrink-0">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.3 }}
-                >
-                  <Link href="/" onClick={() => setIsOpen(false)} aria-label="Agri Experience">
-                    <Image
-                      src="/Newsletters.svg"
-                      alt="Agri Experience Logo"
-                      width={500}
-                      height={240}
-                      style={{ width: 'auto' }}
-                      className="h-[52px] sm:h-[56px] w-auto block"
-                    />
-                  </Link>
-                </motion.div>
-              </div>
+          <div className="fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] bg-white shadow-2xl z-[90] lg:hidden flex flex-col overflow-hidden rounded-none border-l border-white/20 animate-in slide-in-from-right duration-250">
+            <div className="h-[var(--header-height)] flex items-center px-6 shrink-0">
+              <Link href="/" onClick={() => setIsOpen(false)} aria-label="Agri Experience">
+                <Image
+                  src="/Newsletters.svg"
+                  alt="Agri Experience Logo"
+                  width={500}
+                  height={240}
+                  style={{ width: 'auto' }}
+                  className="h-[52px] sm:h-[56px] w-auto block"
+                />
+              </Link>
+            </div>
 
-              {/* Sidebar Content */}
-              <div className="flex-1 overflow-y-auto px-6 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] flex flex-col">
-                <nav className="flex flex-col gap-1.5">
-                  {navItems.map((item) => {
-                    const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/')
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => { setIsOpen(false); }}
-                        className={`px-4 py-3.5 text-base font-semibold rounded-2xl transition-[background-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] flex items-center justify-between ${isActive
+            <div className="flex-1 overflow-y-auto px-6 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] flex flex-col">
+              <nav className="flex flex-col gap-1.5">
+                {navItems.map((item) => {
+                  const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/')
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => { setIsOpen(false); }}
+                      className={`px-4 py-3.5 text-base font-semibold rounded-2xl transition-[background-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] flex items-center justify-between ${
+                        isActive
                           ? 'text-deep-forest bg-[#F1F6F3]'
                           : 'text-charcoal/80 hover:text-deep-forest hover:bg-black/5'
-                          }`}
-                      >
-                        {t(item.key as any)}
-                        {isActive && <div className="w-1.5 h-1.5 rounded-full bg-primary-green" />}
-                      </Link>
-                    )
-                  })}
-                </nav>
+                      }`}
+                    >
+                      {t(item.key as any)}
+                      {isActive && <div className="w-1.5 h-1.5 rounded-full bg-primary-green" />}
+                    </Link>
+                  )
+                })}
+              </nav>
 
-                <div className="mt-auto pt-8 pb-2">
-                  <Link
-                    href="/contact"
-                    onClick={() => { setIsOpen(false); }}
-                    className="group relative overflow-hidden w-full py-4 bg-deep-forest text-white rounded-2xl text-base font-semibold text-center shadow-lg flex items-center justify-center transition-[transform,background-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-deep-forest/95 active:scale-[0.98]"
-                  >
-                    <RollingText>
-                      {t('contact')}
-                    </RollingText>
-                  </Link>
-                </div>
+              <div className="mt-auto pt-8 pb-2">
+                <Link
+                  href="/contact"
+                  onClick={() => { setIsOpen(false); }}
+                  className="group relative overflow-hidden w-full py-4 bg-deep-forest text-white rounded-2xl text-base font-semibold text-center shadow-lg flex items-center justify-center transition-[transform,background-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-deep-forest/95 active:scale-[0.98]"
+                >
+                  <RollingText>
+                    {t('contact')}
+                  </RollingText>
+                </Link>
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            </div>
+          </div>
+        </>
+      )}
     </>
   )
 }

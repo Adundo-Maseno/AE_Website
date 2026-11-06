@@ -22,21 +22,21 @@ const row1Logos: ClientLogo[] = [
   },
   {
     name: 'NARO Uganda',
-    src: '/naro-logo.png',
+    src: '/naro-logo.webp',
     alt: 'National Agricultural Research Organisation Uganda',
     href: 'https://naro.go.ug/',
     containerClassName: 'w-24 sm:w-28 md:w-32 lg:w-36',
   },
   {
     name: 'AGRA',
-    src: '/AGRA.png',
+    src: '/AGRA.webp',
     alt: 'AGRA',
     href: 'https://agra.org/',
     containerClassName: 'w-36 sm:w-44 md:w-48 lg:w-54',
   },
   {
     name: 'KEPHIS',
-    src: '/kephis-logo.png',
+    src: '/kephis-logo.webp',
     alt: 'KEPHIS',
     href: 'https://www.kephis.org/',
     containerClassName: 'w-36 sm:w-44 md:w-52 lg:w-60',
@@ -44,7 +44,7 @@ const row1Logos: ClientLogo[] = [
   },
   {
     name: 'TARI',
-    src: '/tari-logo.png',
+    src: '/tari-logo.webp',
     alt: 'TARI',
     href: 'https://www.tari.go.tz/',
     containerClassName: 'w-20 sm:w-22 md:w-24 lg:w-26',
@@ -59,14 +59,14 @@ const row1Logos: ClientLogo[] = [
   },
   {
     name: 'Catholic Relief Services',
-    src: '/crs-logo.png',
+    src: '/crs-logo.webp',
     alt: 'Catholic Relief Services',
     href: 'https://www.crs.org/where-we-work/africa/kenya',
     containerClassName: 'w-36 sm:w-44 md:w-50 lg:w-56',
   },
   {
     name: 'Ministry of Agriculture Tanzania',
-    src: '/moa-tanzania-logo.png',
+    src: '/moa-tanzania-logo.webp',
     alt: 'Ministry of Agriculture Tanzania',
     href: 'https://www.kilimo.go.tz/',
     containerClassName: 'w-24 sm:w-28 md:w-32 lg:w-36',
@@ -80,14 +80,14 @@ const row1Logos: ClientLogo[] = [
   },
   {
     name: 'STAK',
-    src: '/stak-logo.png',
+    src: '/stak-logo.webp',
     alt: 'STAK',
     href: 'https://stak.or.ke/',
     containerClassName: 'w-26 sm:w-30 md:w-34 lg:w-38',
   },
   {
     name: 'AgDevCo',
-    src: '/agdevco-logo.png',
+    src: '/agdevco-logo.webp',
     alt: 'AgDevCo',
     href: 'https://www.agdevco.com/',
     containerClassName: 'w-44 sm:w-52 md:w-60 lg:w-68',
@@ -97,14 +97,14 @@ const row1Logos: ClientLogo[] = [
 const row2Logos: ClientLogo[] = [
   {
     name: 'Adam Smith International',
-    src: '/adam-smith-international-logo.png',
+    src: '/adam-smith-international-logo.webp',
     alt: 'Adam Smith International',
     href: 'https://adamsmithinternational.com/',
     containerClassName: 'w-40 sm:w-48 md:w-54 lg:w-60',
   },
   {
     name: 'Ministry of Agriculture Kenya',
-    src: '/moa-kenya-logo.png',
+    src: '/moa-kenya-logo.webp',
     alt: 'Ministry of Agriculture and Livestock Development Kenya',
     href: 'https://kilimo.go.ke/',
     containerClassName: 'w-52 sm:w-62 md:w-72 lg:w-80',
@@ -120,21 +120,21 @@ const row2Logos: ClientLogo[] = [
   },
   {
     name: 'IFDC',
-    src: '/ifdc-logo.png',
+    src: '/ifdc-logo.webp',
     alt: 'IFDC',
     href: 'https://ifdc.org/',
     containerClassName: 'w-44 sm:w-52 md:w-60 lg:w-68',
   },
   {
     name: 'elan',
-    src: '/elan-logo.png',
+    src: '/elan-logo.webp',
     alt: 'elan RDC',
     href: 'https://www.beamexchange.org/practice/programme-database/elan-rdc/',
     containerClassName: 'w-24 sm:w-28 md:w-32 lg:w-36',
   },
   {
     name: 'KALRO',
-    src: '/kalro-logo.png',
+    src: '/kalro-logo.webp',
     alt: 'KALRO',
     href: 'https://www.kalro.org/',
     containerClassName: 'w-48 sm:w-56 md:w-66 lg:w-74',
@@ -142,14 +142,14 @@ const row2Logos: ClientLogo[] = [
   },
   {
     name: 'Gatsby Africa',
-    src: '/gatsby-logo.png',
+    src: '/gatsby-logo.webp',
     alt: 'Gatsby Africa',
     href: 'https://www.gatsbyafrica.org.uk/',
     containerClassName: 'w-36 sm:w-44 md:w-50 lg:w-56',
   },
   {
     name: 'TOSCI',
-    src: '/tosci-logo.png',
+    src: '/tosci-logo.webp',
     alt: 'TOSCI',
     href: 'https://www.tosci.go.tz/',
     containerClassName: 'w-48 sm:w-56 md:w-66 lg:w-74',
@@ -157,33 +157,35 @@ const row2Logos: ClientLogo[] = [
   },
   {
     name: 'USTA',
-    src: '/usta-logo.png',
+    src: '/usta-logo.webp',
     alt: 'USTA',
     href: 'http://www.usta.ug/',
     containerClassName: 'w-26 sm:w-30 md:w-34 lg:w-38',
   },
   {
     name: 'TASTA',
-    src: '/tasta-logo-v2.png',
+    src: '/tasta-logo-v2.webp',
     alt: 'TASTA',
     href: 'https://tasta.or.tz/',
     containerClassName: 'w-44 sm:w-52 md:w-60 lg:w-68',
   },
   {
     name: 'NASTAG',
-    src: '/nastag-logo.png',
+    src: '/nastag-logo.webp',
     alt: 'NASTAG',
     href: 'https://nastag.org/',
     containerClassName: 'w-38 sm:w-46 md:w-52 lg:w-58',
   },
 ]
 
-const LogoItem = ({ logo }: { logo: ClientLogo }) => (
+const LogoItem = ({ logo, isDuplicate = false }: { logo: ClientLogo; isDuplicate?: boolean }) => (
   <a
     href={logo.href}
     target="_blank"
     rel="noopener noreferrer"
     aria-label={logo.name}
+    aria-hidden={isDuplicate || undefined}
+    tabIndex={isDuplicate ? -1 : undefined}
     className={`group flex items-center justify-center shrink-0 mx-6 sm:mx-8 md:mx-10 lg:mx-12 xl:mx-14 h-14 sm:h-18 md:h-22 lg:h-24 transition-transform duration-300 hover:-translate-y-1 ${
       logo.containerClassName || 'w-36 sm:w-44 md:w-52 lg:w-60'
     }`}
@@ -191,9 +193,10 @@ const LogoItem = ({ logo }: { logo: ClientLogo }) => (
     <div className="relative w-full h-full flex items-center justify-center">
       <Image
         src={logo.src}
-        alt={logo.alt}
-        width={320}
-        height={100}
+        alt={isDuplicate ? '' : logo.alt}
+        width={220}
+        height={80}
+        loading="lazy"
         unoptimized
         className={`max-h-full max-w-full object-contain object-center grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-[filter,opacity] duration-300 mix-blend-multiply ${
           logo.imageClassName || ''
@@ -248,7 +251,7 @@ export default function ClientLogos() {
         <div className="flex w-full overflow-hidden marquee-container">
           <div className="flex items-center shrink-0 w-max animate-marquee-left py-2">
             {topRepeated.map((logo, index) => (
-              <LogoItem key={`top-${logo.name}-${index}`} logo={logo} />
+              <LogoItem key={`top-${logo.name}-${index}`} logo={logo} isDuplicate={index >= row1Logos.length} />
             ))}
           </div>
         </div>
@@ -257,7 +260,7 @@ export default function ClientLogos() {
         <div className="flex w-full overflow-hidden marquee-container">
           <div className="flex items-center shrink-0 w-max animate-marquee-right py-2">
             {bottomRepeated.map((logo, index) => (
-              <LogoItem key={`bottom-${logo.name}-${index}`} logo={logo} />
+              <LogoItem key={`bottom-${logo.name}-${index}`} logo={logo} isDuplicate={index >= row2Logos.length} />
             ))}
           </div>
         </div>

@@ -38,11 +38,11 @@ export default function Footer() {
 
         <div className="relative w-full overflow-hidden h-[50vh] xl:h-[65vh] max-h-[640px]">
           <Image
-            src="/agri-footer-landscape.jpg"
+            src="/agri-footer-landscape.webp"
             alt="Agricultural landscape"
             fill
             sizes="100vw"
-            quality={75}
+            loading="lazy"
             className="object-cover object-center"
           />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '160px', background: 'linear-gradient(to top, #0d0d0d, transparent)' }} />
@@ -247,11 +247,11 @@ export default function Footer() {
       <div className="lg:hidden">
         <div className="hidden sm:block relative w-full overflow-hidden h-[36vh] max-h-[360px]">
           <Image
-            src="/agri-footer-landscape.jpg"
+            src="/agri-footer-landscape.webp"
             alt="Agricultural landscape"
             fill
             sizes="100vw"
-            quality={75}
+            loading="lazy"
             className="object-cover object-center"
           />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '120px', background: 'linear-gradient(to top, #0d0d0d, transparent)' }} />

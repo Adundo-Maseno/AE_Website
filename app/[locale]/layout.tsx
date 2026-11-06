@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, DM_Sans, Bebas_Neue, Space_Grotesk } from 'next/font/google'
+import { Playfair_Display, DM_Sans } from 'next/font/google'
+import { headers } from 'next/headers'
 import '../globals.css'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
@@ -18,28 +19,26 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-const bebasNeue = Bebas_Neue({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-bebas',
-  display: 'swap',
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-})
-
 import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
+  let siteOrigin = process.env.NEXT_PUBLIC_SITE_URL || 'https://ae-website.ochiengmusa1995.workers.dev';
+  try {
+    const reqHeaders = await headers();
+    const host = reqHeaders.get('x-forwarded-host') || reqHeaders.get('host');
+    if (host) {
+      const proto = reqHeaders.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
+      siteOrigin = `${proto}://${host}`;
+    }
+  } catch {
+    // Fallback to default siteOrigin during static build steps
+  }
+
   return {
-    metadataBase: new URL('https://agri-experience.com'),
+    metadataBase: new URL(siteOrigin),
     title: {
       default: t('root_title_default'),
       template: t('root_title_template'),
@@ -60,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       type: 'website',
       locale: locale === 'en' ? 'en_US' : 'fr_FR',
-      url: `https://agri-experience.com/${locale}`,
+      url: `${siteOrigin}/${locale}`,
       siteName: 'Agri Experience',
       title: t('root_title_default'),
       description: t('root_desc'),
@@ -157,7 +156,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${playfairDisplay.variable} ${dmSans.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} bg-background`}
+      className={`${playfairDisplay.variable} ${dmSans.variable} bg-background`}
     >
       <body
         suppressHydrationWarning

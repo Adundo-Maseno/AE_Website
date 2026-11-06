@@ -2,21 +2,11 @@
 
 import { useRef, useState, useEffect } from 'react'
 import ClientLogos from '@/components/client-logos'
-import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Link } from '@/i18n/routing'
 import WhyAgriExperience from '@/components/motion/why-agri-experience'
-import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { RollingText } from '@/components/ui/rolling-text'
-
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, useGSAP)
-}
 
 export default function Home() {
   const t = useTranslations('Home')
@@ -29,168 +19,237 @@ export default function Home() {
   const track1InnerRef = useRef<HTMLDivElement>(null)
   const track2Ref = useRef<HTMLDivElement>(null)
   const track2InnerRef = useRef<HTMLDivElement>(null)
-  const [isDesktop, setIsDesktop] = useState(false)
+  const [loadVideo, setLoadVideo] = useState(false)
 
+  // Defer ambient hero video until user interaction or after initial load settles on desktop
   useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window.innerWidth >= 768)
-    checkDesktop()
-    window.addEventListener('resize', checkDesktop)
-    return () => window.removeEventListener('resize', checkDesktop)
+    if (typeof window === 'undefined' || window.innerWidth < 768) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if ((navigator as any).connection?.saveData) return
+
+    let triggered = false
+    const activateVideo = () => {
+      if (triggered) return
+      triggered = true
+      setLoadVideo(true)
+      window.removeEventListener('scroll', activateVideo)
+      window.removeEventListener('pointermove', activateVideo)
+      window.removeEventListener('keydown', activateVideo)
+    }
+
+    window.addEventListener('scroll', activateVideo, { once: true, passive: true })
+    window.addEventListener('pointermove', activateVideo, { once: true, passive: true })
+    window.addEventListener('keydown', activateVideo, { once: true, passive: true })
+    const timer = window.setTimeout(activateVideo, 4500)
+
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('scroll', activateVideo)
+      window.removeEventListener('pointermove', activateVideo)
+      window.removeEventListener('keydown', activateVideo)
+    }
   }, [])
 
-  // Effect 1: Hero Parallax
-  useGSAP(() => {
-    if (!heroRef.current || !heroBgRef.current) return;
+  // Dynamically load GSAP + ScrollTrigger only on desktop viewports (>= 768px)
+  // and batch all DOM geometry reads before ScrollTrigger DOM mutations to prevent forced reflows.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const canAnimate = window.matchMedia('(min-width: 768px) and (prefers-reduced-motion: no-preference)').matches
+    if (!canAnimate) return
 
-    let mm = gsap.matchMedia();
-    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-      // Parallax the background (slides down up to 20vh) and slight zoom
-      gsap.to(heroBgRef.current, {
-        y: () => window.innerHeight * 0.2,
-        scale: 1.05,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 0,
-          end: "bottom top",
-          scrub: 1.5,
-          invalidateOnRefresh: true,
-        }
-      });
-    });
+    let ctxCleanup: (() => void) | undefined
+    let cancelled = false
 
-    return () => mm.revert();
-  }, [])
+    const initDesktopMotion = async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ])
+      if (cancelled) return
 
-  // Effect 2: Multi-step Pinned Horizontal Scroll with Parallax Overlap
-  useGSAP(() => {
-    if (!sequenceWrapperRef.current || !track1Ref.current || !track1InnerRef.current || !track2Ref.current || !track2InnerRef.current) return;
+      gsap.registerPlugin(ScrollTrigger)
 
-    let mm = gsap.matchMedia();
+      const mm = gsap.matchMedia()
 
-    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
-      const container = sequenceWrapperRef.current;
-
-      const getScroll1 = () => {
-        // Safely access scrollWidth, returning 0 if the ref is unmounted during mobile view
-        if (!track1InnerRef.current) return 0;
-        return Math.max(0, track1InnerRef.current.scrollWidth - window.innerWidth);
-      };
-      const getScroll2 = () => {
-        if (!track2InnerRef.current) return 0;
-        return Math.max(0, track2InnerRef.current.scrollWidth - window.innerWidth);
-      };
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          start: "top top",
-          end: () => `+=${getScroll1() + getScroll2() + window.innerWidth}`,
-          scrub: 1.5,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        }
-      });
-
-      const scroll1 = getScroll1();
-      const scroll2 = getScroll2();
-      const ratio1 = scroll1 > 0 ? scroll1 / window.innerWidth : 0.1;
-      const ratio2 = scroll2 > 0 ? scroll2 / window.innerWidth : 0.1;
-
-      tl.to(track1InnerRef.current, {
-        x: () => -getScroll1(),
-        ease: "none",
-        duration: ratio1
-      });
-
-      tl.to(track1Ref.current, {
-        x: () => -window.innerWidth * 0.3,
-        ease: "power2.inOut",
-        duration: 0.8
-      }, "cover");
-
-      tl.fromTo(track2Ref.current, {
-        x: "100%"
-      }, {
-        x: "0%",
-        ease: "power2.inOut",
-        duration: 0.8
-      }, "cover");
-
-      tl.to(track2InnerRef.current, {
-        x: () => -getScroll2(),
-        ease: "none",
-        duration: ratio2
-      });
-
-      return () => {
-        tl.kill();
+      // Batch all geometric reads UPFRONT before any ScrollTrigger pin/spacer mutations
+      const cachedMetrics = {
+        vh: window.innerHeight,
+        vw: window.innerWidth,
+        scroll1: track1InnerRef.current ? Math.max(0, track1InnerRef.current.scrollWidth - window.innerWidth) : 0,
+        scroll2: track2InnerRef.current ? Math.max(0, track2InnerRef.current.scrollWidth - window.innerWidth) : 0,
       }
-    });
 
-    return () => mm.revert();
+      const updateMetrics = () => {
+        cachedMetrics.vh = window.innerHeight
+        cachedMetrics.vw = window.innerWidth
+        cachedMetrics.scroll1 = track1InnerRef.current
+          ? Math.max(0, track1InnerRef.current.scrollWidth - cachedMetrics.vw)
+          : 0
+        cachedMetrics.scroll2 = track2InnerRef.current
+          ? Math.max(0, track2InnerRef.current.scrollWidth - cachedMetrics.vw)
+          : 0
+      }
+
+      ScrollTrigger.addEventListener('refreshInit', updateMetrics)
+
+      mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+        if (!heroRef.current || !heroBgRef.current) return
+        gsap.to(heroBgRef.current, {
+          y: () => cachedMetrics.vh * 0.2,
+          scale: 1.05,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 0,
+            end: 'bottom top',
+            scrub: 1.5,
+            invalidateOnRefresh: true,
+          },
+        })
+      })
+
+      mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+        if (
+          !sequenceWrapperRef.current ||
+          !track1Ref.current ||
+          !track1InnerRef.current ||
+          !track2Ref.current ||
+          !track2InnerRef.current
+        ) {
+          return
+        }
+
+        const ratio1 = cachedMetrics.scroll1 > 0 ? cachedMetrics.scroll1 / cachedMetrics.vw : 0.1
+        const ratio2 = cachedMetrics.scroll2 > 0 ? cachedMetrics.scroll2 / cachedMetrics.vw : 0.1
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sequenceWrapperRef.current,
+            start: 'top top',
+            end: () => `+=${cachedMetrics.scroll1 + cachedMetrics.scroll2 + cachedMetrics.vw}`,
+            scrub: 1.5,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+
+        tl.to(track1InnerRef.current, {
+          x: () => -cachedMetrics.scroll1,
+          ease: 'none',
+          duration: ratio1,
+        })
+
+        tl.to(
+          track1Ref.current,
+          {
+            x: () => -cachedMetrics.vw * 0.3,
+            ease: 'power2.inOut',
+            duration: 0.8,
+          },
+          'cover'
+        )
+
+        tl.fromTo(
+          track2Ref.current,
+          { x: '100%' },
+          {
+            x: '0%',
+            ease: 'power2.inOut',
+            duration: 0.8,
+          },
+          'cover'
+        )
+
+        tl.to(track2InnerRef.current, {
+          x: () => -cachedMetrics.scroll2,
+          ease: 'none',
+          duration: ratio2,
+        })
+
+        return () => {
+          tl.kill()
+        }
+      })
+
+      ctxCleanup = () => {
+        ScrollTrigger.removeEventListener('refreshInit', updateMetrics)
+        mm.revert()
+      }
+    }
+
+    initDesktopMotion()
+
+    return () => {
+      cancelled = true
+      ctxCleanup?.()
+    }
   }, [])
 
   const beliefs = [
     {
       title: t('belief_4_title'),
       text: t('belief_4_text'),
-      width: "w-[290px] lg:w-[350px] xl:w-[380px] min-[1440px]:w-[430px] 2xl:w-[470px]"
+      width: 'w-[290px] lg:w-[350px] xl:w-[380px] min-[1440px]:w-[430px] 2xl:w-[470px]',
     },
     {
       title: t('belief_3_title'),
       text: t('belief_3_text'),
-      width: "w-[290px] lg:w-[350px] xl:w-[380px] min-[1440px]:w-[430px] 2xl:w-[470px]"
+      width: 'w-[290px] lg:w-[350px] xl:w-[380px] min-[1440px]:w-[430px] 2xl:w-[470px]',
     },
     {
       title: t('belief_1_title'),
       text: t('belief_1_text'),
-      width: "w-[310px] lg:w-[380px] xl:w-[420px] min-[1440px]:w-[470px] 2xl:w-[510px]"
+      width: 'w-[310px] lg:w-[380px] xl:w-[420px] min-[1440px]:w-[470px] 2xl:w-[510px]',
     },
     {
       title: t('belief_2_title'),
       text: t('belief_2_text'),
-      width: "w-[310px] lg:w-[380px] xl:w-[420px] min-[1440px]:w-[470px] 2xl:w-[510px]"
-    }
+      width: 'w-[310px] lg:w-[380px] xl:w-[420px] min-[1440px]:w-[470px] 2xl:w-[510px]',
+    },
   ]
 
-  const UNIFORM_CARD_WIDTH = "w-[290px] lg:w-[340px] xl:w-[360px] min-[1440px]:w-[420px] 2xl:w-[460px]"
+  const UNIFORM_CARD_WIDTH = 'w-[290px] lg:w-[340px] xl:w-[360px] min-[1440px]:w-[420px] 2xl:w-[460px]'
 
   const agriCards = [
     { text: tAgri('card_3'), width: UNIFORM_CARD_WIDTH },
     { text: tAgri('card_2'), width: UNIFORM_CARD_WIDTH },
     { text: tAgri('card_5'), width: UNIFORM_CARD_WIDTH },
     { text: tAgri('card_1'), width: UNIFORM_CARD_WIDTH },
-    { text: tAgri('card_4'), width: UNIFORM_CARD_WIDTH }
+    { text: tAgri('card_4'), width: UNIFORM_CARD_WIDTH },
   ]
 
   return (
     <>
       <main className="-mt-[var(--header-height)] bg-background overflow-x-clip">
-
-        {/* Premium Full-Bleed Video Hero Section */}
-        <section ref={heroRef} className="relative w-full min-h-[90dvh] md:min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-[calc(var(--header-height)+2rem)] pb-12 bg-white z-0">
-
-          {/* Background Media Container (Contained within hero section) */}
-          <div ref={heroBgRef} className="absolute inset-0 md:-top-[20vh] left-0 w-full h-full md:h-[120vh] z-0 origin-center bg-black overflow-hidden">
+        {/* Premium Full-Bleed Hero Section */}
+        <section
+          ref={heroRef}
+          className="relative w-full min-h-[90dvh] md:min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-[calc(var(--header-height)+2rem)] pb-12 bg-white z-0"
+        >
+          {/* Background Media Container */}
+          <div
+            ref={heroBgRef}
+            className="absolute inset-0 md:-top-[20vh] left-0 w-full h-full md:h-[120vh] z-0 origin-center bg-black overflow-hidden"
+          >
             <div className="absolute inset-0 w-full h-full bg-mist">
-              {/* Mobile (< md): Instant LCP Image (0 MB video download over mobile networks) */}
-              {/* Mobile (< md): Instant LCP Image (Exact video frame screenshot) */}
-              <div className="block md:hidden absolute inset-0 w-full h-full">
-                <Image
-                  src="/hero-video-frame.jpg"
+              {/* Instant First-Frame Hero Picture (34 KB mobile WebP / 85 KB desktop WebP) */}
+              <picture className="absolute inset-0 w-full h-full block">
+                <source media="(max-width: 767px)" srcSet="/hero-video-frame-mobile.webp" type="image/webp" />
+                <source media="(min-width: 768px)" srcSet="/hero-video-frame.webp" type="image/webp" />
+                <img
+                  src="/hero-video-frame-mobile.webp"
                   alt="Agri Experience"
-                  fill
-                  priority
+                  width={1200}
+                  height={675}
                   fetchPriority="high"
-                  sizes="(max-width: 767px) 100vw, 1px"
-                  className="object-cover object-center"
+                  decoding="async"
+                  className="w-full h-full object-cover object-center lg:object-[center_30%]"
                 />
-              </div>
+              </picture>
 
-              {/* Desktop (md+): Full-Bleed Video Background */}
-              {isDesktop && (
+              {/* Desktop (md+): Deferred Full-Bleed Ambient Video Background */}
+              {loadVideo && (
                 <div className="hidden md:block absolute inset-0 w-full h-full">
                   <video
                     autoPlay
@@ -198,9 +257,10 @@ export default function Home() {
                     muted
                     playsInline
                     preload="metadata"
-                    poster="/hero-video-frame.jpg"
+                    poster="/hero-video-frame.webp"
                     className="absolute inset-0 w-full h-full object-cover object-center lg:object-[center_30%]"
                   >
+                    <source src="/Videos/hero-video.webm" type="video/webm" />
                     <source src="/Videos/hero-video.mp4" type="video/mp4" />
                     <track kind="captions" src="/empty.vtt" srcLang="en" label="English" />
                   </video>
@@ -209,16 +269,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Directional Scrim: 100% text legibility on the left, pure video visible on the right */}
+          {/* Directional Scrim: 100% text legibility on the left, pure visual on the right */}
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-white/95 via-white/88 to-white/35 md:bg-gradient-to-r md:from-white/95 md:from-[22%] md:via-white/90 md:via-[56%] md:to-transparent md:to-[86%] md:w-[86%] pointer-events-none" />
 
           <div className="relative z-10 max-w-[1400px] min-[1440px]:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 w-full flex-1 flex flex-col justify-center">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, ease: [0.23, 1, 0.32, 1] }}
-              className="max-w-2xl xl:max-w-3xl 3xl:max-w-4xl space-y-6 lg:space-y-8"
-            >
+            <div className="max-w-2xl xl:max-w-3xl 3xl:max-w-4xl space-y-6 lg:space-y-8">
               <h1
                 className="font-serif tracking-tight text-[#0F1F15] font-bold leading-[1.1]"
                 style={{ fontSize: 'clamp(2.125rem, 1.45rem + 3.1vw, 4rem)' }}
@@ -236,10 +291,16 @@ export default function Home() {
               </p>
 
               <div className="pt-1 flex flex-wrap items-center gap-4">
-                <Link href="/our-impact" className="group relative overflow-hidden inline-flex items-center justify-center gap-3 px-6 py-3.5 lg:px-8 lg:py-4 bg-[#0F1F15] text-white rounded-full font-semibold transition-[transform,background-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#1A4D2E] text-sm lg:text-[15px] shadow-md hover:shadow-lg active:scale-[0.98] select-none">
+                <Link
+                  href="/our-impact"
+                  className="group relative overflow-hidden inline-flex items-center justify-center gap-3 px-6 py-3.5 lg:px-8 lg:py-4 bg-[#0F1F15] text-white rounded-full font-semibold transition-[transform,background-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#1A4D2E] text-sm lg:text-[15px] shadow-md hover:shadow-lg active:scale-[0.98] select-none"
+                >
                   <RollingText className="gap-2.5">
                     {t('explore_impact')}
-                    <ArrowRight size={17} className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] shrink-0" />
+                    <ArrowRight
+                      size={17}
+                      className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] shrink-0"
+                    />
                   </RollingText>
                 </Link>
 
@@ -251,22 +312,28 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Understated Institutional Footprint Line (Refuses hero-metric big-number/ALL-CAPS box template) */}
+              {/* Understated Institutional Footprint Line */}
               <div className="pt-4 border-t border-[#0F1F15]/12 max-w-xl flex flex-wrap items-baseline gap-x-8 gap-y-2 text-sm sm:text-[15px] text-[#223127]">
                 <span>
-                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-base sm:text-lg mr-1.5">{t('stat_1_val')}</strong>
+                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-base sm:text-lg mr-1.5">
+                    {t('stat_1_val')}
+                  </strong>
                   {t('stat_1_lbl').toLowerCase().replace(/\bafrican\b/i, 'African')}
                 </span>
                 <span>
-                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-base sm:text-lg mr-1.5">{t('stat_2_val')}</strong>
+                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-base sm:text-lg mr-1.5">
+                    {t('stat_2_val')}
+                  </strong>
                   {t('stat_2_lbl').toLowerCase()}
                 </span>
                 <span>
-                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-base sm:text-lg mr-1.5">{t('stat_3_val')}</strong>
+                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-base sm:text-lg mr-1.5">
+                    {t('stat_3_val')}
+                  </strong>
                   {t('stat_3_lbl').toLowerCase()}
                 </span>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -274,10 +341,12 @@ export default function Home() {
           {/* Pinned Horizontal Sequence Wrapper */}
           <div ref={sequenceWrapperRef} className="relative z-20 bg-[#F8F6F0]">
             <div className="relative h-[100dvh] w-full overflow-hidden">
-
               {/* Track 1: Why Agri Experience Layer */}
               <div ref={track1Ref} className="absolute inset-0 w-full h-full bg-[#F8F6F0] z-0 flex">
-                <div ref={track1InnerRef} className="flex h-full items-center pt-[4.5rem] lg:pt-[5rem] px-6 md:px-8 lg:px-10 xl:px-12 min-[1440px]:px-16 2xl:px-24 gap-6 lg:gap-8 xl:gap-10 min-[1440px]:gap-14 2xl:gap-16 relative z-10 w-max pr-6 md:pr-8 lg:pr-10 xl:pr-12 min-[1440px]:pr-16 2xl:pr-24">
+                <div
+                  ref={track1InnerRef}
+                  className="flex h-full items-center pt-[4.5rem] lg:pt-[5rem] px-6 md:px-8 lg:px-10 xl:px-12 min-[1440px]:px-16 2xl:px-24 gap-6 lg:gap-8 xl:gap-10 min-[1440px]:gap-14 2xl:gap-16 relative z-10 w-max pr-6 md:pr-8 lg:pr-10 xl:pr-12 min-[1440px]:pr-16 2xl:pr-24"
+                >
                   <div className="w-[210px] lg:w-[230px] xl:w-[260px] min-[1440px]:w-[340px] 2xl:w-[380px] shrink-0">
                     <h2 className="text-2xl sm:text-3xl lg:text-[36px] xl:text-[40px] min-[1440px]:text-5xl 2xl:text-6xl font-serif text-[#0F1F15] font-bold tracking-tight leading-[1.12]">
                       {tAgri('title')}
@@ -302,7 +371,10 @@ export default function Home() {
 
               {/* Track 2: What We Believe Layer */}
               <div ref={track2Ref} className="absolute inset-0 w-full h-full bg-[#0F1F15] z-10 translate-x-full flex">
-                <div ref={track2InnerRef} className="flex h-full items-center pt-[4.5rem] lg:pt-[5rem] px-6 md:px-8 lg:px-10 xl:px-12 min-[1440px]:px-16 2xl:px-24 gap-6 lg:gap-8 xl:gap-10 min-[1440px]:gap-14 2xl:gap-16 relative z-10 w-max pr-6 md:pr-8 lg:pr-10 xl:pr-12 min-[1440px]:pr-16 2xl:pr-24">
+                <div
+                  ref={track2InnerRef}
+                  className="flex h-full items-center pt-[4.5rem] lg:pt-[5rem] px-6 md:px-8 lg:px-10 xl:px-12 min-[1440px]:px-16 2xl:px-24 gap-6 lg:gap-8 xl:gap-10 min-[1440px]:gap-14 2xl:gap-16 relative z-10 w-max pr-6 md:pr-8 lg:pr-10 xl:pr-12 min-[1440px]:pr-16 2xl:pr-24"
+                >
                   <div className="w-[210px] lg:w-[230px] xl:w-[260px] min-[1440px]:w-[340px] 2xl:w-[380px] shrink-0">
                     <h2 className="text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] min-[1440px]:text-5xl font-serif text-white font-bold tracking-tight leading-[1.14]">
                       {t('what_we_believe')}
@@ -328,7 +400,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -355,7 +426,9 @@ export default function Home() {
                         className="bg-[#162B1E] border border-[#2A4735] p-6 sm:p-7 rounded-2xl flex flex-col justify-center"
                       >
                         <h3 className="text-xl font-serif text-white mb-2.5 font-bold">{belief.title}</h3>
-                        <p className="text-[#D5E0D9] font-normal text-base leading-[1.65] tracking-[0.01em]">{belief.text}</p>
+                        <p className="text-[#D5E0D9] font-normal text-base leading-[1.65] tracking-[0.01em]">
+                          {belief.text}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -369,7 +442,9 @@ export default function Home() {
         <section className="w-full py-16 lg:py-24 bg-white border-t border-stone-200/80 relative z-20">
           <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-10 md:mb-14 space-y-3">
-              <h2 className="text-[#0F1F15] text-2xl sm:text-3xl lg:text-5xl font-serif font-bold tracking-tight">{t('trusted_leaders')}</h2>
+              <h2 className="text-[#0F1F15] text-2xl sm:text-3xl lg:text-5xl font-serif font-bold tracking-tight">
+                {t('trusted_leaders')}
+              </h2>
               <p className="text-base sm:text-lg lg:text-xl text-[#2A3830] font-normal max-w-2xl mx-auto">
                 {t('trusted_leaders_desc')}
               </p>
@@ -395,17 +470,13 @@ export default function Home() {
                   href="/contact"
                   className="group relative overflow-hidden inline-flex items-center justify-center px-7 py-3.5 sm:px-9 sm:py-4 bg-primary-green text-[#0F1F15] rounded-full font-bold text-sm sm:text-base transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#45c456] active:scale-[0.98]"
                 >
-                  <RollingText>
-                    {t('cta_btn_1')}
-                  </RollingText>
+                  <RollingText>{t('cta_btn_1')}</RollingText>
                 </Link>
                 <Link
                   href="/contact"
                   className="group relative overflow-hidden inline-flex items-center justify-center px-7 py-3.5 sm:px-9 sm:py-4 border border-[#3A5A46] text-white rounded-full font-semibold text-sm sm:text-base hover:bg-[#162B1E] hover:border-[#527A61] transition-[transform,background-color,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]"
                 >
-                  <RollingText>
-                    {t('cta_btn_2')}
-                  </RollingText>
+                  <RollingText>{t('cta_btn_2')}</RollingText>
                 </Link>
               </div>
             </div>

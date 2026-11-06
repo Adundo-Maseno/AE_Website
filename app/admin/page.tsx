@@ -56,6 +56,8 @@ export default function AdminDashboardPage() {
   // Upload state
   const [uploading, setUploading] = useState(false)
   const [uploadedUrl, setUploadedUrl] = useState('')
+  const [uploadingStaffPhoto, setUploadingStaffPhoto] = useState<'primary' | 'hover' | null>(null)
+  const [uploadingPubPdf, setUploadingPubPdf] = useState(false)
 
   // 1. Check Authentication on Mount
   useEffect(() => {
@@ -333,6 +335,67 @@ export default function AdminDashboardPage() {
       alert('Upload failed due to connection error')
     } finally {
       setUploading(false)
+    }
+  }
+
+  // 8b. Direct Staff Photo Upload Handler
+  const handleStaffPhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'primary' | 'hover') => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingStaffPhoto(type)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        if (type === 'primary') {
+          setEditingItemData((prev: any) => ({ ...prev, image: data.url }))
+        } else {
+          setEditingItemData((prev: any) => ({ ...prev, hover_image: data.url }))
+        }
+      } else {
+        alert(data.error || 'Failed to upload photo')
+      }
+    } catch {
+      alert('Failed to upload photo')
+    } finally {
+      setUploadingStaffPhoto(null)
+    }
+  }
+
+  // 8c. Direct PDF Publication Upload Handler
+  const handlePubPdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingPubPdf(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setEditingItemData((prev: any) => {
+          const cleanName = file.name.replace(/\.pdf$/i, '').replace(/[-_]+/g, ' ')
+          return {
+            ...prev,
+            link: data.url,
+            title_en: prev.title_en || cleanName,
+          }
+        })
+      } else {
+        alert(data.error || 'Failed to upload PDF')
+      }
+    } catch {
+      alert('Failed to upload PDF')
+    } finally {
+      setUploadingPubPdf(false)
     }
   }
 
@@ -726,34 +789,147 @@ export default function AdminDashboardPage() {
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                              <label className="block text-xs font-medium text-[#46584D] mb-1">
-                                Primary Photo Path / URL
-                              </label>
-                              <input
-                                type="text"
-                                placeholder="/team/name.jpg or /uploads/..."
-                                value={editingItemData.image || ''}
-                                onChange={(e) =>
-                                  setEditingItemData({ ...editingItemData, image: e.target.value })
-                                }
-                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs"
-                              />
+                          {/* Staff Photos & Direct Upload */}
+                          <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200/80 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-[#0F1F15] uppercase tracking-wider">
+                                Staff Photos &amp; Framing
+                              </span>
+                              <span className="text-[11px] text-[#46584D]">Upload JPG, PNG, or WebP</span>
                             </div>
-                            <div>
-                              <label className="block text-xs font-medium text-[#46584D] mb-1">
-                                Hover Photo Path / URL
-                              </label>
-                              <input
-                                type="text"
-                                placeholder="/team/name2.jpg (optional)"
-                                value={editingItemData.hover_image || ''}
-                                onChange={(e) =>
-                                  setEditingItemData({ ...editingItemData, hover_image: e.target.value })
-                                }
-                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs"
-                              />
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              {/* Primary Photo */}
+                              <div className="space-y-2">
+                                <label className="block text-xs font-semibold text-[#1A4D2E]">
+                                  Primary Staff Photo *
+                                </label>
+                                <div className="flex items-center gap-3">
+                                  <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-stone-200 shrink-0 border border-stone-300">
+                                    {editingItemData.image ? (
+                                      <Image
+                                        src={editingItemData.image}
+                                        alt="Primary preview"
+                                        fill
+                                        sizes="64px"
+                                        className="object-cover"
+                                        style={{ objectPosition: editingItemData.image_position || '50% 30%' }}
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center text-stone-400 text-xs">
+                                        No photo
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  <div className="flex-1 space-y-1.5">
+                                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] transition-colors cursor-pointer shadow-xs">
+                                      {uploadingStaffPhoto === 'primary' ? (
+                                        <Loader2 size={13} className="animate-spin" />
+                                      ) : (
+                                        <Upload size={13} />
+                                      )}
+                                      <span>{uploadingStaffPhoto === 'primary' ? 'Uploading...' : 'Upload Photo'}</span>
+                                      <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={(e) => handleStaffPhotoUpload(e, 'primary')}
+                                        disabled={uploadingStaffPhoto !== null}
+                                      />
+                                    </label>
+                                    <input
+                                      type="text"
+                                      placeholder="/team/name.jpg or URL"
+                                      value={editingItemData.image || ''}
+                                      onChange={(e) => setEditingItemData({ ...editingItemData, image: e.target.value })}
+                                      className="w-full px-2 py-1 rounded bg-white border border-stone-200 text-[11px] font-mono"
+                                    />
+                                  </div>
+                                </div>
+
+                                {/* Quick Focal Point Presets */}
+                                <div>
+                                  <span className="text-[10px] text-[#46584D] font-medium block mb-1">Portrait Focal Align:</span>
+                                  <div className="flex items-center gap-1 flex-wrap">
+                                    {['50% 25%', '50% 30%', '50% 35%', '50% 50%'].map((pos) => (
+                                      <button
+                                        key={pos}
+                                        type="button"
+                                        onClick={() => setEditingItemData({ ...editingItemData, image_position: pos })}
+                                        className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors cursor-pointer ${
+                                          (editingItemData.image_position || '50% 30%') === pos
+                                            ? 'bg-[#1A4D2E] text-white border-[#1A4D2E]'
+                                            : 'bg-white text-[#46584D] border-stone-200 hover:bg-stone-100'
+                                        }`}
+                                      >
+                                        {pos}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Hover Photo (Optional) */}
+                              <div className="space-y-2">
+                                <label className="block text-xs font-semibold text-[#46584D]">
+                                  Hover Photo (Optional)
+                                </label>
+                                <div className="flex items-center gap-3">
+                                  <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-stone-200 shrink-0 border border-stone-300">
+                                    {editingItemData.hover_image ? (
+                                      <Image
+                                        src={editingItemData.hover_image}
+                                        alt="Hover preview"
+                                        fill
+                                        sizes="64px"
+                                        className="object-cover"
+                                        style={{ objectPosition: editingItemData.hover_image_position || '50% 30%' }}
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center text-stone-400 text-xs text-center p-1">
+                                        Optional
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  <div className="flex-1 space-y-1.5">
+                                    <div className="flex items-center gap-2">
+                                      <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-800 text-white text-xs font-semibold hover:bg-black transition-colors cursor-pointer shadow-xs">
+                                        {uploadingStaffPhoto === 'hover' ? (
+                                          <Loader2 size={13} className="animate-spin" />
+                                        ) : (
+                                          <Upload size={13} />
+                                        )}
+                                        <span>{uploadingStaffPhoto === 'hover' ? 'Uploading...' : 'Upload Hover'}</span>
+                                        <input
+                                          type="file"
+                                          accept="image/*"
+                                          className="hidden"
+                                          onChange={(e) => handleStaffPhotoUpload(e, 'hover')}
+                                          disabled={uploadingStaffPhoto !== null}
+                                        />
+                                      </label>
+                                      {editingItemData.hover_image && (
+                                        <button
+                                          type="button"
+                                          onClick={() => setEditingItemData({ ...editingItemData, hover_image: '' })}
+                                          className="text-[11px] text-red-600 hover:underline cursor-pointer"
+                                        >
+                                          Remove
+                                        </button>
+                                      )}
+                                    </div>
+                                    <input
+                                      type="text"
+                                      placeholder="/team/name2.jpg or URL"
+                                      value={editingItemData.hover_image || ''}
+                                      onChange={(e) => setEditingItemData({ ...editingItemData, hover_image: e.target.value })}
+                                      className="w-full px-2 py-1 rounded bg-white border border-stone-200 text-[11px] font-mono"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
 
@@ -1198,18 +1374,68 @@ export default function AdminDashboardPage() {
                                 <option value="Toolkits & Guides">Toolkits &amp; Guides</option>
                               </select>
                             </div>
+                          </div>
+
+                          {/* Direct PDF File Upload Section */}
+                          <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200/80 space-y-2.5">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-[#0F1F15] uppercase tracking-wider">
+                                PDF Document Download *
+                              </span>
+                              <span className="text-[11px] text-[#46584D]">PDF files only</span>
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                              <label className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#1A4D2E] text-white text-xs font-semibold hover:bg-[#143d24] transition-colors cursor-pointer shadow-xs shrink-0">
+                                {uploadingPubPdf ? (
+                                  <Loader2 size={14} className="animate-spin" />
+                                ) : (
+                                  <Upload size={14} />
+                                )}
+                                <span>{uploadingPubPdf ? 'Uploading PDF Document...' : 'Upload PDF Document'}</span>
+                                <input
+                                  type="file"
+                                  accept="application/pdf"
+                                  className="hidden"
+                                  onChange={handlePubPdfUpload}
+                                  disabled={uploadingPubPdf}
+                                />
+                              </label>
+
+                              {editingItemData.link ? (
+                                <div className="flex-1 flex items-center justify-between gap-2 p-2 rounded-lg bg-green-50 border border-green-200 text-xs text-green-900 min-w-0">
+                                  <span className="truncate font-mono text-[11px] font-medium">
+                                    {editingItemData.link}
+                                  </span>
+                                  <a
+                                    href={editingItemData.link}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#1A4D2E] hover:underline shrink-0"
+                                  >
+                                    <span>Preview</span>
+                                    <ExternalLink size={11} />
+                                  </a>
+                                </div>
+                              ) : (
+                                <span className="text-xs text-[#46584D] italic">
+                                  No PDF attached yet. Click above to upload.
+                                </span>
+                              )}
+                            </div>
+
                             <div>
-                              <label className="block text-xs font-medium text-[#46584D] mb-1">
-                                PDF File Link / URL
+                              <label className="block text-[11px] text-[#46584D] mb-1">
+                                Or custom link / path
                               </label>
                               <input
                                 type="text"
-                                placeholder="/uploads/file.pdf"
+                                placeholder="/resources/filename.pdf or /uploads/..."
                                 value={editingItemData.link || ''}
                                 onChange={(e) =>
                                   setEditingItemData({ ...editingItemData, link: e.target.value })
                                 }
-                                className="w-full px-3 py-2 rounded-lg bg-[#F8F6F0] border border-stone-200 text-xs font-mono"
+                                className="w-full px-3 py-1.5 rounded-lg bg-white border border-stone-200 text-xs font-mono"
                               />
                             </div>
                           </div>

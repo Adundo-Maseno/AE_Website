@@ -511,7 +511,7 @@ export function getAllTeamMembers(includeUnpublished = false): any[] {
   try {
     const db = getDb()
     const query = includeUnpublished
-      ? 'SELECT * FROM team_members ORDER BY sort_order ASC, created_at ASC'
+      ? 'SELECT * FROM team_members ORDER BY sort_order ASC, updated_at DESC'
       : 'SELECT * FROM team_members WHERE is_published = 1 ORDER BY sort_order ASC'
     return db.prepare(query).all()
   } catch (err) {

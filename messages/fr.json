@@ -1313,13 +1313,13 @@
     "root_title_template": "%s | Expérience agricole",
     "root_desc": "Conseil d'experts transformant les chaînes de valeur agricoles et les systèmes semenciers en Afrique subsaharienne. Développement durable pour les communautés en croissance.",
     "root_og_alt": "Agri Expérience - Développement Agricole",
-    "gallery_title": "Galerie Visuelle",
-    "gallery_desc": "Découvrez notre galerie 3D interactive mettant en valeur la transformation agricole et les réalisations d'Agri Experience en Afrique.",
-    "map_title": "Carte Interactive des Systèmes Semenciers",
-    "map_desc": "Explorez notre empreinte interactive dans 21 pays d'Afrique subsaharienne, suivant la commercialisation des semences et les réformes réglementaires.",
-    "privacy_title": "Politique de Confidentialité",
-    "privacy_desc": "Consultez la politique de confidentialité et les pratiques de gouvernance des données d'Agri Experience.",
-    "terms_title": "Conditions d'Utilisation",
-    "terms_desc": "Consultez les conditions régissant l'utilisation du site web et des plateformes numériques d'Agri Experience."
+    "gallery_title": "Visual Gallery",
+    "gallery_desc": "Explore our interactive 3D visual showcase highlighting the agricultural transformation and milestones of Agri Experience across Africa.",
+    "map_title": "Interactive Seed Systems Map",
+    "map_desc": "Explore our interactive footprint across 21 sub-Saharan African countries, tracking seed commercialization, regulatory reforms, and impactful projects.",
+    "privacy_title": "Privacy Policy",
+    "privacy_desc": "Review Agri Experience's privacy policy and data governance practices.",
+    "terms_title": "Terms of Service",
+    "terms_desc": "Review the terms and conditions governing the use of the Agri Experience website and digital platforms."
   }
 }

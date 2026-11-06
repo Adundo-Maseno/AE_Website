@@ -1301,7 +1301,15 @@
     "root_title_default": "Agri Experience | Seed Systems & Agricultural Development",
     "root_title_template": "%s | Agri Experience",
     "root_desc": "Expert consultancy transforming agricultural value chains and seed systems across sub-Saharan Africa. Sustainable development for growing communities.",
-    "root_og_alt": "Agri Experience - Agricultural Development"
+    "root_og_alt": "Agri Experience - Agricultural Development",
+    "gallery_title": "Visual Gallery",
+    "gallery_desc": "Explore our interactive 3D visual showcase highlighting the agricultural transformation and milestones of Agri Experience across Africa.",
+    "map_title": "Interactive Seed Systems Map",
+    "map_desc": "Explore our interactive footprint across 21 sub-Saharan African countries, tracking seed commercialization, regulatory reforms, and impactful projects.",
+    "privacy_title": "Privacy Policy",
+    "privacy_desc": "Review Agri Experience's privacy policy and data governance practices.",
+    "terms_title": "Terms of Service",
+    "terms_desc": "Review the terms and conditions governing the use of the Agri Experience website and digital platforms."
   },
   "ClientLogos": {
     "development_partners": "Development Partners",

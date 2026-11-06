@@ -19,19 +19,16 @@ const navItems = [
 const AnimatedHamburger = ({ isOpen }: { isOpen: boolean }) => (
   <div className="relative w-6 h-6 flex flex-col justify-center items-center">
     <span
-      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-        isOpen ? 'rotate-45 translate-y-0' : 'rotate-0 -translate-y-1.5'
-      }`}
+      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${isOpen ? 'rotate-45 translate-y-0' : 'rotate-0 -translate-y-1.5'
+        }`}
     />
     <span
-      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-[opacity,transform] duration-150 ease-out ${
-        isOpen ? 'opacity-0 scale-75' : 'opacity-100 scale-100'
-      }`}
+      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-[opacity,transform] duration-150 ease-out ${isOpen ? 'opacity-0 scale-75' : 'opacity-100 scale-100'
+        }`}
     />
     <span
-      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-        isOpen ? '-rotate-45 translate-y-0' : 'rotate-0 translate-y-1.5'
-      }`}
+      className={`absolute w-5 h-[2px] bg-deep-forest rounded-full transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${isOpen ? '-rotate-45 translate-y-0' : 'rotate-0 translate-y-1.5'
+        }`}
     />
   </div>
 )
@@ -107,9 +104,8 @@ export default function Header() {
       <div className="sticky top-0 z-[80] w-full pointer-events-none">
         <div
           style={{ pointerEvents: isOpen ? 'none' : 'auto' }}
-          className={`w-full pointer-events-auto transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-            isOpen ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
-          }`}
+          className={`w-full pointer-events-auto transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${isOpen ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
+            }`}
         >
           <LiquidGlass
             className="flex justify-center items-center h-[var(--header-height)] w-full"
@@ -166,16 +162,14 @@ export default function Header() {
                           if (el) buttonRefs.current.set(item.href, el)
                           else buttonRefs.current.delete(item.href)
                         }}
-                        className={`relative px-3 py-1.5 min-[1440px]:px-4 min-[1440px]:py-2 text-[13px] min-[1440px]:text-sm font-medium rounded-full transition-colors duration-150 ${
-                          isActive
+                        className={`relative px-3 py-1.5 min-[1440px]:px-4 min-[1440px]:py-2 text-[13px] min-[1440px]:text-sm font-medium rounded-full transition-colors duration-150 ${isActive
                             ? 'text-deep-forest z-20'
                             : 'text-charcoal/80 hover:text-deep-forest z-10'
-                        }`}
+                          }`}
                       >
                         <div
-                          className={`absolute inset-0 bg-black/5 rounded-full -z-20 pointer-events-none transition-opacity duration-150 ease-out ${
-                            hoveredPath === item.href && !isActive ? 'opacity-100' : 'opacity-0'
-                          }`}
+                          className={`absolute inset-0 bg-black/5 rounded-full -z-20 pointer-events-none transition-opacity duration-150 ease-out ${hoveredPath === item.href && !isActive ? 'opacity-100' : 'opacity-0'
+                            }`}
                         />
                         {t(item.key as any)}
                       </Link>
@@ -233,11 +227,10 @@ export default function Header() {
                       key={item.href}
                       href={item.href}
                       onClick={() => { setIsOpen(false); }}
-                      className={`px-4 py-3.5 text-base font-semibold rounded-2xl transition-[background-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] flex items-center justify-between ${
-                        isActive
+                      className={`px-4 py-3.5 text-base font-semibold rounded-2xl transition-[background-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98] flex items-center justify-between ${isActive
                           ? 'text-deep-forest bg-[#F1F6F3]'
                           : 'text-charcoal/80 hover:text-deep-forest hover:bg-black/5'
-                      }`}
+                        }`}
                     >
                       {t(item.key as any)}
                       {isActive && <div className="w-1.5 h-1.5 rounded-full bg-primary-green" />}

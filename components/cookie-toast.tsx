@@ -14,7 +14,7 @@ export default function CookieToast() {
     setMounted(true)
     try {
       if (typeof window !== 'undefined') {
-        ;(window as any).resetCookieConsent = () => {
+        ; (window as any).resetCookieConsent = () => {
           localStorage.removeItem('cookie_consent')
           setVisible(true)
         }

@@ -96,3 +96,4 @@ export function DynamicCustomSections({ page, locale }: Props) {
     </>
   )
 }
+

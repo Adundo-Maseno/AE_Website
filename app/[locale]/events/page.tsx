@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl'
 import { RollingText } from '@/components/ui/rolling-text'
 import {
   ArrowRight,
-  Calendar,
   MapPin,
   Users,
   Search,
@@ -303,8 +302,8 @@ export default function EventsPage() {
   const eventsJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: t('hero_title'),
-    description: t('hero_lead'),
+    name: t('title'),
+    description: t('subtitle'),
     itemListElement: upcomingEvents.map((ev, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -333,189 +332,129 @@ export default function EventsPage() {
   }
 
   return (
-    <main className="bg-[#F8F6F0] min-h-[100dvh] text-[#0F1F15]">
+    <main className="bg-[#F8F6F0] min-h-[100dvh]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(eventsJsonLd) }}
       />
 
-      {/* ===== 1. EDITORIAL HERO SECTION ===== */}
-      <section className="relative w-full pt-10 sm:pt-14 lg:pt-20 pb-14 lg:pb-24 border-b border-stone-300/80 bg-[#F8F6F0]">
-        <div className="max-w-[1400px] min-[1440px]:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-            {/* Left Column: Editorial Headline, Narrative & Footprint */}
-            <div className="lg:col-span-7 space-y-6 lg:space-y-8">
+      {/* ===== 1. SITE-STANDARD WHITE MASTHEAD BANNER ===== */}
+      <section className="relative w-full pt-14 lg:pt-24 pb-10 lg:pb-14 bg-white border-b border-stone-200/80 snap-start scroll-mt-20">
+        <div className="relative z-10 max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 lg:gap-16">
+            <div className="flex-1">
               <h1
-                className="font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.08] text-balance"
-                style={{ fontSize: 'clamp(2.25rem, 1.6rem + 2.8vw, 4.25rem)' }}
+                className="font-serif text-[#0F1F15] font-bold tracking-tight leading-[1.1]"
+                style={{ fontSize: 'clamp(2.125rem, 1.5rem + 2.5vw, 4.25rem)' }}
               >
-                {t('hero_title')}
+                {t('title')}
               </h1>
-
-              <p
-                className="text-[#223127] font-normal leading-[1.65] max-w-[64ch]"
-                style={{ fontSize: 'clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem)' }}
-              >
-                {t('hero_lead')}
-              </p>
-
-              <p className="text-[#36493D] font-normal leading-[1.65] text-base max-w-[64ch]">
-                {t('hero_sublead')}
-              </p>
-
-              <div className="pt-2 flex flex-wrap items-center gap-4">
-                <a
-                  href="#upcoming-schedule"
-                  className="group relative overflow-hidden inline-flex items-center justify-center gap-2.5 px-6 py-3.5 lg:px-7 lg:py-4 bg-[#0F1F15] text-white rounded-full font-semibold text-sm lg:text-[15px] hover:bg-[#1A4D2E] transition-[transform,background-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-sm hover:shadow-md active:scale-[0.98]"
-                >
-                  <RollingText className="gap-2">
-                    {t('cta_explore_schedule')}
-                    <ArrowRight
-                      size={16}
-                      className="transform rotate-90 transition-transform duration-200 shrink-0"
-                    />
-                  </RollingText>
-                </a>
-
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 lg:px-7 lg:py-4 bg-white border border-[#0F1F15]/20 text-[#0F1F15] rounded-full font-semibold text-sm lg:text-[15px] hover:border-[#0F1F15] hover:bg-stone-50 transition-colors duration-200 active:scale-[0.98]"
-                >
-                  {t('cta_commission_event')}
-                </Link>
-              </div>
-
-              {/* Understated Institutional Footprint Line */}
-              <div className="pt-6 border-t border-stone-300/90 flex flex-wrap items-baseline gap-x-8 gap-y-3 text-sm sm:text-[15px] text-[#223127]">
-                <span>
-                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-lg sm:text-xl mr-1.5">
-                    100+
-                  </strong>
-                  {t('stat_events')}
-                </span>
-                <span>
-                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-lg sm:text-xl mr-1.5">
-                    20+
-                  </strong>
-                  {t('stat_countries')}
-                </span>
-                <span>
-                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-lg sm:text-xl mr-1.5">
-                    500+
-                  </strong>
-                  {t('stat_leaders')}
-                </span>
-                <span>
-                  <strong className="font-serif font-bold text-[#0F1F15] tabular-nums text-lg sm:text-xl mr-1.5">
-                    15+
-                  </strong>
-                  {t('stat_roundtables')}
-                </span>
-              </div>
             </div>
-
-            {/* Right Column: Field Dossier Visual & Next Convening Brief */}
-            <div className="lg:col-span-5">
-              <div
-                className="bg-white rounded-2xl border border-stone-200/90 overflow-hidden"
-                style={{ boxShadow: '0 12px 32px -12px rgba(15, 31, 21, 0.08)' }}
-              >
-                <div className="relative w-full aspect-[16/10] bg-stone-100 overflow-hidden">
-                  <Image
-                    src="/our-mission-2026.webp"
-                    alt={t('hero_img_alt')}
-                    fill
-                    priority
-                    sizes="(max-width: 1023px) 100vw, 42vw"
-                    className="object-cover object-center"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F1F15]/80 via-[#0F1F15]/20 to-transparent" />
-                  <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-4 text-white">
-                    <div>
-                      <p className="text-xs font-medium text-[#D5E0D9] mb-1">
-                        {t('hero_card_location')}
-                      </p>
-                      <p className="font-serif font-bold text-lg sm:text-xl leading-snug">
-                        {t('hero_card_title')}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-5 sm:p-6 space-y-4">
-                  <p className="text-sm sm:text-[15px] text-[#223127] leading-relaxed">
-                    {t('hero_card_desc')}
-                  </p>
-                  <div className="pt-3 border-t border-stone-200/80 flex items-center justify-between gap-4 text-xs sm:text-sm">
-                    <span className="text-[#36493D] font-medium">
-                      {t('hero_card_meta')}
-                    </span>
-                    <Link
-                      href="/our-work/stakeholder-convenings"
-                      className="inline-flex items-center gap-1.5 font-semibold text-[#1A4D2E] hover:text-[#0F1F15] underline underline-offset-4 transition-colors"
-                    >
-                      {t('hero_card_link')}
-                      <ArrowRight size={14} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
+            <div className="flex-1 relative">
+              <div className="hidden lg:block absolute left-0 top-1 bottom-1 w-px bg-stone-200" />
+              <p className="text-base sm:text-lg lg:text-xl text-[#2A3830] leading-[1.6] font-normal lg:pl-10">
+                {t('subtitle')}
+              </p>
             </div>
           </div>
+
+          {/* Institutional Metrics Row (Standard Architectural Grid) */}
+          <dl className="mt-10 pt-6 border-t border-stone-200/90 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-wider text-[#1A4D2E] mb-1">
+                Facilitated
+              </dt>
+              <dd className="font-serif text-2xl sm:text-3xl font-bold text-[#0F1F15] tabular-nums">
+                100+
+              </dd>
+              <p className="text-xs sm:text-sm text-[#46584D] mt-0.5">
+                {t('stat_events')}
+              </p>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-wider text-[#1A4D2E] mb-1">
+                Footprint
+              </dt>
+              <dd className="font-serif text-2xl sm:text-3xl font-bold text-[#0F1F15] tabular-nums">
+                20+
+              </dd>
+              <p className="text-xs sm:text-sm text-[#46584D] mt-0.5">
+                {t('stat_countries')}
+              </p>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-wider text-[#1A4D2E] mb-1">
+                Participation
+              </dt>
+              <dd className="font-serif text-2xl sm:text-3xl font-bold text-[#0F1F15] tabular-nums">
+                500+
+              </dd>
+              <p className="text-xs sm:text-sm text-[#46584D] mt-0.5">
+                {t('stat_leaders')}
+              </p>
+            </div>
+            <div>
+              <dt className="text-xs font-semibold uppercase tracking-wider text-[#1A4D2E] mb-1">
+                Policy Impact
+              </dt>
+              <dd className="font-serif text-2xl sm:text-3xl font-bold text-[#0F1F15] tabular-nums">
+                15+
+              </dd>
+              <p className="text-xs sm:text-sm text-[#46584D] mt-0.5">
+                {t('stat_roundtables')}
+              </p>
+            </div>
+          </dl>
         </div>
       </section>
 
-      {/* ===== 2. 2026 UPCOMING & RECURRING CONVENINGS SCHEDULE LEDGER ===== */}
+      {/* ===== 2. 2026 UPCOMING CONVENINGS SCHEDULE LEDGER ===== */}
       <section
         id="upcoming-schedule"
-        className="w-full py-16 lg:py-24 bg-white border-b border-stone-200/90 scroll-mt-24"
+        className="w-full py-12 sm:py-16 lg:py-20 bg-[#F8F6F0] border-b border-stone-200/80 scroll-mt-20"
       >
-        <div className="max-w-[1400px] min-[1440px]:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 lg:mb-14">
-            <div className="max-w-2xl space-y-3">
-              <h2
-                className="font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.12]"
-                style={{ fontSize: 'clamp(1.75rem, 1.35rem + 1.8vw, 3rem)' }}
-              >
+        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          {/* Section Header (Consistent Site Pattern) */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 lg:mb-12 gap-6">
+            <div>
+              <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1A4D2E] mb-2">
+                2026 Schedule
+              </p>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.15]">
                 {t('upcoming_title')}
               </h2>
-              <p className="text-base sm:text-lg text-[#223127] leading-relaxed">
-                {t('upcoming_desc')}
-              </p>
             </div>
-
-            <div className="flex items-center gap-3 text-sm text-[#36493D] bg-[#F8F6F0] px-4 py-2.5 rounded-full border border-stone-200/90 self-start lg:self-auto">
-              <Calendar size={16} className="text-[#1A4D2E] shrink-0" />
-              <span>{t('upcoming_notice')}</span>
-            </div>
+            <p className="text-base sm:text-lg text-[#2A3830] max-w-md leading-[1.6]">
+              {t('upcoming_desc')}
+            </p>
           </div>
 
-          {/* Interactive Editorial Ledger */}
-          <div className="border-t border-stone-300 divide-y divide-stone-200">
+          {/* Schedule Ledger Card */}
+          <div className="consultancy-card divide-y divide-stone-200/80 overflow-hidden">
             {upcomingEvents.map((ev) => {
               const isExpanded = expandedUpcomingId === ev.id
               return (
                 <article
                   key={ev.id}
-                  className={`transition-colors duration-200 ${
-                    isExpanded ? 'bg-[#F8F6F0]/75' : 'bg-white hover:bg-stone-50/70'
+                  className={`transition-colors duration-150 ${
+                    isExpanded ? 'bg-[#FBFBF9]' : 'bg-white hover:bg-stone-50/60'
                   }`}
                 >
-                  <div className="py-6 sm:py-7 px-3 sm:px-5 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start lg:items-center">
+                  <div className="p-5 sm:p-6 lg:p-7 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start lg:items-center">
                     {/* Date Window & Mode */}
                     <div className="lg:col-span-2 flex lg:flex-col items-center lg:items-start justify-between gap-2">
-                      <span className="font-serif font-bold text-base sm:text-lg text-[#0F1F15] tabular-nums">
+                      <span className="font-serif font-bold text-lg sm:text-xl text-[#0F1F15] tabular-nums">
                         {ev.window}
                       </span>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#1A4D2E]/10 text-[#1A4D2E]">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1A4D2E]/10 text-[#1A4D2E]">
                         {ev.mode}
                       </span>
                     </div>
 
                     {/* Title & Format */}
                     <div className="lg:col-span-5 space-y-1.5">
-                      <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-[#1A4D2E]">
-                        <span>{ev.formatLabel}</span>
+                      <div className="text-xs font-semibold uppercase tracking-wider text-[#1A4D2E]">
+                        {ev.formatLabel}
                       </div>
                       <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#0F1F15] leading-snug">
                         {ev.title}
@@ -523,7 +462,7 @@ export default function EventsPage() {
                     </div>
 
                     {/* Location with Flag */}
-                    <div className="lg:col-span-3 flex items-center gap-2.5 text-sm sm:text-[15px] text-[#223127]">
+                    <div className="lg:col-span-3 flex items-center gap-2.5 text-sm sm:text-base text-[#2A3830]">
                       <Image
                         src={ev.flag}
                         alt={ev.country}
@@ -542,13 +481,13 @@ export default function EventsPage() {
                           setExpandedUpcomingId(isExpanded ? '' : ev.id)
                         }
                         aria-expanded={isExpanded}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-[#0F1F15] bg-white border border-stone-300 hover:border-[#0F1F15] transition-colors cursor-pointer min-h-[44px]"
+                        className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-semibold text-[#0F1F15] bg-[#F8F6F0] border border-stone-200/80 hover:border-[#1A4D2E]/40 hover:bg-stone-100 transition-[transform,background-color,border-color] duration-150 active:scale-[0.97] cursor-pointer min-h-[40px]"
                       >
                         <span>
                           {isExpanded ? t('hide_brief') : t('view_brief')}
                         </span>
                         <ChevronDown
-                          size={16}
+                          size={15}
                           className={`transition-transform duration-200 ${
                             isExpanded ? 'rotate-180' : 'rotate-0'
                           }`}
@@ -557,15 +496,15 @@ export default function EventsPage() {
                     </div>
                   </div>
 
-                  {/* Inline Expandable Delegation & Agenda Brief */}
+                  {/* Inline Expandable Delegation & Agenda Brief Drawer */}
                   {isExpanded && (
-                    <div className="px-3 sm:px-5 pb-7 pt-2 border-t border-stone-200/70">
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 pt-4">
+                    <div className="px-5 sm:px-8 pb-8 pt-4 border-t border-stone-200/70 bg-[#FBFBF9]">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 pt-2">
                         <div className="lg:col-span-5 space-y-4">
-                          <p className="text-sm sm:text-[15px] text-[#223127] leading-relaxed">
+                          <p className="text-sm sm:text-base text-[#2A3830] leading-[1.6]">
                             {ev.summary}
                           </p>
-                          <div className="space-y-2 text-xs sm:text-sm text-[#36493D]">
+                          <div className="space-y-2 text-xs sm:text-sm text-[#46584D]">
                             <div className="flex items-start gap-2">
                               <Users
                                 size={16}
@@ -593,15 +532,15 @@ export default function EventsPage() {
                           </div>
                         </div>
 
-                        <div className="lg:col-span-4 space-y-2.5">
-                          <h4 className="text-xs sm:text-sm font-bold text-[#0F1F15]">
+                        <div className="lg:col-span-4 space-y-3">
+                          <h4 className="text-xs sm:text-sm font-bold text-[#0F1F15] uppercase tracking-wider">
                             {t('label_themes')}
                           </h4>
                           <ul className="space-y-2">
                             {ev.themes.map((theme, idx) => (
                               <li
                                 key={idx}
-                                className="flex items-start gap-2 text-xs sm:text-sm text-[#223127] leading-relaxed"
+                                className="flex items-start gap-2.5 text-xs sm:text-sm text-[#2A3830] leading-relaxed"
                               >
                                 <CheckCircle2
                                   size={15}
@@ -613,18 +552,18 @@ export default function EventsPage() {
                           </ul>
                         </div>
 
-                        <div className="lg:col-span-3 flex flex-col justify-between bg-white p-4 sm:p-5 rounded-xl border border-stone-200/90 gap-4">
-                          <div className="space-y-1">
+                        <div className="lg:col-span-3 flex flex-col justify-between bg-white p-5 rounded-xl border border-stone-200/80 gap-4">
+                          <div className="space-y-1.5">
                             <p className="font-serif font-bold text-base text-[#0F1F15]">
                               {t('inquire_box_title')}
                             </p>
-                            <p className="text-xs text-[#36493D] leading-relaxed">
+                            <p className="text-xs text-[#46584D] leading-relaxed">
                               {t('inquire_box_desc')}
                             </p>
                           </div>
                           <Link
                             href="/contact"
-                            className="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full bg-[#0F1F15] text-white text-xs sm:text-sm font-semibold hover:bg-[#1A4D2E] transition-colors min-h-[44px]"
+                            className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-full bg-[#0F1F15] text-white text-xs sm:text-sm font-semibold hover:bg-[#1A4D2E] transition-colors"
                           >
                             <span>{t('inquire_btn')}</span>
                             <ArrowRight size={14} />
@@ -640,12 +579,12 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* ===== 3. FLAGSHIP POLICY IMPACT CASE STUDY (DARK FOREST FEATURE) ===== */}
-      <section className="w-full py-16 lg:py-24 bg-[#0F1F15] text-white border-b border-[#2A4735]">
-        <div className="max-w-[1400px] min-[1440px]:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      {/* ===== 3. FLAGSHIP POLICY CASE STUDY (DARK FOREST SECTION) ===== */}
+      <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#0F1F15] text-white border-t border-b border-[#2A4735]">
+        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            <div className="lg:col-span-7 space-y-5 lg:space-y-6">
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#162B1E] border border-[#2A4735] text-xs sm:text-sm text-[#D5E0D9]">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs sm:text-sm text-stone-200 font-medium">
                 <Image
                   src="/flags/ke.png"
                   alt="Kenya"
@@ -656,52 +595,49 @@ export default function EventsPage() {
                 <span>{t('flagship_badge')}</span>
               </div>
 
-              <h2
-                className="font-serif font-bold text-white tracking-tight leading-[1.12]"
-                style={{ fontSize: 'clamp(1.75rem, 1.35rem + 1.8vw, 3rem)' }}
-              >
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white tracking-tight leading-[1.15]">
                 {t('flagship_title')}
               </h2>
 
-              <p className="text-base sm:text-lg text-[#D5E0D9] leading-[1.65] max-w-[62ch]">
+              <p className="text-base sm:text-lg text-stone-300 leading-[1.65] max-w-[62ch]">
                 {t('flagship_desc_1')}
               </p>
 
-              <p className="text-sm sm:text-base text-[#B8C9BE] leading-[1.65] max-w-[62ch]">
+              <p className="text-sm sm:text-base text-stone-400 leading-[1.65] max-w-[62ch]">
                 {t('flagship_desc_2')}
               </p>
             </div>
 
             <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-[#162B1E] border border-[#2A4735] rounded-2xl p-6 space-y-2">
+              <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 sm:p-7 space-y-2 hover:border-white/20 transition-colors">
                 <p className="font-serif font-bold text-3xl sm:text-4xl text-white tabular-nums">
                   15+
                 </p>
                 <p className="text-sm font-semibold text-white">
                   {t('flagship_stat_1_title')}
                 </p>
-                <p className="text-xs text-[#B8C9BE] leading-relaxed">
+                <p className="text-xs text-stone-300 leading-relaxed">
                   {t('flagship_stat_1_desc')}
                 </p>
               </div>
 
-              <div className="bg-[#162B1E] border border-[#2A4735] rounded-2xl p-6 space-y-2">
+              <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 sm:p-7 space-y-2 hover:border-white/20 transition-colors">
                 <p className="font-serif font-bold text-3xl sm:text-4xl text-white tabular-nums">
                   100%
                 </p>
                 <p className="text-sm font-semibold text-white">
                   {t('flagship_stat_2_title')}
                 </p>
-                <p className="text-xs text-[#B8C9BE] leading-relaxed">
+                <p className="text-xs text-stone-300 leading-relaxed">
                   {t('flagship_stat_2_desc')}
                 </p>
               </div>
 
-              <div className="sm:col-span-2 bg-[#162B1E] border border-[#2A4735] rounded-2xl p-6 space-y-2">
+              <div className="sm:col-span-2 bg-white/[0.04] border border-white/10 rounded-2xl p-6 sm:p-7 space-y-2 hover:border-white/20 transition-colors">
                 <p className="font-serif font-bold text-xl sm:text-2xl text-white">
                   {t('flagship_stat_3_title')}
                 </p>
-                <p className="text-xs sm:text-sm text-[#D5E0D9] leading-relaxed">
+                <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
                   {t('flagship_stat_3_desc')}
                 </p>
               </div>
@@ -710,26 +646,29 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* ===== 4. PAN-AFRICAN CONVENING ARCHIVE (FACETED FILTER LEDGER) ===== */}
-      <section className="w-full py-16 lg:py-24 bg-[#F8F6F0] border-b border-stone-300/80">
-        <div className="max-w-[1400px] min-[1440px]:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="max-w-3xl space-y-3 mb-8 lg:mb-12">
-            <h2
-              className="font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.12]"
-              style={{ fontSize: 'clamp(1.75rem, 1.35rem + 1.8vw, 3rem)' }}
-            >
-              {t('archive_title')}
-            </h2>
-            <p className="text-base sm:text-lg text-[#223127] leading-relaxed">
+      {/* ===== 4. PAN-AFRICAN CONVENINGS ARCHIVE (FACETED FILTER LEDGER) ===== */}
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-[#F8F6F0] border-b border-stone-200/80">
+        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          {/* Section Header (Consistent Site Pattern) */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 lg:mb-12 gap-6">
+            <div>
+              <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1A4D2E] mb-2">
+                Convenings Archive
+              </p>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.15]">
+                {t('archive_title')}
+              </h2>
+            </div>
+            <p className="text-base sm:text-lg text-[#2A3830] max-w-md leading-[1.6]">
               {t('archive_desc')}
             </p>
           </div>
 
-          {/* Multi-Criteria Faceted Filter Bar (TWK Farm Africa Pattern) */}
-          <div className="bg-white rounded-2xl border border-stone-200/90 p-4 sm:p-6 mb-8 space-y-4">
+          {/* Faceted Filter Bar (Matching Resources Page Filter Bar) */}
+          <div className="bg-white rounded-2xl border border-stone-200/90 p-5 sm:p-6 mb-8 sm:mb-10 shadow-sm space-y-4">
             <div className="flex flex-col lg:flex-row gap-4 lg:items-center justify-between">
               {/* Format Pills */}
-              <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by format">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5" role="group" aria-label="Filter by format">
                 {formatFilters.map((f) => {
                   const active = activeFormat === f.key
                   return (
@@ -737,13 +676,13 @@ export default function EventsPage() {
                       key={f.key}
                       type="button"
                       onClick={() => setActiveFormat(f.key)}
-                      className={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[40px] ${
+                      className={`group relative overflow-hidden inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-semibold transition-[transform,background-color,color,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] cursor-pointer border ${
                         active
-                          ? 'bg-[#0F1F15] text-white'
-                          : 'bg-[#F8F6F0] text-[#223127] hover:bg-stone-200/70'
+                          ? 'bg-[#0F1F15] border-[#0F1F15] text-white'
+                          : 'bg-[#F8F6F0] border-stone-200/80 text-[#0F1F15] hover:border-[#1A4D2E]/40 hover:bg-stone-100'
                       }`}
                     >
-                      {f.label}
+                      <RollingText>{f.label}</RollingText>
                     </button>
                   )
                 })}
@@ -752,8 +691,8 @@ export default function EventsPage() {
               {/* Search Input */}
               <div className="relative w-full lg:w-72">
                 <Search
-                  size={16}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#36493D] pointer-events-none"
+                  size={15}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#46584D] pointer-events-none"
                 />
                 <input
                   type="search"
@@ -761,14 +700,14 @@ export default function EventsPage() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t('search_placeholder')}
                   aria-label={t('search_placeholder')}
-                  className="w-full pl-9 pr-9 py-2 rounded-full bg-[#F8F6F0] border border-stone-300 text-sm text-[#0F1F15] placeholder:text-[#36493D] focus:outline-none focus:border-[#0F1F15] focus:bg-white transition-colors min-h-[40px]"
+                  className="w-full pl-9 pr-9 py-2.5 rounded-full bg-[#F8F6F0] border border-stone-200/80 text-xs sm:text-[13px] text-[#0F1F15] placeholder:text-[#46584D] focus:outline-none focus:border-[#1A4D2E] focus:bg-white transition-all min-h-[40px]"
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
                     aria-label="Clear search"
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-[#36493D] hover:text-[#0F1F15]"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-[#46584D] hover:text-[#0F1F15]"
                   >
                     <X size={14} />
                   </button>
@@ -779,7 +718,7 @@ export default function EventsPage() {
             {/* Region Filter Row & Result Count */}
             <div className="pt-3 border-t border-stone-200/80 flex flex-wrap items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by region">
-                <span className="text-xs font-semibold text-[#36493D] mr-1">
+                <span className="text-xs font-semibold text-[#46584D] mr-1">
                   {t('label_region')}:
                 </span>
                 {regionFilters.map((r) => {
@@ -789,10 +728,10 @@ export default function EventsPage() {
                       key={r.key}
                       type="button"
                       onClick={() => setActiveRegion(r.key)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
+                      className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors cursor-pointer border ${
                         active
-                          ? 'bg-[#1A4D2E] text-white'
-                          : 'bg-stone-100 text-[#223127] hover:bg-stone-200/80'
+                          ? 'bg-[#1A4D2E] border-[#1A4D2E] text-white'
+                          : 'bg-[#F8F6F0] border-stone-200/80 text-[#0F1F15] hover:border-[#1A4D2E]/40 hover:bg-stone-100'
                       }`}
                     >
                       {r.label}
@@ -801,19 +740,19 @@ export default function EventsPage() {
                 })}
               </div>
 
-              <div className="text-xs sm:text-sm text-[#36493D] font-medium tabular-nums">
+              <span className="text-xs sm:text-sm font-medium text-[#46584D] tabular-nums shrink-0">
                 {t('showing_count', { count: filteredArchive.length, total: archiveEvents.length })}
-              </div>
+              </span>
             </div>
           </div>
 
           {/* Archive Results Grid */}
           {filteredArchive.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-stone-200/90 p-10 text-center space-y-4">
+            <div className="consultancy-card p-10 text-center space-y-4">
               <p className="font-serif font-bold text-xl text-[#0F1F15]">
                 {t('empty_title')}
               </p>
-              <p className="text-sm text-[#36493D] max-w-md mx-auto">
+              <p className="text-sm text-[#46584D] max-w-md mx-auto">
                 {t('empty_desc')}
               </p>
               <button
@@ -829,12 +768,11 @@ export default function EventsPage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {filteredArchive.map((item) => (
                 <article
                   key={item.id}
-                  className="bg-white rounded-2xl border border-stone-200/90 p-6 sm:p-7 flex flex-col justify-between gap-5 hover:border-[#1A4D2E]/40 transition-colors"
-                  style={{ boxShadow: '0 4px 16px -6px rgba(15, 31, 21, 0.05)' }}
+                  className="consultancy-card flex flex-col justify-between p-6 sm:p-7 lg:p-8 rounded-2xl group"
                 >
                   <div className="space-y-4">
                     {/* Top Meta Bar */}
@@ -850,45 +788,45 @@ export default function EventsPage() {
                         <span className="font-semibold text-[#0F1F15]">
                           {item.location}
                         </span>
-                        <span className="text-stone-400">·</span>
-                        <span className="text-[#36493D] font-medium tabular-nums">
+                        <span className="text-stone-300">·</span>
+                        <span className="text-[#46584D] font-medium tabular-nums">
                           {item.year}
                         </span>
                       </div>
 
-                      <span className="px-2.5 py-1 rounded-full bg-[#F8F6F0] border border-stone-200 text-[#1A4D2E] font-semibold">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#F8F6F0] border border-stone-200/80 text-[#1A4D2E] font-semibold text-[11px]">
                         {item.formatLabel}
                       </span>
                     </div>
 
                     {/* Title & Summary */}
                     <div className="space-y-2">
-                      <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#0F1F15] leading-snug">
+                      <h3 className="text-[17px] sm:text-lg font-serif font-bold text-[#0F1F15] group-hover:text-[#1A4D2E] leading-snug transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-sm sm:text-[15px] text-[#223127] leading-relaxed">
+                      <p className="text-[13.5px] sm:text-sm text-[#2A3830] leading-[1.6]">
                         {item.summary}
                       </p>
                     </div>
                   </div>
 
                   {/* Bottom Outcome & Partners Ledger */}
-                  <div className="pt-4 border-t border-stone-200/80 space-y-2.5 text-xs sm:text-sm">
+                  <div className="pt-4 border-t border-stone-100 mt-5 space-y-2 text-xs sm:text-[13px]">
                     <div className="flex items-center justify-between gap-2">
                       <span className="font-semibold text-[#1A4D2E]">
                         {item.metricBadge}
                       </span>
-                      <span className="text-xs text-[#36493D]">
+                      <span className="text-xs text-[#46584D]">
                         {item.regionLabel}
                       </span>
                     </div>
-                    <p className="text-xs sm:text-[13.5px] text-[#223127] leading-relaxed">
+                    <p className="text-[#2A3830] leading-relaxed">
                       <strong className="text-[#0F1F15] font-semibold">
                         {t('label_outcome')}:{' '}
                       </strong>
                       {item.outcome}
                     </p>
-                    <p className="text-xs text-[#36493D]">
+                    <p className="text-xs text-[#46584D]">
                       <strong className="text-[#0F1F15] font-medium">
                         {t('label_partners')}:{' '}
                       </strong>
@@ -902,60 +840,60 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* ===== 5. CONVENING METHODOLOGY (4-STAGE CHRONOLOGICAL PROCESS) ===== */}
-      <section className="w-full py-16 lg:py-24 bg-white border-b border-stone-200/90">
-        <div className="max-w-[1400px] min-[1440px]:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="max-w-2xl space-y-3 mb-10 lg:mb-14">
-            <h2
-              className="font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.12]"
-              style={{ fontSize: 'clamp(1.75rem, 1.35rem + 1.8vw, 3rem)' }}
-            >
-              {t('method_title')}
-            </h2>
-            <p className="text-base sm:text-lg text-[#223127] leading-relaxed">
+      {/* ===== 5. 4-STAGE METHODOLOGY SECTION ===== */}
+      <section className="w-full py-14 sm:py-18 lg:py-24 bg-white border-b border-stone-200/80">
+        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          {/* Section Header (Consistent Site Pattern) */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 lg:mb-14 gap-6">
+            <div>
+              <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#1A4D2E] mb-2">
+                Our Approach
+              </p>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0F1F15] tracking-tight leading-[1.15]">
+                {t('method_title')}
+              </h2>
+            </div>
+            <p className="text-base sm:text-lg text-[#2A3830] max-w-md leading-[1.6]">
               {t('method_desc')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {deliverySteps.map((s) => (
-              <div
+              <article
                 key={s.step}
-                className="bg-[#F8F6F0] rounded-2xl border border-stone-200/90 p-6 sm:p-7 flex flex-col justify-between gap-4"
+                className="consultancy-card p-6 sm:p-7 flex flex-col justify-between gap-5"
               >
                 <div className="space-y-3">
-                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#0F1F15] text-white font-serif font-bold text-sm tabular-nums">
+                  <span className="w-9 h-9 rounded-full bg-[#0F1F15] text-white font-serif font-bold text-sm flex items-center justify-center tabular-nums">
                     {s.step}
                   </span>
-                  <h3 className="font-serif font-bold text-xl text-[#0F1F15]">
+                  <h3 className="font-serif font-bold text-lg sm:text-xl text-[#0F1F15] leading-snug">
                     {s.title}
                   </h3>
-                  <p className="text-sm sm:text-[15px] text-[#223127] leading-relaxed">
+                  <p className="text-[13.5px] sm:text-sm text-[#2A3830] leading-[1.6]">
                     {s.desc}
                   </p>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== 6. EXECUTIVE ADVISORY CTA ===== */}
-      <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#0F1F15] text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2
-            className="font-serif font-bold text-white tracking-tight leading-[1.12]"
-            style={{ fontSize: 'clamp(1.875rem, 1.4rem + 2vw, 3.25rem)' }}
-          >
+      {/* ===== 6. SITE-WIDE EXECUTIVE CTA ===== */}
+      <section className="w-full py-16 sm:py-20 lg:py-24 bg-[#0F1F15] text-white border-t border-[#2A4735]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 text-center space-y-6 lg:space-y-7">
+          <h2 className="text-white text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight">
             {t('cta_bottom_title')}
           </h2>
-          <p className="text-base sm:text-lg text-[#D5E0D9] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-stone-300 text-base sm:text-lg lg:text-xl font-normal leading-[1.6] max-w-2xl mx-auto">
             {t('cta_bottom_desc')}
           </p>
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="group relative overflow-hidden inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 bg-primary-green text-[#0F1F15] rounded-full font-bold text-sm sm:text-base hover:bg-[#45c456] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]"
+              className="group relative overflow-hidden inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 bg-[#3ab44a] text-[#0F1F15] rounded-full font-bold text-sm sm:text-base hover:bg-[#45c456] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]"
             >
               <RollingText className="gap-2">
                 {t('cta_bottom_btn_1')}
